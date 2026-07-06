@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maintenance</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+    <script>
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "admin-login.html";
+
+}
+
+</script>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li>
+                <a href="dashboard.html">
+                    <i class="fa-solid fa-gauge"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="residents.html">
+                    <i class="fa-solid fa-users"></i>
+                    Residents
+                </a>
+            </li>
+
+            <li>
+                <a href="complaints.html">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Complaints
+                </a>
+            </li>
+
+            <li>
+                <a class="active" href="maintenance.html">
+                    <i class="fa-solid fa-wallet"></i>
+                    Maintenance
+                </a>
+            </li>
+
+            <li>
+                <a href="notice.html">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Notice
+                </a>
+            </li>
+            <li>
+    <a href="visitors.html">
+        <i class="fa-solid fa-user-check"></i>
+        Visitors
+    </a>
+</li>
+
+            <li>
+                <a href="../index.html">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <h1>💰 Maintenance Management</h1>
+
+        <p class="welcome-text">
+
+            Manage monthly maintenance payments of all residents.
+
+        </p>
+
+<!-- Form -->
+
+<div class="maintenance-form">
+
+    <h2>Add Maintenance</h2>
+
+    <div class="form-group">
+
+        <input type="text" id="ownerName" placeholder="Resident Name">
+
+        <input type="text" id="flatNo" placeholder="Flat Number">
+
+        <input type="number" id="maintenanceAmount" placeholder="Amount">
+
+<input
+    type="month"
+    id="maintenanceMonth">
+
+        <select id="paymentStatus">
+            <option>Paid</option>
+            <option>Pending</option>
+        </select>
+
+    </div>
+
+    <button id="saveMaintenance">
+        Save Maintenance
+    </button>
+
+</div>
+
+<!-- =========================
+Maintenance Month Filter
+========================= -->
+
+<div class="maintenance-filter">
+
+    <label for="filterMonth">
+        📅 Filter By Month
+    </label>
+
+    <input
+        type="month"
+        id="filterMonth">
+
+</div>
+
+        <!-- Search -->
+
+        <input
+            type="text"
+            id="searchMaintenance"
+            placeholder="Search Maintenance...">
+
+        <button id="exportMaintenance" class="export-btn">
+    <i class="fa-solid fa-file-csv"></i>
+    Export CSV
+        </button>
+
+        <input
+    type="file"
+    id="importMaintenance"
+    accept=".csv">
+
+<button id="importMaintenanceBtn" class="import-btn">
+    <i class="fa-solid fa-file-import"></i>
+    Import CSV
+</button>
+
+        <!-- Table -->
+
+        <table id="maintenanceTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Resident</th>
+
+                    <th>Flat</th>
+
+                    <th>Month</th>
+
+                    <th>Amount</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="maintenanceTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Maintenance View Modal
+========================= -->
+
+<div id="maintenanceModal" class="modal">
+
+    <div class="modal-content">
+
+        <span id="closeMaintenanceModal" class="close">&times;</span>
+
+        <h2>💰 Maintenance Details</h2>
+
+        <p><strong>ID :</strong> <span id="viewMaintenanceId"></span></p>
+
+        <p><strong>Resident :</strong> <span id="viewMaintenanceOwner"></span></p>
+
+        <p><strong>Flat :</strong> <span id="viewMaintenanceFlat"></span></p>
+
+        <p><strong>Amount :</strong> <span id="viewMaintenanceAmount"></span></p>
+
+        <p><strong>Status :</strong> <span id="viewMaintenanceStatus"></span></p>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+</body>
+
+</html>

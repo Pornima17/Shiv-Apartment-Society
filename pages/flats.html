@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flat Management</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li>
+                <a href="dashboard.html">
+                    <i class="fa-solid fa-gauge"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="residents.html">
+                    <i class="fa-solid fa-users"></i>
+                    Residents
+                </a>
+            </li>
+
+            <li>
+                <a class="active" href="flats.html">
+                    <i class="fa-solid fa-building"></i>
+                    Flats
+                </a>
+            </li>
+
+            <li>
+                <a href="complaints.html">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Complaints
+                </a>
+            </li>
+
+            <li>
+                <a href="maintenance.html">
+                    <i class="fa-solid fa-wallet"></i>
+                    Maintenance
+                </a>
+            </li>
+
+            <li>
+                <a href="notice.html">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Notice
+                </a>
+            </li>
+
+            <li>
+                <a href="visitors.html">
+                    <i class="fa-solid fa-user-check"></i>
+                    Visitors
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    <i class="fa-solid fa-user"></i>
+                    Profile
+                </a>
+            </li>
+
+            <li>
+                <a href="../index.html">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <h1>🏠 Flat Management</h1>
+
+        <!-- =========================
+Flat Summary
+========================= -->
+
+<div class="dashboard-cards">
+
+    <div class="card">
+
+        <h3>Total Flats</h3>
+
+        <h2 id="totalFlats">0</h2>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Occupied</h3>
+
+        <h2 id="occupiedFlats">0</h2>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Vacant</h3>
+
+        <h2 id="vacantFlats">0</h2>
+
+    </div>
+
+</div>
+
+        <!-- Add Flat -->
+
+        <div class="form-container">
+
+            <h2>Add Flat</h2>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    id="flatNumber"
+                    placeholder="Flat Number (Ex. A-101)">
+
+                <input
+                    type="text"
+                    id="floor"
+                    placeholder="Floor">
+
+            </div>
+
+            <div class="form-group">
+
+                <select id="flatType">
+
+                    <option value="">Select Flat Type</option>
+                    <option>1 BHK</option>
+                    <option>2 BHK</option>
+                    <option>3 BHK</option>
+
+                </select>
+
+                <input
+                    type="text"
+                    id="ownerName"
+                    placeholder="Owner Name">
+
+            </div>
+
+            <div class="form-group">
+
+                <select id="flatStatus">
+
+                    <option value="Occupied">
+                        Occupied
+                    </option>
+
+                    <option value="Vacant">
+                        Vacant
+                    </option>
+
+                </select>
+
+                <button id="saveFlat">
+
+                    Save Flat
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <!-- Search -->
+
+        <input
+            type="text"
+            id="searchFlat"
+            placeholder="🔍 Search Flat...">
+
+        <br><br>
+
+        <!-- Table -->
+
+        <table id="flatTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Flat No</th>
+                    <th>Floor</th>
+                    <th>Type</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="flatTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Flat View Modal
+========================= -->
+
+<div id="flatModal" class="modal">
+
+<div class="modal-content">
+
+<span id="closeFlatModal" class="close">&times;</span>
+
+<h2>🏠 Flat Details</h2>
+
+<p><b>ID :</b> <span id="viewFlatId"></span></p>
+
+<p><b>Flat :</b> <span id="viewFlatNumber"></span></p>
+
+<p><b>Floor :</b> <span id="viewFloor"></span></p>
+
+<p><b>Type :</b> <span id="viewFlatType"></span></p>
+
+<p><b>Owner :</b> <span id="viewOwner"></span></p>
+
+<p><b>Status :</b> <span id="viewFlatStatus"></span></p>
+
+</div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+
+</html>

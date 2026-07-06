@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notice Board</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <script>
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "admin-login.html";
+
+}
+
+</script>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li><a href="dashboard.html">Dashboard</a></li>
+
+            <li><a href="residents.html">Residents</a></li>
+
+            <li><a href="complaints.html">Complaints</a></li>
+
+            <li><a href="maintenance.html">Maintenance</a></li>
+
+            <li><a href="notice.html">Notice</a></li>
+            
+            <li><a href="visitors.html" class="active">Visitors</a></li>
+
+            <li><a href="../index.html">Logout</a></li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+       <h1>📢 Notice Board</h1>
+
+<p>Manage Society Notices Here.</p>
+
+<div class="notice-form">
+
+    <h2>➕ Add Notice</h2>
+
+    <div class="form-group">
+
+        <input
+            type="text"
+            id="noticeTitle"
+            placeholder="Notice Title">
+
+        <input
+            type="date"
+            id="noticeDate">
+
+    </div>
+
+    <textarea
+        id="noticeDescription"
+        placeholder="Notice Description"
+        rows="5"></textarea>
+
+    <br><br>
+
+    <button id="saveNotice">
+        Save Notice
+    </button>
+
+</div>
+
+<div class="table-container">
+
+    <h2>📋 Notice List</h2>
+
+    <table id="noticeTable" class="notice-table">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="noticeTableBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+    </div>
+
+</div>
+<!-- =========================
+Notice View Modal
+========================= -->
+
+<div id="noticeModal" class="modal">
+
+    <div class="modal-content">
+
+        <span id="closeNoticeModal" class="close">&times;</span>
+
+        <h2>📢 Notice Details</h2>
+
+        <p><strong>ID:</strong> <span id="viewNoticeId"></span></p>
+
+        <p><strong>Title:</strong> <span id="viewNoticeTitle"></span></p>
+
+        <p><strong>Date:</strong> <span id="viewNoticeDate"></span></p>
+
+        <p><strong>Description:</strong> <span id="viewNoticeDescription"></span></p>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+</body>
+
+</html>

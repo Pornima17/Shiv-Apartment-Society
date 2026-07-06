@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <script>
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "admin-login.html";
+
+}
+
+</script>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li>
+                <a class="active" href="dashboard.html">
+                    <i class="fa-solid fa-gauge"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="residents.html">
+                    <i class="fa-solid fa-users"></i>
+                    Residents
+                </a>
+            </li>
+
+            <li>
+                <a href="complaints.html">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Complaints
+                </a>
+            </li>
+
+            <li>
+                <a href="maintenance.html">
+                    <i class="fa-solid fa-wallet"></i>
+                    Maintenance
+                </a>
+            </li>
+
+            <li>
+                <a href="notice.html">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Notice
+                </a>
+            </li>
+            <li>
+    <a href="visitors.html">
+        <i class="fa-solid fa-user-check"></i>
+        Visitors
+    </a>
+</li>
+
+<li>
+    <a href="reports.html">
+        <i class="fa-solid fa-chart-line"></i>
+        Reports
+    </a>
+</li>
+
+<li>
+
+<a href="parking.html">
+
+<i class="fa-solid fa-square-parking"></i>
+
+Parking
+
+</a>
+
+</li>
+
+<li>
+
+<a href="flats.html">
+
+<i class="fa-solid fa-square-parking"></i>
+
+flats
+
+</a>
+
+</li>
+
+            <li>
+                <a href="../index.html">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+<button id="menuToggle" class="menu-toggle">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <div class="top-header">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input type="text" placeholder="Search...">
+
+            </div>
+
+            <div class="notification">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <span class="notification-count">3</span>
+
+                <div class="notification-dropdown" id="notificationDropdown">
+
+                    <h4>Latest Notifications</h4>
+
+                    <p>💧 Water Supply Maintenance</p>
+
+                    <p>📅 Society Meeting on Sunday</p>
+
+                    <p>🌳 Tree Plantation Drive</p>
+
+                </div>
+
+            </div>
+
+            <div class="today-date">
+                July 2026
+            </div>
+<div class="admin-profile" id="adminProfile">
+
+    <img
+        id="adminProfileImage"
+        src="../images/logo.png"
+        width="40"
+        height="40"
+        style="border-radius:50%;object-fit:cover;">
+
+    <span id="headerAdminName">Admin</span>
+
+    <div class="profile-dropdown" id="profileDropdown">
+
+        <a href="profile.html">👤 My Profile</a>
+
+        <a href="#">⚙️ Settings</a>
+
+        <a href="../index.html">🚪 Logout</a>
+
+    </div>
+
+</div>
+
+        </div>
+
+        <!-- Welcome -->
+        <p class="welcome-text">Welcome Back, Admin 👋</p>
+
+        <div class="welcome-card">
+
+            <h2>Welcome to Shiv Apartment Society</h2>
+
+            <p>
+
+                Manage residents, complaints, maintenance payments,
+                notices and all society activities from one dashboard.
+
+            </p>
+
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+
+            <div class="card">
+
+                <h3>Total Residents</h3>
+
+                <h2 id="totalResidents">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Active Residents</h3>
+
+                <h2 id="activeResidents">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Inactive Residents</h3>
+
+                <h2 id="inactiveResidents">0</h2>
+
+            </div>
+
+        </div>
+
+        <!-- Recent Activities -->
+
+        <div class="activity-card">
+
+            <h2>📝 Recent Activities</h2>
+
+            <ul id="activityList"></ul>
+
+        </div>
+
+<!-- =========================
+Resident Statistics Chart
+========================= -->
+
+     <div class="charts-container">
+
+    <!-- Bar Chart -->
+    <div class="chart-card">
+
+        <h2>📊 Resident Statistics</h2>
+
+        <canvas id="residentChart"></canvas>
+
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="chart-card">
+
+        <h2>🥧 Resident Status</h2>
+
+        <canvas id="statusChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Maintenance Summary
+========================= -->
+
+<div class="maintenance-summary">
+
+    <div class="summary-card income">
+
+        <h3>💰 Total Collection</h3>
+
+        <h2 id="totalCollection">₹0</h2>
+
+    </div>
+
+    <div class="summary-card pending">
+
+        <h3>⏳ Pending Amount</h3>
+
+        <h2 id="pendingCollection">₹0</h2>
+
+    </div>
+
+    <div class="summary-card paid">
+
+        <h3>✅ Paid Residents</h3>
+
+        <h2 id="paidResidents">0</h2>
+
+    </div>
+
+    <div class="summary-card unpaid">
+
+        <h3>❌ Unpaid Residents</h3>
+
+        <h2 id="unpaidResidents">0</h2>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Monthly Collection Chart
+========================= -->
+
+<div class="chart-card">
+
+    <h2>📊 Monthly Maintenance Collection</h2>
+
+    <canvas id="maintenanceChart"></canvas>
+
+</div>
+
+<!-- =========================
+Monthly Collection Trend
+========================= -->
+
+<div class="chart-card">
+
+    <h2>📈 Monthly Collection Trend</h2>
+
+    <canvas id="maintenanceTrendChart"></canvas>
+
+</div>
+
+
+
+<!-- =========================
+Maintenance Pie Chart
+========================= -->
+
+<div class="chart-card">
+
+    <h2>🥧 Paid vs Pending Maintenance</h2>
+
+    <canvas id="maintenancePieChart"></canvas>
+
+</div>
+
+<!-- =========================
+Recent Maintenance
+========================= -->
+
+<div class="recent-maintenance">
+
+    <h2>💰 Recent Maintenance Payments</h2>
+
+    <table id="recentMaintenanceTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Resident</th>
+                <th>Flat</th>
+                <th>Amount</th>
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="recentMaintenanceBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+       <!-- =========================
+Recent Complaints
+========================= -->
+
+<div class="complaints-section">
+
+    <h2>📋 Recent Complaints</h2>
+
+    <table id="recentComplaintTable">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Resident</th>
+                <th>Issue</th>
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="recentComplaintBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/script.js"></script>
+
+</body>
+
+</html>

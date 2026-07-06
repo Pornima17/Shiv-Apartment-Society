@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li>
+                <a href="dashboard.html">
+                    <i class="fa-solid fa-gauge"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="residents.html">
+                    <i class="fa-solid fa-users"></i>
+                    Residents
+                </a>
+            </li>
+
+            <li>
+                <a href="maintenance.html">
+                    <i class="fa-solid fa-wallet"></i>
+                    Maintenance
+                </a>
+            </li>
+
+            <li>
+                <a href="complaints.html">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Complaints
+                </a>
+            </li>
+
+            <li>
+                <a href="notice.html">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Notice
+                </a>
+            </li>
+
+            <li>
+                <a href="visitors.html">
+                    <i class="fa-solid fa-user-check"></i>
+                    Visitors
+                </a>
+            </li>
+
+            <li>
+                <a href="parking.html">
+                    <i class="fa-solid fa-square-parking"></i>
+                    Parking
+                </a>
+            </li>
+
+            <li>
+                <a href="flats.html">
+                    <i class="fa-solid fa-building"></i>
+                    Flats
+                </a>
+            </li>
+
+            <li>
+                <a class="active" href="reports.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Reports
+                </a>
+            </li>
+
+            <li>
+                <a href="../index.html">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <h1>📊 Society Reports</h1>
+
+        <!-- Summary Cards -->
+
+        <div class="report-summary">
+
+            <div class="summary-card">
+
+                <h3>Total Residents</h3>
+
+                <h2 id="reportResidents">0</h2>
+
+            </div>
+
+            <div class="summary-card">
+
+                <h3>Total Flats</h3>
+
+                <h2 id="reportFlats">0</h2>
+
+            </div>
+
+            <div class="summary-card">
+
+                <h3>Total Parking</h3>
+
+                <h2 id="reportParking">0</h2>
+
+            </div>
+
+            <div class="summary-card">
+
+                <h3>Total Maintenance</h3>
+
+                <h2 id="reportMaintenance">₹0</h2>
+
+            </div>
+
+        </div>
+
+        <!-- Report Table -->
+
+        <div class="table-container">
+
+            <h2>Society Summary Report</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Module</th>
+                        <th>Total Records</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="reportTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <button id="printReport" class="save-btn">
+
+            <i class="fa-solid fa-print"></i>
+
+            Print Report
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>

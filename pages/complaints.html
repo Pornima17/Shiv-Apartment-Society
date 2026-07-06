@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Complaints</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <script>
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "admin-login.html";
+
+}
+
+</script>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li><a href="dashboard.html">Dashboard</a></li>
+
+            <li><a href="residents.html">Residents</a></li>
+
+            <li><a href="complaints.html">Complaints</a></li>
+
+            <li><a href="maintenance.html">Maintenance</a></li>
+
+            <li><a href="notice.html">Notice</a></li>
+
+            <li><a href="visitors.html" class="active">Visitors</a></li>
+
+            <li><a href="../index.html">Logout</a></li>
+
+        </ul>
+
+    </div>
+
+    <div class="main-content">
+
+        <h1>Complaint Management</h1>
+
+        <p>Manage society complaints here.</p>
+
+<div class="complaint-top">
+
+    <input type="text" placeholder="Search Complaint...">
+
+    <button>Raise Complaint</button>
+
+</div>
+
+<!-- =========================
+Add Complaint
+========================= -->
+
+<div class="complaint-form">
+
+    <h2>➕ Add Complaint</h2>
+
+    <div class="form-group">
+
+        <input
+            type="text"
+            id="complaintResident"
+            placeholder="Resident Name">
+
+        <input
+            type="text"
+            id="complaintFlat"
+            placeholder="Flat Number">
+
+    </div>
+
+    <div class="form-group">
+
+        <input
+            type="text"
+            id="complaintTitle"
+            placeholder="Complaint Title">
+
+        <select id="complaintStatus">
+
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Solved">Solved</option>
+
+        </select>
+
+    </div>
+
+    <textarea
+        id="complaintDescription"
+        placeholder="Complaint Description"
+        rows="4"></textarea>
+
+    <br><br>
+
+    <button id="saveComplaint">Save Complaint</button>
+
+</div>
+
+<!-- =========================
+Complaints Table
+========================= -->
+
+<div class="table-container">
+
+    <h2>📋 Complaint List</h2>
+<table id="complaintTable" class="complaint-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Resident</th>
+            <th>Flat</th>
+            <th>Issue</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="complaintTableBody">
+
+    </tbody>
+</table>
+    </div>
+
+</div>
+<!-- =========================
+Complaint View Modal
+========================= -->
+
+<div id="complaintModal" class="modal">
+
+    <div class="modal-content">
+
+        <span id="closeComplaintModal" class="close">&times;</span>
+
+        <h2>📋 Complaint Details</h2>
+
+        <p><strong>ID:</strong> <span id="viewComplaintId"></span></p>
+
+        <p><strong>Resident:</strong> <span id="viewComplaintResident"></span></p>
+
+        <p><strong>Flat:</strong> <span id="viewComplaintFlat"></span></p>
+
+        <p><strong>Title:</strong> <span id="viewComplaintTitle"></span></p>
+
+        <p><strong>Description:</strong> <span id="viewComplaintDescription"></span></p>
+
+        <p><strong>Status:</strong> <span id="viewComplaintStatus"></span></p>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+</body>
+
+</html>

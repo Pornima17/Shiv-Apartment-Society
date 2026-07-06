@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Visitors Management</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <script>
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "admin-login.html";
+
+}
+
+</script>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+        <ul>
+
+            <li><a href="dashboard.html">Dashboard</a></li>
+
+            <li><a href="residents.html">Residents</a></li>
+
+            <li><a href="complaints.html">Complaints</a></li>
+
+            <li><a href="maintenance.html">Maintenance</a></li>
+
+            <li><a href="notice.html">Notice</a></li>
+
+            <li><a href="visitors.html" class="active">Visitors</a></li>
+
+            <li><a href="../index.html">Logout</a></li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <h1>🚶 Visitors Management</h1>
+
+        <p>Manage Society Visitors Here.</p>
+
+        <!-- =========================
+Visitor Summary
+========================= -->
+
+<div class="visitor-summary">
+
+    <div class="summary-card total">
+
+        <h3>👥 Total Visitors</h3>
+
+        <h2 id="totalVisitors">0</h2>
+
+    </div>
+
+    <div class="summary-card inside">
+
+        <h3>🟢 Inside</h3>
+
+        <h2 id="insideVisitors">0</h2>
+
+    </div>
+
+    <div class="summary-card outside">
+
+        <h3>🔴 Outside</h3>
+
+        <h2 id="outsideVisitors">0</h2>
+
+    </div>
+
+</div>
+
+        <input
+type="text"
+id="searchVisitor"
+placeholder="🔍 Search Visitor..."
+class="search-box">
+
+        <!-- =========================
+        Add Visitor
+        ========================= -->
+
+        <div class="visitor-form">
+
+            <h2>➕ Add Visitor</h2>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    id="visitorName"
+                    placeholder="Visitor Name">
+
+                <input
+                    type="text"
+                    id="visitorMobile"
+                    placeholder="Mobile Number">
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    id="visitorFlat"
+                    placeholder="Flat Number">
+
+                <select id="visitorPurpose">
+
+                    <option value="">Select Purpose</option>
+                    <option value="Guest">Guest</option>
+                    <option value="Delivery">Delivery</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Other">Other</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="datetime-local"
+                    id="visitorInTime">
+
+                <input
+                    type="datetime-local"
+                    id="visitorOutTime">
+
+            </div>
+
+            <button id="saveVisitor">
+
+                Save Visitor
+
+            </button>
+
+        </div>
+
+        <!-- =========================
+        Visitors Table
+        ========================= -->
+
+        <div class="table-container">
+
+            <h2>📋 Visitors List</h2>
+
+            <table id="visitorTable" class="visitor-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Flat</th>
+                        <th>In Time</th>
+                        <th>Out Time</th>
+                        <th>Purpose</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="visitorTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Visitor View Modal
+========================= -->
+
+<div id="visitorModal" class="modal">
+
+    <div class="modal-content">
+
+        <span id="closeVisitorModal" class="close">&times;</span>
+
+        <h2>🚶 Visitor Details</h2>
+
+        <p><strong>ID:</strong> <span id="viewVisitorId"></span></p>
+
+        <p><strong>Name:</strong> <span id="viewVisitorName"></span></p>
+
+        <p><strong>Mobile:</strong> <span id="viewVisitorMobile"></span></p>
+
+        <p><strong>Flat:</strong> <span id="viewVisitorFlat"></span></p>
+
+        <p><strong>Purpose:</strong> <span id="viewVisitorPurpose"></span></p>
+
+        <p><strong>In Time:</strong> <span id="viewVisitorInTime"></span></p>
+
+        <p><strong>Out Time:</strong> <span id="viewVisitorOutTime"></span></p>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+
+</html>

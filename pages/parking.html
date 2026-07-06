@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parking Management</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <h2>🏢 Shiv Apartment</h2>
+
+         <ul>
+
+            <li>
+                <a class="active" href="dashboard.html">
+                    <i class="fa-solid fa-gauge"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="residents.html">
+                    <i class="fa-solid fa-users"></i>
+                    Residents
+                </a>
+            </li>
+
+            <li>
+                <a href="complaints.html">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Complaints
+                </a>
+            </li>
+
+            <li>
+                <a href="maintenance.html">
+                    <i class="fa-solid fa-wallet"></i>
+                    Maintenance
+                </a>
+            </li>
+
+            <li>
+                <a href="notice.html">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Notice
+                </a>
+            </li>
+            <li>
+    <a href="visitors.html">
+        <i class="fa-solid fa-user-check"></i>
+        Visitors
+    </a>
+</li>
+
+<li>
+
+<a href="parking.html">
+
+<i class="fa-solid fa-square-parking"></i>
+
+Parking
+
+</a>
+
+</li>
+
+<li>
+
+<a href="flats.html">
+
+<i class="fa-solid fa-square-parking"></i>
+
+flats
+
+</a>
+
+</li>
+
+            <li>
+                <a href="../index.html">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+<div class="main-content">
+
+    <h1>🅿️ Parking Management</h1>
+
+    <!-- =========================
+    Parking Form
+    ========================= -->
+
+    <div class="form-container">
+
+        <h2>Add Parking</h2>
+
+        <div class="form-group">
+
+            <input
+                type="text"
+                id="parkingSlot"
+                placeholder="Parking Slot (P001)">
+
+            <input
+                type="text"
+                id="vehicleNumber"
+                placeholder="Vehicle Number">
+
+        </div>
+
+        <div class="form-group">
+
+            <input
+                type="text"
+                id="ownerName"
+                placeholder="Owner Name">
+
+            <input
+                type="text"
+                id="parkingFlat"
+                placeholder="Flat Number">
+
+        </div>
+
+        <div class="form-group">
+
+            <select id="vehicleType">
+                <option value="">Select Vehicle</option>
+                <option>Bike</option>
+                <option>Car</option>
+            </select>
+
+            <select id="parkingStatus">
+                <option value="Occupied">Occupied</option>
+                <option value="Vacant">Vacant</option>
+            </select>
+
+        </div>
+<button id="saveParking">
+    Save Parking
+</button>
+
+    </div>
+
+
+    <!-- =========================
+    Search
+    ========================= -->
+
+    <div class="parking-top">
+
+        <input
+            type="text"
+            id="searchParking"
+            placeholder="🔍 Search by Owner / Flat / Vehicle">
+
+    </div>
+
+
+    <!-- =========================
+    Summary Cards
+    ========================= -->
+
+    <div class="parking-summary">
+
+        <div class="summary-card">
+
+            <h3>Total Slots</h3>
+
+            <h2 id="totalSlots">0</h2>
+
+        </div>
+
+        <div class="summary-card occupied">
+
+            <h3>Occupied</h3>
+
+            <h2 id="occupiedSlots">0</h2>
+
+        </div>
+
+        <div class="summary-card available">
+
+            <h3>Available</h3>
+
+            <h2 id="availableSlots">0</h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+    Parking Table
+    ========================= -->
+
+    <div class="table-container">
+
+        <h2>Parking Records</h2>
+
+        <table id="parkingTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Slot</th>
+                    <th>Vehicle No.</th>
+                    <th>Owner</th>
+                    <th>Flat</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="parkingTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Parking View Modal
+========================= -->
+
+<div id="parkingModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" id="closeParkingModal">&times;</span>
+
+        <h2>🚗 Parking Details</h2>
+
+        <hr>
+
+        <p><strong>ID :</strong> <span id="viewParkingId"></span></p>
+
+        <p><strong>Owner :</strong> <span id="viewParkingOwner"></span></p>
+
+        <p><strong>Flat :</strong> <span id="viewParkingFlat"></span></p>
+
+        <p><strong>Vehicle No :</strong> <span id="viewVehicleNo"></span></p>
+
+        <p><strong>Vehicle Type :</strong> <span id="viewVehicleType"></span></p>
+
+        <p><strong>Slot :</strong> <span id="viewParkingSlot"></span></p>
+
+        <p><strong>Status :</strong> <span id="viewParkingStatus"></span></p>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>
