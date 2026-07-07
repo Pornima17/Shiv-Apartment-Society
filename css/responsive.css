@@ -353,190 +353,90 @@ table{
 }
 
 /* ==========================================
-   INDEX PAGE MOBILE RESPONSIVE
+   Mobile Menu
+========================================== */
+
+.menu-toggle{
+
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+    color:#0B4DA2;
+
+}
+
+/* ==========================================
+   Mobile Responsive Navbar
 ========================================== */
 
 @media (max-width:768px){
 
-/* Navbar */
-
 nav{
 
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     flex-wrap:wrap;
-    justify-content:center;
-    padding:15px;
+    padding:15px 20px;
+    position:relative;
 
 }
 
 .logo{
 
-    width:100%;
-    text-align:center;
-    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
 
 }
 
 .logo span{
 
-    font-size:26px;
+    font-size:24px;
+
+}
+
+.menu-toggle{
+
+    display:block;
 
 }
 
 nav ul{
 
+    display:none;
     width:100%;
-    display:flex;
     flex-direction:column;
-    align-items:center;
-    gap:12px;
-    margin:15px 0;
+    margin-top:20px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+    padding:20px;
+
+}
+
+nav ul.active{
+
+    display:flex;
 
 }
 
 nav ul li{
 
-    list-style:none;
-
-}
-
-nav ul li a{
-
-    font-size:18px;
+    margin:12px 0;
+    text-align:center;
 
 }
 
 .right{
 
-    margin:15px 0;
+    display:none;
 
 }
 
 #darkModeBtn{
 
-    width:220px;
-    margin:15px auto;
-
-}
-
-/* Hero */
-
-.hero{
-
-    flex-direction:column;
-    padding:40px 20px;
-    text-align:center;
-    min-height:auto;
-
-}
-
-.hero-content{
-
-    width:100%;
-
-}
-
-.hero-content h1{
-
-    font-size:42px;
-    line-height:1.2;
-
-}
-
-.hero-content p{
-
-    font-size:18px;
-    line-height:1.6;
-
-}
-
-.buttons{
-
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-
-}
-
-.btn1,
-.btn2{
-
-    width:100%;
-    text-align:center;
-
-}
-
-/* Announcement */
-
-.announcement{
-
-    width:100%;
-    margin-top:30px;
-
-}
-
-/* Statistics */
-
-.stats{
-
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-
-}
-
-/* Quick Actions */
-
-.action-container{
-
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-
-}
-
-/* Community */
-
-.community-container{
-
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-
-}
-
-/* Footer */
-
-.footer-container{
-
-    display:grid;
-    grid-template-columns:1fr;
-    text-align:center;
-    gap:25px;
-
-}
-
-}
-
-
-/* Small Mobile */
-
-@media (max-width:480px){
-
-.hero-content h1{
-
-    font-size:32px;
-
-}
-
-.hero-content p{
-
-    font-size:16px;
-
-}
-
-.logo span{
-
-    font-size:22px;
+    display:none;
 
 }
 
