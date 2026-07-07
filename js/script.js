@@ -4063,6 +4063,23 @@ if(menuToggle && sidebar){
 
 }
 
+// =========================
+// Mobile Menu Toggle
+// =========================
+
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector("nav");
+
+if (menuToggle) {
+
+    menuToggle.addEventListener("click", function () {
+
+        nav.classList.toggle("active");
+
+    });
+
+}
+
 
 // =========================
 // Load Data
