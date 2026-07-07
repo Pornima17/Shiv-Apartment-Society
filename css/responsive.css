@@ -74,20 +74,31 @@
 
 }
 
-.form-group{
+.resident-form .form-group,
+.complaint-form .form-group,
+.visitor-form .form-group,
+.notice-form .form-group,
+.maintenance-form .form-group,
+.flat-form,
+.form-container .form-group{
 
-    display:grid;
-    grid-template-columns:1fr;
-    gap:15px;
+display:grid;
+grid-template-columns:1fr;
+gap:15px;
 
 }
 
-input,
-select,
-textarea,
-button{
+form input,
+form select,
+form textarea{
 
-    width:100%;
+width:100%;
+
+}
+
+form button{
+
+width:100%;
 
 }
 
@@ -97,9 +108,13 @@ button{
 
 }
 
-table{
+.resident-table,
+.notice-table,
+.visitor-table,
+#maintenanceTable,
+#parkingTable{
 
-    min-width:900px;
+min-width:900px;
 
 }
 
@@ -149,13 +164,13 @@ table{
 
 }
 
-h1{
+.main-content h1{
 
-    font-size:28px;
+    font-size:22px;
 
 }
 
-h2{
+.main-content h2{
 
     font-size:22px;
 
@@ -210,7 +225,7 @@ h2{
 
 }
 
-button{
+form button{
 
     font-size:15px;
 
@@ -255,12 +270,12 @@ h1{
 
 }
 
-input,
-select,
-textarea{
+form input,
+form select,
+form textarea{
 
-    padding:12px;
-    font-size:15px;
+padding:12px;
+font-size:15px;
 
 }
 
@@ -271,9 +286,13 @@ button{
 
 }
 
-table{
+.resident-table,
+.notice-table,
+.visitor-table,
+#maintenanceTable,
+#parkingTable{
 
-    min-width:700px;
+min-width:700px;
 
 }
 
@@ -347,6 +366,29 @@ table{
     margin-left:0;
     width:100%;
     padding-top:80px;
+
+}
+
+/* Top Header */
+
+.top-header{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+.search-box{
+
+    width:100%;
+
+}
+
+.header-right{
+
+    justify-content:center;
+    flex-wrap:wrap;
 
 }
 
