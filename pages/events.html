@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Event Management</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- =========================
+Sidebar
+========================= -->
+
+<div class="sidebar">
+
+<h2>🏢 Shiv Apartment</h2>
+
+<ul>
+
+<li>
+<a href="dashboard.html">
+<i class="fa-solid fa-gauge"></i>
+Dashboard
+</a>
+</li>
+
+<li>
+<a href="residents.html">
+<i class="fa-solid fa-users"></i>
+Residents
+</a>
+</li>
+
+<li>
+<a href="complaints.html">
+<i class="fa-solid fa-triangle-exclamation"></i>
+Complaints
+</a>
+</li>
+
+<li>
+<a href="maintenance.html">
+<i class="fa-solid fa-wallet"></i>
+Maintenance
+</a>
+</li>
+
+<li>
+<a href="notice.html">
+<i class="fa-solid fa-bullhorn"></i>
+Notice
+</a>
+</li>
+
+<li>
+<a href="visitors.html">
+<i class="fa-solid fa-user-check"></i>
+Visitors
+</a>
+</li>
+
+<li>
+<a href="parking.html">
+<i class="fa-solid fa-square-parking"></i>
+Parking
+</a>
+</li>
+
+<li>
+<a href="flats.html">
+<i class="fa-solid fa-building"></i>
+Flats
+</a>
+</li>
+
+<li>
+<a class="active" href="events.html">
+<i class="fa-solid fa-calendar-days"></i>
+Events
+</a>
+</li>
+
+<li>
+<a href="reports.html">
+<i class="fa-solid fa-chart-line"></i>
+Reports
+</a>
+</li>
+
+<li>
+<a href="profile.html">
+<i class="fa-solid fa-user"></i>
+Profile
+</a>
+</li>
+
+<li>
+<a href="../index.html">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<!-- =========================
+Main Content
+========================= -->
+
+<div class="main-content">
+
+<h1>📅 Event Management</h1>
+
+<!-- =========================
+Event Form
+========================= -->
+
+<div class="event-container">
+
+<h2>Add Event</h2>
+
+<form class="event-form">
+
+<div class="form-group">
+
+<input
+type="text"
+id="eventTitle"
+placeholder="Event Title">
+
+<input
+type="date"
+id="eventDate">
+
+</div>
+
+<div class="form-group">
+
+<input
+type="time"
+id="eventTime">
+
+<input
+type="text"
+id="eventLocation"
+placeholder="Event Location">
+
+</div>
+
+<div class="form-group">
+
+<textarea
+id="eventDescription"
+placeholder="Event Description"></textarea>
+
+</div>
+
+<button id="saveEvent">
+    <i class="fa-solid fa-calendar-plus"></i>
+    Save Event
+</button>
+
+</form>
+
+</div>
+
+<!-- =========================
+Event Summary
+========================= -->
+
+<div class="event-summary">
+
+    <div class="summary-card">
+
+        <i class="fa-solid fa-calendar-days"></i>
+
+        <h3>Total Events</h3>
+
+        <h2 id="totalEvents">0</h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <i class="fa-solid fa-clock"></i>
+
+        <h3>Upcoming</h3>
+
+        <h2 id="upcomingEvents">0</h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <i class="fa-solid fa-check-circle"></i>
+
+        <h3>Completed</h3>
+
+        <h2 id="completedEvents">0</h2>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Search
+========================= -->
+
+<div class="table-container">
+
+<div class="table-top">
+
+    <h2>
+        <i class="fa-solid fa-calendar-days"></i>
+        Event List
+    </h2>
+
+    <div class="search-box">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            type="text"
+            id="searchEvent"
+            placeholder="Search Event...">
+
+    </div>
+
+</div>
+
+<!-- =========================
+Event Table
+========================= -->
+
+<table id="eventTable">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Title</th>
+<th>Date</th>
+<th>Time</th>
+<th>Location</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="eventTableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+Event View Modal
+========================= -->
+
+<div id="eventModal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" id="closeEventModal">&times;</span>
+
+<h2>📅 Event Details</h2>
+
+<hr>
+
+<p><strong>ID :</strong> <span id="viewEventId"></span></p>
+
+<p><strong>Title :</strong> <span id="viewEventTitle"></span></p>
+
+<p><strong>Date :</strong> <span id="viewEventDate"></span></p>
+
+<p><strong>Time :</strong> <span id="viewEventTime"></span></p>
+
+<p><strong>Location :</strong> <span id="viewEventLocation"></span></p>
+
+<p><strong>Description :</strong> <span id="viewEventDescription"></span></p>
+
+</div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>

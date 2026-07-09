@@ -217,6 +217,366 @@ let parkingRecords = [];
 let editingParkingIndex = -1;
 
 // =========================
+// Events Data
+// =========================
+
+let events =
+JSON.parse(localStorage.getItem("events")) || [];
+
+let editingEventIndex = -1;
+
+// =========================
+// Save Events
+// =========================
+
+function saveEvents(){
+
+    localStorage.setItem(
+        "events",
+        JSON.stringify(events)
+    );
+
+}
+
+// =========================
+// Display Events
+// =========================
+
+function displayEvents(){
+
+    const tableBody =
+    document.getElementById("eventTableBody");
+
+    if(!tableBody) return;
+
+    tableBody.innerHTML = "";
+
+    events.forEach(function(event,index){
+
+        tableBody.innerHTML += `
+
+<tr>
+
+<td>E${String(index+1).padStart(3,"0")}</td>
+
+<td>${event.title}</td>
+
+<td>${event.date}</td>
+
+<td>${event.time}</td>
+
+<td>${event.location}</td>
+
+<td>
+
+<button class="view-event-btn"
+data-index="${index}">
+
+<i class="fa-solid fa-eye"></i>
+
+</button>
+
+<button class="edit-event-btn"
+data-index="${index}">
+
+<i class="fa-solid fa-pen"></i>
+
+</button>
+
+<button class="delete-event-btn"
+data-index="${index}">
+
+<i class="fa-solid fa-trash"></i>
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+updateEventSummary();
+
+}
+
+// =========================
+// Update Event Summary
+// =========================
+
+function updateEventSummary(){
+
+    const totalEvents =
+    document.getElementById("totalEvents");
+
+    const upcomingEvents =
+    document.getElementById("upcomingEvents");
+
+    const completedEvents =
+    document.getElementById("completedEvents");
+
+    if(
+        !totalEvents ||
+        !upcomingEvents ||
+        !completedEvents
+    ){
+        return;
+    }
+
+    const today = new Date();
+
+    today.setHours(0,0,0,0);
+
+    let upcoming = 0;
+    let completed = 0;
+
+events.forEach(function(event){
+        const eventDate = new Date(event.date);
+
+        eventDate.setHours(0,0,0,0);
+
+        if(eventDate >= today){
+
+            upcoming++;
+
+        }else{
+
+            completed++;
+
+        }
+
+    });
+
+totalEvents.innerText = events.length;
+    upcomingEvents.innerText = upcoming;
+
+    completedEvents.innerText = completed;
+
+}
+
+// =========================
+// Add Event
+// =========================
+
+const saveEvent =
+document.getElementById("saveEvent");
+
+if(saveEvent){
+
+saveEvent.addEventListener("click",function(){
+
+const title =
+document.getElementById("eventTitle").value.trim();
+
+const date =
+document.getElementById("eventDate").value;
+
+const time =
+document.getElementById("eventTime").value;
+
+const location =
+document.getElementById("eventLocation").value.trim();
+
+const description =
+document.getElementById("eventDescription").value.trim();
+
+if(
+title===""||
+date===""||
+time===""||
+location===""
+){
+
+alert("Please fill all fields.");
+
+return;
+
+}
+
+if(editingEventIndex!==-1){
+
+events[editingEventIndex]={
+
+title,
+date,
+time,
+location,
+description
+
+};
+
+editingEventIndex=-1;
+
+saveEvent.innerText="Save Event";
+
+addActivity(title+" event updated.");
+
+}else{
+
+events.push({
+
+title,
+date,
+time,
+location,
+description
+
+});
+
+addActivity(title+" event added.");
+
+}
+
+saveEvents();
+
+displayEvents();
+
+updateEventSummary();
+
+document.getElementById("eventTitle").value="";
+document.getElementById("eventDate").value="";
+document.getElementById("eventTime").value="";
+document.getElementById("eventLocation").value="";
+document.getElementById("eventDescription").value="";
+
+alert("Event Saved Successfully.");
+
+});
+
+}
+
+// =========================
+// Event Actions
+// =========================
+
+const eventTable =
+document.getElementById("eventTable");
+
+if(eventTable){
+
+eventTable.addEventListener("click",function(e){
+
+const button =
+e.target.closest("button");
+
+if(!button) return;
+
+const index =
+button.dataset.index;
+
+if(button.classList.contains("edit-event-btn")){
+
+editingEventIndex=index;
+
+document.getElementById("eventTitle").value=
+events[index].title;
+
+document.getElementById("eventDate").value=
+events[index].date;
+
+document.getElementById("eventTime").value=
+events[index].time;
+
+document.getElementById("eventLocation").value=
+events[index].location;
+
+document.getElementById("eventDescription").value=
+events[index].description;
+
+saveEvent.innerText="Update Event";
+
+}
+
+if(button.classList.contains("delete-event-btn")){
+
+if(confirm("Delete Event?")){
+
+addActivity(events[index].title+" event deleted.");
+
+events.splice(index,1);
+
+saveEvents();
+
+displayEvents();
+
+updateEventSummary();
+
+}
+
+}
+
+if(button.classList.contains("view-event-btn")){
+
+document.getElementById("viewEventId").innerText=
+"E"+String(Number(index)+1).padStart(3,"0");
+
+document.getElementById("viewEventTitle").innerText=
+events[index].title;
+
+document.getElementById("viewEventDate").innerText=
+events[index].date;
+
+document.getElementById("viewEventTime").innerText=
+events[index].time;
+
+document.getElementById("viewEventLocation").innerText=
+events[index].location;
+
+document.getElementById("viewEventDescription").innerText=
+events[index].description;
+
+document.getElementById("eventModal").style.display="block";
+
+}
+
+});
+
+const closeEventModal =
+document.getElementById("closeEventModal");
+
+if(closeEventModal){
+
+closeEventModal.onclick=function(){
+
+document.getElementById("eventModal").style.display="none";
+
+};
+
+}
+
+}
+
+// =========================
+// Search Event
+// =========================
+
+const searchEvent =
+document.getElementById("searchEvent");
+
+if(searchEvent){
+
+searchEvent.addEventListener("keyup",function(){
+
+const value =
+this.value.toLowerCase();
+
+document.querySelectorAll("#eventTableBody tr")
+.forEach(function(row){
+
+row.style.display=
+row.innerText.toLowerCase().includes(value)
+? ""
+: "none";
+
+});
+
+});
+
+}
+
+// =========================
 // Load Parking
 // =========================
 
@@ -4085,6 +4445,7 @@ displayNotices();
 displayVisitors();
 displayFlats();
 displayParking();
+displayEvents();
 
 updateDashboardStats();
 updateMaintenanceSummary();
