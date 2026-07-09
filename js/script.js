@@ -4063,24 +4063,6 @@ if(menuToggle && sidebar){
 
 }
 
-const menuToggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector("nav");
-
-console.log(menuToggle);
-console.log(nav);
-
-if (menuToggle) {
-
-    menuToggle.addEventListener("click", function () {
-
-        console.log("Menu Clicked");
-
-        nav.classList.toggle("active");
-
-    });
-
-}
-
 
 // =========================
 // Load Data
