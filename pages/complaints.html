@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
@@ -59,14 +61,71 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
         <h1>Complaint Management</h1>
 
         <p>Manage society complaints here.</p>
+<!-- =========================
+Complaint Summary
+========================= -->
+
+<div class="complaint-summary">
+
+    <div class="summary-card total">
+
+        <h3>Total Complaints</h3>
+
+        <h2 id="totalComplaints">0</h2>
+
+    </div>
+
+    <div class="summary-card pending">
+
+        <h3>Pending</h3>
+
+        <h2 id="pendingComplaints">0</h2>
+
+    </div>
+
+    <div class="summary-card progress">
+
+        <h3>In Progress</h3>
+
+        <h2 id="progressComplaints">0</h2>
+
+    </div>
+
+    <div class="summary-card solved">
+
+        <h3>Solved</h3>
+
+        <h2 id="solvedComplaints">0</h2>
+
+    </div>
+
+</div>
 
 <div class="complaint-top">
 
-    <input type="text" placeholder="Search Complaint...">
+    <input
+    type="text"
+    id="searchComplaint"
+    placeholder="Search Complaint...">
 
-    <button>Raise Complaint</button>
+    <select id="filterComplaintStatus">
+
+        <option value="">All Status</option>
+
+        <option value="Pending">Pending</option>
+
+        <option value="In Progress">In Progress</option>
+
+        <option value="Solved">Solved</option>
+
+    </select>
+
+    <button id="raiseComplaintBtn">
+        Raise Complaint
+    </button>
 
 </div>
+
 
 <!-- =========================
 Add Complaint
@@ -92,20 +151,32 @@ Add Complaint
 
     <div class="form-group">
 
-        <input
-            type="text"
-            id="complaintTitle"
-            placeholder="Complaint Title">
+    <input
+        type="text"
+        id="complaintTitle"
+        placeholder="Complaint Title">
 
-        <select id="complaintStatus">
+    <select id="complaintPriority">
 
-            <option value="Pending">Pending</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Solved">Solved</option>
+        <option value="Low">🟢 Low Priority</option>
+        <option value="Medium">🟡 Medium Priority</option>
+        <option value="High">🔴 High Priority</option>
 
-        </select>
+    </select>
 
-    </div>
+</div>
+
+<div class="form-group">
+
+    <select id="complaintStatus">
+
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Solved">Solved</option>
+
+    </select>
+
+</div>
 
     <textarea
         id="complaintDescription"
@@ -127,14 +198,17 @@ Complaints Table
     <h2>📋 Complaint List</h2>
 <table id="complaintTable" class="complaint-table">
     <thead>
-        <tr>
-            <th>ID</th>
-            <th>Resident</th>
-            <th>Flat</th>
-            <th>Issue</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
+       <tr>
+    <th>ID</th>
+<th>Resident</th>
+<th>Flat</th>
+<th>Issue</th>
+<th>Priority</th>
+<th>Date</th>
+<th>Time</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
     </thead>
 
     <tbody id="complaintTableBody">
@@ -165,14 +239,28 @@ Complaint View Modal
         <p><strong>Title:</strong> <span id="viewComplaintTitle"></span></p>
 
         <p><strong>Description:</strong> <span id="viewComplaintDescription"></span></p>
-
+         <p>
+    <strong>Priority:</strong>
+    <span id="viewComplaintPriority"></span>
+</p>
         <p><strong>Status:</strong> <span id="viewComplaintStatus"></span></p>
+        <p><strong>Date:</strong> <span id="viewComplaintDate"></span></p>
+
+<p><strong>Time:</strong> <span id="viewComplaintTime"></span></p>
 
     </div>
 
 </div>
 
+<img
+id="societyLogo"
+src="../images/logo.png"
+style="display:none;">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script src="../js/script.js"></script>
+
 </body>
 
 </html>

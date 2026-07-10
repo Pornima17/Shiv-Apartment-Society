@@ -2320,22 +2320,63 @@ console.log(complaints);
     complaintTableBody.innerHTML = "";
 
     complaints.forEach(function (complaint, index) {
+        const selectedStatus =
+document.getElementById("filterComplaintStatus")?.value || "";
+
+if(selectedStatus &&
+complaint.status !== selectedStatus){
+
+    return;
+
+}
 
         const row = document.createElement("tr");
 
-        row.innerHTML = `
+     row.innerHTML = `
 
-            <td>C${String(index + 1).padStart(3, "0")}</td>
+<td>C00${index+1}</td>
 
-            <td>${complaint.resident}</td>
+<td>${complaint.resident}</td>
 
-            <td>${complaint.flat}</td>
+<td>${complaint.flat}</td>
 
-            <td>${complaint.title}</td>
+<td>${complaint.title}</td>
 
-            <td>${complaint.status}</td>
+<td>
 
-           <td class="complaint-actions">
+<span class="${
+complaint.priority === "High"
+? "high-priority"
+: complaint.priority === "Medium"
+? "medium-priority"
+: "low-priority"
+}">
+
+${complaint.priority || "Low"}
+
+</span>
+
+</td>
+
+<td>${complaint.date || "-"}</td>
+
+<td>${complaint.time || "-"}</td>
+
+<td>
+
+<span class="${complaint.status === "Solved"
+? "solved-badge"
+: complaint.status === "In Progress"
+? "progress-badge"
+: "pending-badge"}">
+
+${complaint.status}
+
+</span>
+
+</td>
+
+<td class="complaint-actions">
 
     <button class="view-complaint-btn"
         data-index="${index}">
@@ -2352,10 +2393,119 @@ console.log(complaints);
         🗑 Delete
     </button>
 
+    <button class="pdf-complaint-btn"
+        onclick="downloadComplaintPDF(${index})">
+        📄 PDF
+    </button>
+    <button
+class="print-complaint-btn"
+onclick="printComplaint(${index})">
+🖨 Print
+</button>
+
 </td>
         `;
 
         complaintTableBody.appendChild(row);
+
+    });
+
+    updateComplaintSummary();
+
+}
+
+// =========================
+// Complaint Summary
+// =========================
+
+function updateComplaintSummary(){
+
+    document.getElementById("totalComplaints").innerText =
+    complaints.length;
+
+    const pending =
+    complaints.filter(function(complaint){
+
+        return complaint.status === "Pending";
+
+    }).length;
+
+    const progress =
+    complaints.filter(function(complaint){
+
+        return complaint.status === "In Progress";
+
+    }).length;
+
+    const solved =
+    complaints.filter(function(complaint){
+
+        return complaint.status === "Solved";
+
+    }).length;
+
+    document.getElementById("pendingComplaints").innerText =
+    pending;
+
+    document.getElementById("progressComplaints").innerText =
+    progress;
+
+    document.getElementById("solvedComplaints").innerText =
+    solved;
+
+}
+
+// =========================
+// Search Complaint
+// =========================
+
+const searchComplaint =
+document.getElementById("searchComplaint");
+
+if(searchComplaint){
+
+    searchComplaint.addEventListener("keyup",function(){
+
+        const value =
+        this.value.toLowerCase();
+
+        const rows =
+        document.querySelectorAll(
+        "#complaintTableBody tr"
+        );
+
+        rows.forEach(function(row){
+
+            if(row.innerText
+            .toLowerCase()
+            .includes(value)){
+
+                row.style.display = "";
+
+            }else{
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+}
+
+// =========================
+// Filter Complaint
+// =========================
+
+const filterComplaintStatus =
+document.getElementById("filterComplaintStatus");
+
+if(filterComplaintStatus){
+
+    filterComplaintStatus.addEventListener("change",function(){
+
+        displayComplaints();
 
     });
 
@@ -2383,6 +2533,8 @@ if (saveComplaint) {
 
         const description =
         document.getElementById("complaintDescription").value.trim();
+const priority =
+document.getElementById("complaintPriority").value;
 
         const status =
         document.getElementById("complaintStatus").value;
@@ -2409,6 +2561,7 @@ if (editingComplaintIndex !== -1) {
     complaints[editingComplaintIndex].flat = flat;
     complaints[editingComplaintIndex].title = title;
     complaints[editingComplaintIndex].description = description;
+    complaints[editingComplaintIndex].priority = priority;
     complaints[editingComplaintIndex].status = status;
 
     editingComplaintIndex = -1;
@@ -2429,16 +2582,39 @@ if (editingComplaintIndex !== -1) {
     return;
 
 }
+const now = new Date();
 
-        complaints.push({
+const complaintDate =
+now.toLocaleDateString();
 
-            resident: resident,
-            flat: flat,
-            title: title,
-            description: description,
-            status: status
+const complaintTime =
+now.toLocaleTimeString([],{
 
-        });
+hour:"2-digit",
+
+minute:"2-digit"
+
+});
+
+complaints.push({
+
+resident:resident,
+
+flat:flat,
+
+title:title,
+
+description:description,
+
+priority:priority,
+
+status:status,
+
+date:complaintDate,
+
+time:complaintTime
+
+});
         console.log(complaints);
 displayRecentComplaints();
         saveComplaints();
@@ -2557,8 +2733,36 @@ if (complaintTable) {
             document.getElementById("viewComplaintDescription").innerText =
                 complaints[index].description;
 
+const priorityElement =
+document.getElementById("viewComplaintPriority");
+
+priorityElement.innerText =
+complaints[index].priority || "Low";
+
+priorityElement.className = "";
+
+if(complaints[index].priority === "High"){
+
+    priorityElement.classList.add("high-priority");
+
+}
+else if(complaints[index].priority === "Medium"){
+
+    priorityElement.classList.add("medium-priority");
+
+}
+else{
+
+    priorityElement.classList.add("low-priority");
+
+}
             document.getElementById("viewComplaintStatus").innerText =
                 complaints[index].status;
+                document.getElementById("viewComplaintDate").innerText =
+complaints[index].date || "-";
+
+document.getElementById("viewComplaintTime").innerText =
+complaints[index].time || "-";
 
             complaintModal.style.display = "block";
 
@@ -2588,6 +2792,567 @@ window.addEventListener("click", function (event) {
 
 });
 
+// =========================
+// Download Professional Complaint PDF
+// =========================
+
+async function downloadComplaintPDF(index){
+
+    const complaint = complaints[index];
+
+    if(!complaint){
+
+        return;
+
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    const logo =
+document.getElementById("societyLogo");
+
+if(logo.complete){
+
+    const canvas =
+    document.createElement("canvas");
+
+    canvas.width =
+    logo.naturalWidth;
+
+    canvas.height =
+    logo.naturalHeight;
+
+    const ctx =
+    canvas.getContext("2d");
+
+    ctx.drawImage(
+        logo,
+        0,
+        0
+    );
+
+    const imgData =
+    canvas.toDataURL("image/png");
+
+    doc.addImage(
+        imgData,
+        "PNG",
+        15,
+        15,
+        22,
+        22
+    );
+
+}
+
+    // =========================
+    // Border
+    // =========================
+
+    doc.setDrawColor(11,77,162);
+    doc.setLineWidth(1);
+    doc.rect(10,10,190,277);
+
+    // =========================
+    // Header
+    // =========================
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(11,77,162);
+doc.text(
+"SHIV APARTMENT",
+48,
+22
+);
+    doc.setFontSize(11);
+    doc.setTextColor(80);
+
+ doc.text(
+"S.R. NO.116/6A, Plot No.01, Palaspe, Panvel, Raigad - 410206",
+48,
+30
+);
+    doc.text(
+"Phone : +91 9619751999",
+48,
+37
+);
+
+    doc.text(
+"Email : shivapartment@gmail.com",
+48,
+44
+);
+
+    doc.setDrawColor(180);
+    doc.line(20,52,190,52);
+
+    // =========================
+    // Report Title
+    // =========================
+
+    doc.setFontSize(17);
+    doc.setTextColor(0);
+    doc.text("Complaint Report",70,65);
+
+    // =========================
+    // Complaint Details
+    // =========================
+
+    doc.setFontSize(12);
+
+    let y = 82;
+
+    doc.text("Complaint ID :",20,y);
+    doc.text("C00"+(index+1),75,y);
+
+    y += 12;
+
+    doc.text("Resident :",20,y);
+    doc.text(complaint.resident,75,y);
+
+    y += 12;
+
+    doc.text("Flat :",20,y);
+    doc.text(complaint.flat,75,y);
+
+    y += 12;
+
+    doc.text("Issue :",20,y);
+    doc.text(complaint.title,75,y);
+
+    y += 12;
+
+    doc.text("Description :",20,y);
+
+    doc.text(
+        complaint.description,
+        75,
+        y,
+        {
+            maxWidth:100
+        }
+    );
+
+    y += 22;
+
+    doc.text("Priority :",20,y);
+    doc.text(
+        complaint.priority || "Low",
+        75,
+        y
+    );
+
+    y += 12;
+
+    doc.text("Status :",20,y);
+    doc.text(
+        complaint.status,
+        75,
+        y
+    );
+
+    y += 12;
+
+    doc.text("Complaint Date :",20,y);
+    doc.text(
+        complaint.date || "-",
+        75,
+        y
+    );
+
+    y += 12;
+
+    doc.text("Complaint Time :",20,y);
+    doc.text(
+        complaint.time || "-",
+        75,
+        y
+    );
+
+    // =========================
+    // Generation Date
+    // =========================
+
+    y += 22;
+
+    doc.setFont("helvetica","italic");
+
+    doc.text(
+        "Generated On : " +
+        new Date().toLocaleString(),
+        20,
+        y
+    );
+
+    // =========================
+    // Signature
+    // =========================
+
+    doc.line(135,245,185,245);
+
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        "Authorized Signature",
+        135,
+        253
+    );
+
+    // =========================
+    // Footer
+    // =========================
+
+    doc.setFontSize(10);
+
+    doc.setTextColor(120);
+
+    doc.text(
+        "Generated by Shiv Apartment Society Management System",
+        25,
+        280
+    );
+
+    // =========================
+    // Save PDF
+    // =========================
+
+    doc.save(
+        "Complaint_C00" +
+        (index+1) +
+        ".pdf"
+    );
+
+}
+
+// =========================
+// Print Complaint
+// =========================
+
+function printComplaint(index){
+
+    const complaint = complaints[index];
+
+    if(!complaint){
+
+        return;
+
+    }
+
+    const printWindow = window.open("","","width=900,height=700");
+
+    printWindow.document.write(`
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Complaint Report</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+@page{
+    size:A4;
+    margin:10mm;
+}
+
+body{
+
+    font-family:Arial,sans-serif;
+    color:#222;
+    background:#fff;
+
+}
+
+.receipt{
+
+    width:100%;
+    border:2px solid #0B4DA2;
+    border-radius:8px;
+    padding:18px;
+
+}
+
+.header{
+
+    text-align:center;
+    border-bottom:2px solid #0B4DA2;
+    padding-bottom:12px;
+    margin-bottom:15px;
+
+}
+
+.header img{
+
+    width:55px;
+    height:55px;
+    object-fit:contain;
+
+}
+
+.header h1{
+
+    font-size:30px;
+    color:#0B4DA2;
+    margin:8px 0 5px;
+
+}
+
+.header p{
+
+    font-size:13px;
+    margin:3px 0;
+
+}
+
+.report-title{
+
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    margin:15px 0;
+
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+
+}
+
+table td{
+
+    border:1px solid #ddd;
+    padding:10px;
+    font-size:14px;
+
+}
+
+table td:first-child{
+
+    width:35%;
+    background:#f4f7fb;
+    font-weight:bold;
+
+}
+
+.footer{
+
+    margin-top:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+
+}
+
+.generated{
+
+    font-size:13px;
+
+}
+
+.signature{
+
+    text-align:center;
+    width:180px;
+
+}
+
+.signature-line{
+
+    border-top:1px solid #000;
+    margin-bottom:6px;
+
+}
+
+.footer-note{
+
+    margin-top:25px;
+    text-align:center;
+    font-size:12px;
+    color:#666;
+    border-top:1px solid #ddd;
+    padding-top:10px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="receipt">
+
+<div class="header">
+
+<img src="../images/logo.png">
+
+<h1>SHIV APARTMENT</h1>
+
+<p>S.R. No. 116/6A, Plot No. 01
+Palaspe, Panvel, Raigad - 410206</p>
+
+<p>📞 +91 9619751999</p>
+
+<p>✉ shivapartment@gmail.com</p>
+
+</div>
+
+<div class="report-title">
+
+Complaint Report
+
+</div>
+
+<table>
+
+<tr>
+
+<td><b>Complaint ID</b></td>
+
+<td>C00${index+1}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Resident</b></td>
+
+<td>${complaint.resident}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Flat</b></td>
+
+<td>${complaint.flat}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Issue</b></td>
+
+<td>${complaint.title}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Description</b></td>
+
+<td>${complaint.description}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Priority</b></td>
+
+<td>${complaint.priority || "Low"}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Status</b></td>
+
+<td>${complaint.status}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Date</b></td>
+
+<td>${complaint.date || "-"}</td>
+
+</tr>
+
+<tr>
+
+<td><b>Time</b></td>
+
+<td>${complaint.time || "-"}</td>
+
+</tr>
+
+</table>
+
+<div class="footer">
+
+<div class="generated">
+
+<b>Generated On :</b><br>
+
+${new Date().toLocaleString()}
+
+</div>
+
+<div class="signature">
+
+<div class="signature-line"></div>
+
+Authorized Signature
+
+</div>
+
+</div>
+
+<div class="footer-note">
+
+Generated by <b>Shiv Apartment Society Management System</b>
+
+<br><br>
+
+This is a computer generated report.
+
+</div>
+
+</div>
+
+<script>
+
+window.onload = function () {
+
+    setTimeout(function () {
+
+        window.print();
+
+        window.onafterprint = function () {
+            window.close();
+        };
+
+    }, 500);
+
+};
+
+</script>
+
+</body>
+
+</html>
+
+`);
+
+    printWindow.document.close();
+
+}
 
 // =========================
 // Load Maintenance
@@ -3880,31 +4645,329 @@ ${record.status}
 </span>
 
 </td>
-           <td>
+<td>
+    <div class="action-buttons">
 
-    <button
-    class="view-maintenance-btn"
-    data-index="${index}">
-    View
-    </button>
+        <button class="view-btn" data-index="${index}">
+            <i class="fa-solid fa-eye"></i> View
+        </button>
 
-    <button
-    class="edit-maintenance-btn"
-    data-index="${index}">
-    Edit
-    </button>
+        <button class="edit-btn" data-index="${index}">
+            <i class="fa-solid fa-pen"></i> Edit
+        </button>
 
-    <button
-    class="delete-maintenance-btn"
-    data-index="${index}">
-    Delete
-    </button>
+        <button class="delete-btn" data-index="${index}">
+            <i class="fa-solid fa-trash"></i> Delete
+        </button>
 
+        <button class="receipt-btn" onclick="generateReceipt(${index})">
+            <i class="fa-solid fa-file-invoice"></i> Receipt
+        </button>
+
+    </div>
 </td>
 
         `;
 
         tableBody.appendChild(row);
+
+    });
+
+}
+
+// =========================
+// Generate Receipt
+// =========================
+
+function generateReceipt(index){
+
+    const record = maintenanceRecords[index];
+
+    if(!record){
+        return;
+    }
+
+    const year = new Date().getFullYear();
+
+const receiptNumber =
+String(index + 1).padStart(4,"0");
+
+document.getElementById("receiptNo").innerText =
+`RCP-${year}-${receiptNumber}`;
+
+    document.getElementById("receiptResident").innerText =
+    record.owner;
+
+    document.getElementById("receiptFlat").innerText =
+    record.flat;
+
+    document.getElementById("receiptAmount").innerText =
+    record.amount;
+
+    document.getElementById("receiptStatus").innerText =
+    record.status;
+    const stamp =
+document.getElementById("paidStamp");
+
+if(record.status === "Paid"){
+
+stamp.innerHTML = "PAID";
+
+stamp.style.color = "green";
+
+}else{
+
+stamp.innerHTML = "PENDING";
+
+stamp.style.color = "red";
+
+}
+
+    document.getElementById("receiptDate").innerText =
+    new Date().toLocaleDateString();
+
+    const qrBox =
+document.getElementById("qrcode");
+
+qrBox.innerHTML = "";
+
+new QRCode(qrBox,{
+    text: `RCP:${document.getElementById("receiptNo").innerText}
+Flat:${record.flat}
+Amt:${record.amount}`,
+    width:120,
+    height:120
+});
+
+    document.getElementById("receiptModal").style.display =
+    "block";
+
+}
+
+// =========================
+// Close Receipt Modal
+// =========================
+
+const closeReceipt =
+document.getElementById("closeReceipt");
+
+if(closeReceipt){
+
+    closeReceipt.addEventListener("click",function(){
+
+        document.getElementById("receiptModal").style.display =
+        "none";
+
+    });
+
+}
+
+window.addEventListener("click",function(e){
+
+    const modal =
+    document.getElementById("receiptModal");
+
+    if(e.target === modal){
+
+        modal.style.display = "none";
+
+    }
+
+});
+
+// =========================
+// Print Receipt
+// =========================
+
+const printReceipt =
+document.getElementById("printReceipt");
+
+if(printReceipt){
+
+    printReceipt.addEventListener("click",function(){
+
+        const receipt =
+        document.getElementById("receiptContent").innerHTML;
+
+        const printWindow =
+        window.open("","","width=800,height=700");
+
+        printWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Maintenance Receipt</title>
+
+<style>
+
+body{
+
+font-family:Arial,sans-serif;
+
+padding:30px;
+
+}
+
+.receipt{
+
+max-width:600px;
+
+margin:auto;
+
+border:2px solid #333;
+
+padding:25px;
+
+border-radius:10px;
+
+}
+
+h2,h3{
+
+text-align:center;
+
+margin:5px;
+
+}
+
+hr{
+
+margin:15px 0;
+
+}
+
+p{
+
+font-size:18px;
+
+margin:10px 0;
+
+}
+
+.footer{
+
+text-align:center;
+
+margin-top:30px;
+
+font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="receipt">
+
+${receipt}
+
+<div class="footer">
+
+Generated by Shiv Apartment Society Management System
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+
+`);
+
+        printWindow.document.close();
+
+        printWindow.focus();
+
+        printWindow.print();
+
+    });
+
+}
+
+// =========================
+// Download Receipt PDF
+// =========================
+
+const downloadReceipt =
+document.getElementById("downloadReceipt");
+
+if(downloadReceipt){
+
+    downloadReceipt.addEventListener("click",function(){
+
+        const { jsPDF } = window.jspdf;
+
+        const doc = new jsPDF();
+        // Border
+doc.setDrawColor(0,102,204);
+doc.setLineWidth(1);
+
+doc.rect(10,10,190,277);
+
+       doc.setTextColor(0,102,204);
+doc.setFontSize(22);
+doc.setFont("helvetica","bold");
+
+doc.text("SHIV APARTMENT",50,25);
+
+doc.setTextColor(0,0,0);
+
+      doc.setFontSize(16);
+doc.setFont("helvetica","bold");
+
+doc.text("Maintenance Payment Receipt",45,40);
+
+doc.line(20,45,190,45);
+        doc.setFontSize(12);
+
+        doc.text("Receipt No : " +
+        document.getElementById("receiptNo").innerText,20,60);
+
+        doc.text("Resident : " +
+        document.getElementById("receiptResident").innerText,20,75);
+
+        doc.text("Flat : " +
+        document.getElementById("receiptFlat").innerText,20,90);
+
+        doc.text("Amount : ₹" +
+        document.getElementById("receiptAmount").innerText,20,105);
+
+        doc.text("Status : " +
+        document.getElementById("receiptStatus").innerText,20,120);
+
+        doc.text("Date : " +
+        document.getElementById("receiptDate").innerText,20,135);
+
+doc.setFontSize(16);
+doc.setFont("helvetica","bold");
+
+doc.text("Thank You!",78,165);
+
+doc.line(135,220,185,220);
+
+doc.setFontSize(12);
+
+doc.text(
+"Authorized Signature",
+138,
+228
+);
+
+doc.setFontSize(10);
+
+doc.text(
+"Generated by Shiv Apartment Society Management System",
+25,
+270
+);
+
+        doc.save("Maintenance_Receipt.pdf");
 
     });
 
@@ -4062,7 +5125,7 @@ if(maintenanceTable){
 
     maintenanceTable.addEventListener("click",function(event){
 
-        if(event.target.classList.contains("view-maintenance-btn")){
+        if(event.target.classList.contains("view-btn")){
 
     const index = event.target.dataset.index;
 
@@ -4085,7 +5148,7 @@ if(maintenanceTable){
 
 }
 
-        if(event.target.classList.contains("edit-maintenance-btn")){
+        if(event.target.classList.contains("edit-btn")){
 
             const index = event.target.dataset.index;
 
@@ -4110,7 +5173,7 @@ maintenanceRecords[index].month;
 
         }
 
-        if(event.target.classList.contains("delete-maintenance-btn")){
+        if(event.target.classList.contains("delete-btn")){
 
             const index = event.target.dataset.index;
 
