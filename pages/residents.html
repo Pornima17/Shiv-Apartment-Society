@@ -64,145 +64,191 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
 <div class="resident-top">
 
-<input type="text" id="searchResident" placeholder="Search Resident...">
-    <button>Add Resident</button>
-<button id="exportResidents" class="export-btn">
-    📥 Export CSV
-</button>
+    <input
+        type="text"
+        id="searchResident"
+        placeholder="Search Resident...">
 
-<input type="file" id="importResidents" accept=".csv">
+    <button id="addResidentBtn">
+        + Add Resident
+    </button>
 
-<button id="importBtn" class="import-btn">
-    📂 Import CSV
-</button>
+    <button
+        id="exportResidents"
+        class="export-btn">
+
+        📥 Export CSV
+
+    </button>
+
+    <button
+        id="importBtn"
+        class="import-btn">
+
+        📂 Import CSV
+
+    </button>
+
+    <input
+        type="file"
+        id="importResidents"
+        accept=".csv"
+        hidden>
 
 </div>
 
-<table class="resident-table" id="residentTable">
+<table
+    class="resident-table"
+    id="residentTable">
 
     <thead>
 
         <tr>
+
             <th>ID</th>
+
             <th>Name</th>
+
             <th>Flat No</th>
+
             <th>Mobile</th>
+
             <th>Status</th>
+
             <th>Action</th>
+
         </tr>
 
     </thead>
 
     <tbody id="residentTableBody">
 
-        <tr>
-
-            <td>R001</td>
-            <td>Rahul Patil</td>
-            <td>A-101</td>
-            <td>9876543210</td>
-            <td>Active</td>
-            <td>
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
-            </td>
-
-        </tr>
-
-        <tr>
-
-            <td>R002</td>
-            <td>Sneha Joshi</td>
-            <td>B-203</td>
-            <td>9876501234</td>
-            <td>Active</td>
-            <td>
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
-            </td>
-
-        </tr>
-
-        <tr>
-
-            <td>R003</td>
-            <td>Amit More</td>
-            <td>C-305</td>
-            <td>9988776655</td>
-            <td>Inactive</td>
-            <td>
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
-            </td>
-
-        </tr>
-
     </tbody>
 
 </table>
-
-<!-- Add Resident Form -->
 
 <div class="resident-form">
 
     <h2>Add New Resident</h2>
 
-    <form>
+<form id="residentForm">
 
-        <div class="form-group">
+    <div class="form-group">
 
-            <label>Full Name</label>
+        <label>Full Name</label>
 
-<input type="text" id="residentName" placeholder="Enter Full Name">
-        </div>
+        <input
+            type="text"
+            id="residentName"
+            placeholder="Enter Full Name">
 
-        <div class="form-group">
+    </div>
 
-            <label>Flat Number</label>
+    <div class="form-group">
 
-<input type="text" id="flatNumber" placeholder="A-101">
-        </div>
+        <label>Flat Number</label>
 
-        <div class="form-group">
+        <input
+            type="text"
+            id="flatNumber"
+            placeholder="A-101">
 
-            <label>Mobile Number</label>
+    </div>
 
-<input type="text" id="mobileNumber" placeholder="9876543210">
-        </div>
+    <div class="form-group">
 
-        <div class="form-group">
+        <label>Mobile Number</label>
 
-            <label>Email Address</label>
+        <input
+            type="text"
+            id="mobileNumber"
+            placeholder="9876543210">
 
-<input type="email" id="email" placeholder="example@gmail.com">
-        </div>
+    </div>
 
-        <div class="form-group">
+    <div class="form-group">
 
-            <label>Family Members</label>
+        <label>Email Address</label>
 
-<input type="number" id="familyMembers" placeholder="4">
-        </div>
+        <input
+            type="email"
+            id="email"
+            placeholder="example@gmail.com">
 
-        <div class="form-buttons">
+    </div>
 
-<button type="button" class="save-btn" id="saveResident">
-    Save
-</button>
-            <button class="cancel-btn" type="reset">Cancel</button>
+    <div class="form-group">
 
-        </div>
+    <label>Resident Photo</label>
 
-    </form>
+    <input
+        type="file"
+        id="residentPhoto"
+        accept="image/*">
 
-</div>
+    <div class="photo-preview">
+
+        <img
+            id="photoPreview"
+            src="../images/default-user.png"
+            alt="Resident Photo">
 
     </div>
 
 </div>
 
+    <div class="form-group">
+
+        <label>Family Members</label>
+
+        <input
+            type="number"
+            id="familyMembers"
+            placeholder="4">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Status</label>
+
+        <select id="residentStatus">
+
+            <option value="Active">Active</option>
+
+            <option value="Inactive">Inactive</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-buttons">
+
+        <button
+            type="button"
+            class="save-btn"
+            id="saveResident">
+
+            Save Resident
+
+        </button>
+
+        <button
+            type="reset"
+            class="cancel-btn">
+
+            Clear
+
+        </button>
+
+    </div>
+
+</form>
+
+</div>
+
 <!-- =========================
-Resident Details Modal
+Resident View Modal
 ========================= -->
 
 <div id="residentModal" class="modal">
@@ -211,21 +257,89 @@ Resident Details Modal
 
         <span id="closeModal" class="close">&times;</span>
 
-        <h2>Resident Details</h2>
+        <!-- Header -->
 
-        <p><strong>ID:</strong> <span id="viewId"></span></p>
+        <div class="resident-view-header">
 
-        <p><strong>Name:</strong> <span id="viewName"></span></p>
+            <img
+                id="viewPhoto"
+                src="../images/default-user.png"
+                alt="Resident Photo">
 
-        <p><strong>Flat:</strong> <span id="viewFlat"></span></p>
+            <h2 id="viewName"></h2>
 
-        <p><strong>Mobile:</strong> <span id="viewMobile"></span></p>
+            <p id="viewFlat"></p>
 
-        <p><strong>Status:</strong> <span id="viewStatus"></span></p>
+        </div>
 
-        <p><strong>Email:</strong> <span id="viewEmail"></span></p>
+        <!-- Details -->
 
-<p><strong>Family Members:</strong> <span id="viewFamily"></span></p>
+        <div class="resident-details">
+
+            <div class="detail-item">
+
+                <span>Resident ID</span>
+
+                <strong id="viewId"></strong>
+
+            </div>
+
+            <div class="detail-item">
+
+                <span>Mobile Number</span>
+
+                <strong id="viewMobile"></strong>
+
+            </div>
+
+            <div class="detail-item">
+
+                <span>Email Address</span>
+
+                <strong id="viewEmail"></strong>
+
+            </div>
+
+            <div class="detail-item">
+
+                <span>Family Members</span>
+
+                <strong id="viewFamily"></strong>
+
+            </div>
+
+            <div class="detail-item">
+
+                <span>Status</span>
+
+<span
+    id="viewStatus"
+    class="status-badge">
+
+</span>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+    <button
+        id="printResident"
+        class="print-btn">
+
+        🖨 Print
+
+    </button>
+
+    <button
+        id="closeResidentBtn"
+        class="close-btn-modal">
+
+        Close
+
+    </button>
+
+</div>
 
     </div>
 

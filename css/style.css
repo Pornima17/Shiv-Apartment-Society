@@ -943,331 +943,7 @@ footer hr{
 
 }
 
-/* Recent Complaints */
 
-.complaints-section{
-
-    margin-top:50px;
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:15px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-
-}
-
-.complaints-section h2{
-
-    color:#0B4DA2;
-
-    margin-bottom:20px;
-
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-table th{
-
-    background:#0B4DA2;
-
-    color:white;
-
-    padding:15px;
-
-}
-
-table td{
-
-    padding:15px;
-
-    border-bottom:1px solid #ddd;
-
-}
-
-table tr:hover{
-
-    background:#f5f7fa;
-
-}
-
-.pending{
-
-    color:red;
-
-    font-weight:bold;
-
-}
-
-.progress{
-
-    color:orange;
-
-    font-weight:bold;
-
-}
-
-.solved{
-
-    color:green;
-
-    font-weight:bold;
-
-}
-
-/* Residents Page */
-
-.resident-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin:30px 0;
-
-}
-
-.resident-top input{
-
-    width:300px;
-
-    padding:12px;
-
-    border:1px solid #ccc;
-
-    border-radius:8px;
-
-}
-
-.resident-top button{
-
-    background:#0B4DA2;
-
-    color:white;
-
-    border:none;
-
-    padding:12px 25px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-}
-
-.resident-top button:hover{
-
-    background:#083d82;
-
-}
-
-.resident-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    background:white;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-
-}
-
-.resident-table th{
-
-    background:#0B4DA2;
-
-    color:white;
-
-    padding:15px;
-
-}
-
-.resident-table td{
-
-    padding:15px;
-
-    border-bottom:1px solid #ddd;
-
-}
-
-.resident-table tr:hover{
-
-    background:#f5f7fa;
-
-}
-
-/* Edit Button */
-
-.edit-btn{
-
-    background:#28a745;
-
-    color:white;
-
-    border:none;
-
-    padding:8px 15px;
-
-    border-radius:6px;
-
-    cursor:pointer;
-
-    margin-right:8px;
-
-}
-
-.edit-btn:hover{
-
-    background:#218838;
-
-}
-
-/* Delete Button */
-
-.delete-btn{
-
-    background:#dc3545;
-
-    color:white;
-
-    border:none;
-
-    padding:8px 15px;
-
-    border-radius:6px;
-
-    cursor:pointer;
-
-}
-
-.delete-btn:hover{
-
-    background:#c82333;
-
-}
-
-/* Resident Form */
-
-.resident-form{
-
-    margin-top:50px;
-
-    background:white;
-
-    padding:30px;
-
-    border-radius:15px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-
-}
-
-.resident-form h2{
-
-    color:#0B4DA2;
-
-    margin-bottom:25px;
-
-}
-
-.form-group{
-
-    margin-bottom:20px;
-
-}
-
-.form-group label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    font-weight:600;
-
-}
-
-.form-group input{
-
-    width:100%;
-
-    padding:12px;
-
-    border:1px solid #ccc;
-
-    border-radius:8px;
-
-    font-size:16px;
-
-}
-
-.form-group input:focus{
-
-    outline:none;
-
-    border:2px solid #0B4DA2;
-
-}
-
-.form-buttons{
-
-    margin-top:25px;
-
-}
-
-.save-btn{
-
-    background:#0B4DA2;
-
-    color:white;
-
-    border:none;
-
-    padding:12px 30px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    margin-right:15px;
-
-}
-
-.save-btn:hover{
-
-    background:#083d82;
-
-}
-
-.cancel-btn{
-
-    background:#dc3545;
-
-    color:white;
-
-    border:none;
-
-    padding:12px 30px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-}
-
-.cancel-btn:hover{
-
-    background:#b02a37;
-
-}
 
 /* Complaint Page */
 
@@ -1848,6 +1524,7 @@ line-height:28px;
 
     background:#111;
 
+
 }
 
 .dark-mode .dashboard-card,
@@ -2001,19 +1678,17 @@ Resident Modal
 
 .modal-content{
 
+    width:500px;
+    max-width:92%;
     background:#fff;
-
-    width:400px;
-
-    max-width:90%;
-
-    margin:80px auto;
-
-    padding:20px;
-
-    border-radius:10px;
-
+    margin:40px auto;
+    border-radius:18px;
+    padding:30px;
     position:relative;
+    animation:popup .35s ease;
+
+    max-height:85vh;
+    overflow-y:auto;
 
 }
 
@@ -2028,6 +1703,36 @@ Resident Modal
     font-size:28px;
 
     cursor:pointer;
+
+}
+
+/* =========================
+Modal Scrollbar
+========================= */
+
+.modal-content::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.modal-content::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+    border-radius:10px;
+
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+
+    background:#99b7dd;
+    border-radius:10px;
+
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover{
+
+    background:#083d82;
 
 }
 
@@ -2056,36 +1761,6 @@ Resident Modal
 
 }
 
-/* =========================
-   Import Button
-========================= */
-
-.import-btn{
-
-    background:#28a745;
-    color:#fff;
-    border:none;
-    padding:10px 18px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:15px;
-    font-weight:500;
-    margin-left:10px;
-    transition:0.3s;
-
-}
-
-.import-btn:hover{
-
-    background:#218838;
-
-}
-
-#importResidents{
-
-    margin-right:10px;
-
-}
 
 /* =========================
    Recent Activities
@@ -3197,31 +2872,6 @@ Mobile Responsive
 
 }
 
-/* =========================
-   Export Button
-========================= */
-
-.export-btn{
-
-    margin: 15px 0;
-    background: #198754;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-
-}
-
-.export-btn:hover{
-
-    background: #146c43;
-    transform: translateY(-2px);
-
-}
 
 /* =========================
    Import Maintenance
@@ -4363,27 +4013,6 @@ background:#6d28d9;
 }
 
 /* =========================
-   Responsive
-========================= */
-
-@media(max-width:768px){
-
-    .visitor-form .form-group{
-
-        flex-direction:column;
-
-    }
-
-    .visitor-table{
-
-        display:block;
-        overflow-x:auto;
-
-    }
-
-}
-
-/* =========================
 Flat Management
 ========================= */
 
@@ -4740,15 +4369,6 @@ Parking Page
     color:#0B4DA2;
     margin-bottom:20px;
     font-size:28px;
-
-}
-
-.form-group{
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
-    margin-bottom:18px;
 
 }
 
@@ -5396,3 +5016,454 @@ Event Summary
     color:#1e56a0;
     font-size:32px;
 }
+
+
+/* =========================
+Residents Top Bar
+========================= */
+
+.resident-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin:30px 0;
+    flex-wrap:wrap;
+
+}
+
+.resident-top input{
+
+    flex:1;
+    min-width:250px;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+
+}
+
+.resident-top button{
+
+    background:#0B4DA2;
+    color:#fff;
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+
+}
+
+.resident-top button:hover{
+
+    background:#083d82;
+
+}
+
+/* =========================
+Residents Table
+========================= */
+
+.resident-table{
+
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.resident-table th{
+
+    background:#0B4DA2;
+    color:#fff;
+    padding:15px;
+    text-align:center;
+
+}
+
+.resident-table td{
+
+    padding:14px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+
+}
+
+.resident-table tr:hover{
+
+    background:#f7f9fc;
+
+}
+
+/* =========================
+Resident Form
+========================= */
+
+.resident-form{
+
+    margin-top:40px;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.resident-form h2{
+
+    color:#0B4DA2;
+    margin-bottom:25px;
+
+}
+
+/* =========================
+Form Fields
+========================= */
+
+.form-group{
+
+    margin-bottom:18px;
+
+}
+
+.form-group label{
+
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+
+}
+
+.form-group input,
+.form-group select{
+
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    transition:.3s;
+
+}
+
+.form-group input:focus,
+.form-group select:focus{
+
+    outline:none;
+    border-color:#0B4DA2;
+
+}
+
+.photo-preview{
+
+    margin-top:15px;
+
+}
+
+.photo-preview img{
+
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #0B4DA2;
+
+}
+
+/* =========================
+Form Buttons
+========================= */
+
+.form-buttons{
+
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+
+}
+
+.save-btn{
+
+    background:#0B4DA2;
+    color:#fff;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+
+}
+
+.save-btn:hover{
+
+    background:#083d82;
+
+}
+
+.cancel-btn{
+
+    background:#dc3545;
+    color:#fff;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+
+}
+
+.cancel-btn:hover{
+
+    background:#b52b39;
+
+}
+
+/* =========================
+Professional Resident Modal
+========================= */
+
+.modal{
+
+    display:none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.55);
+    z-index:9999;
+
+}
+
+.modal-content{
+
+    width:500px;
+    max-width:92%;
+    background:#fff;
+    margin:60px auto;
+    border-radius:18px;
+    padding:30px;
+    position:relative;
+    animation:popup .35s ease;
+
+}
+
+@keyframes popup{
+
+    from{
+
+        opacity:0;
+        transform:scale(.85);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+}
+
+.close{
+
+    position:absolute;
+    top:18px;
+    right:22px;
+    font-size:30px;
+    font-weight:bold;
+    cursor:pointer;
+    color:#666;
+    transition:.3s;
+
+}
+
+.close:hover{
+
+    color:#dc3545;
+    transform:rotate(90deg);
+
+}
+
+.resident-view-header{
+
+    text-align:center;
+    margin-bottom:30px;
+
+}
+
+.resident-view-header img{
+
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #0B4DA2;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    margin-bottom:18px;
+
+}
+
+.resident-view-header h2{
+
+    color:#0B4DA2;
+    margin-bottom:8px;
+    font-size:28px;
+
+}
+
+.resident-view-header p{
+
+    color:#777;
+    font-size:17px;
+
+}
+
+.resident-details{
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+
+}
+
+.detail-item{
+
+    background:#f8f9fc;
+    padding:18px;
+    border-radius:12px;
+    transition:.3s;
+
+}
+
+.detail-item:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.detail-item span{
+
+    display:block;
+    color:#777;
+    font-size:14px;
+    margin-bottom:8px;
+
+}
+
+.detail-item strong{
+
+    color:#222;
+    font-size:17px;
+
+}
+
+/* =========================
+Status Badge
+========================= */
+
+.status-badge{
+
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:25px;
+    color:#fff;
+    font-weight:600;
+    font-size:14px;
+
+}
+
+.status-active{
+
+    background:#28a745;
+
+}
+
+.status-inactive{
+
+    background:#dc3545;
+
+}
+
+/* =========================
+Status Full Width
+========================= */
+
+.detail-item:last-child{
+
+    grid-column:1 / -1;
+
+}
+
+/* =========================
+Hover Effect
+========================= */
+
+.detail-item{
+
+    transition:.3s;
+
+}
+
+.detail-item:hover{
+
+    transform:translateY(-5px);
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+
+}
+
+/* =========================
+Footer
+========================= */
+
+.modal-footer{
+
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:30px;
+
+}
+
+.print-btn{
+
+    background:#0B4DA2;
+    color:#fff;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    cursor:pointer;
+
+}
+
+.print-btn:hover{
+
+    background:#083d82;
+
+}
+
+.close-btn-modal{
+
+    background:#dc3545;
+    color:#fff;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    cursor:pointer;
+
+}
+
+.close-btn-modal:hover{
+
+    background:#b02a37;
+
+}
+
+

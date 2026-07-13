@@ -171,15 +171,6 @@ if(profileData){
 
 }
 
-// =========================
-// Residents Data
-// =========================
-
-let residents = [];
-let editingIndex = -1;
-let activities = [];
-let maintenanceRecords = [];
-let editingMaintenanceIndex = -1;
 
 // =========================
 // Complaints Data
@@ -3388,15 +3379,6 @@ function loadActivities() {
 
 }
 
-// =========================
-// Save Residents
-// =========================
-
-function saveResidents() {
-
-    localStorage.setItem("residents", JSON.stringify(residents));
-
-}
 
 // =========================
 // Save Maintenance
@@ -3485,670 +3467,7 @@ function displayActivities() {
 
 }
 
-// =========================
-// Generate Resident ID
-// =========================
 
-function generateResidentId() {
-
-    let maxId = 0;
-
-    residents.forEach(function (resident) {
-
-        const number = parseInt(resident.id.replace("R", ""));
-
-        if (number > maxId) {
-
-            maxId = number;
-
-        }
-
-    });
-
-    const newId = maxId + 1;
-
-    return "R" + String(newId).padStart(3, "0");
-
-}
-
-
-// =========================
-// Display Residents
-// =========================
-
-function displayResidents() {
-
-    const residentTableBody = document.getElementById("residentTableBody");
-
-   if (!residentTableBody) {
-
-    updateDashboardStats();
-
-    return;
-
-}
-
-    residentTableBody.innerHTML = "";
-
-    residents.forEach(function (resident, index) {
-
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-
-            <td>${resident.id}</td>
-
-            <td>${resident.name}</td>
-
-            <td>${resident.flat}</td>
-
-            <td>${resident.mobile}</td>
-
-<td>
-
-    <button class="status-btn" data-index="${index}"
-        style="background:${resident.status === "Active" ? "#28a745" : "#dc3545"}">
-
-        ${resident.status}
-
-    </button>
-
-</td>
-            <td>
-
-    <button class="view-btn" data-index="${index}">
-        View
-    </button>
-
-    <button class="edit-btn" data-index="${index}">
-        Edit
-    </button>
-
-    <button class="delete-btn" data-index="${index}">
-        Delete
-    </button>
-
-</td>
-        `;
-
-       residentTableBody.appendChild(row);
-
-});
-
-updateDashboardStats();
-
-}
-
-// =========================
-// Add / Update Resident
-// =========================
-
-const saveResident = document.getElementById("saveResident");
-
-if (saveResident) {
-
-    saveResident.addEventListener("click", function () {
-
-        const name = document.getElementById("residentName").value.trim();
-        const flat = document.getElementById("flatNumber").value.trim();
-        const mobile = document.getElementById("mobileNumber").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const familyMembers = document.getElementById("familyMembers").value.trim();
-
-        if (name === "" || flat === "" || mobile === "") {
-
-            alert("Please fill all required fields.");
-            return;
-
-        }
-
-        // =========================
-        // Update Resident
-        // =========================
-
-        if (editingIndex !== -1) {
-
-            residents[editingIndex].name = name;
-            residents[editingIndex].flat = flat;
-            residents[editingIndex].mobile = mobile;
-            residents[editingIndex].email = email;
-            residents[editingIndex].familyMembers = familyMembers;
-
-            editingIndex = -1;
-
-            saveResident.innerText = "Save";
-
-            saveResidents();
-            displayResidents();
-
-            addActivity(name + " details updated.");
-
-            document.getElementById("residentName").value = "";
-            document.getElementById("flatNumber").value = "";
-            document.getElementById("mobileNumber").value = "";
-            document.getElementById("email").value = "";
-            document.getElementById("familyMembers").value = "";
-
-
-            alert("Resident Updated Successfully!");
-
-            return;
-
-        }
-
-        // =========================
-        // Add Resident
-        // =========================
-
-       residents.push({
-
-    id: generateResidentId(),
-
-    name: name,
-
-    flat: flat,
-
-    mobile: mobile,
-
-    email: email,
-
-    familyMembers: familyMembers,
-
-    status: "Active"
-
-});
-
-        saveResidents();
-        displayResidents();
-
-        addActivity(name + " added as a new resident.");
-
-        document.getElementById("residentName").value = "";
-        document.getElementById("flatNumber").value = "";
-        document.getElementById("mobileNumber").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("familyMembers").value = "";
-
-        alert("Resident Added Successfully!");
-
-    });
-
-}
-
-// =========================
-// Edit & Delete Resident
-// =========================
-
-const residentTable = document.getElementById("residentTable");
-
-if (residentTable) {
-
-    residentTable.addEventListener("click", function (event) {
-
- // =========================
- // Edit Resident
-// =========================
-
-        if (event.target.classList.contains("edit-btn")) {
-
-            const index = event.target.dataset.index;
-
-            editingIndex = index;
-
-            document.getElementById("residentName").value =
-                residents[index].name;
-
-            document.getElementById("flatNumber").value =
-                residents[index].flat;
-
-            document.getElementById("mobileNumber").value =
-                residents[index].mobile;
-
-                document.getElementById("email").value =
-                residents[index].email || "";
-
-                document.getElementById("familyMembers").value =
-                residents[index].familyMembers || "";
-
-            saveResident.innerText = "Update Resident";
-
-        }
-
- // =========================
-// Toggle Status
-// =========================
-
-if (event.target.classList.contains("status-btn")) {
-
-    const index = event.target.dataset.index;
-
-    if (residents[index].status === "Active") {
-
-        residents[index].status = "Inactive";
-
-    } else {
-
-        residents[index].status = "Active";
-
-    }
-
-    saveResidents();
-
-    displayResidents();
-
-    addActivity(
-    residents[index].name +
-    " status changed to " +
-    residents[index].status
-);
-
-}
-
-        // =========================
-        // Delete Resident
-        // =========================
-
-        if (event.target.classList.contains("delete-btn")) {
-
-            const index = event.target.dataset.index;
-
-            const confirmDelete = confirm(
-                "Are you sure you want to delete this resident?"
-            );
-
-            if (confirmDelete) {
-
-                const deletedName = residents[index].name;
-
-residents.splice(index, 1);
-
-saveResidents();
-
-displayResidents();
-
-addActivity(deletedName + " deleted.");
-
-                alert("Resident Deleted Successfully!");
-
-            }
-
-        }
-
-    });
-
-}
-
-// =========================
-// Resident View Modal
-// =========================
-
-const residentModal = document.getElementById("residentModal");
-const closeModal = document.getElementById("closeModal");
-
-if (residentTable) {
-
-    residentTable.addEventListener("click", function(event){
-
-        if(event.target.classList.contains("view-btn")){
-
-            const index = event.target.dataset.index;
-
-            document.getElementById("viewId").innerText =
-            residents[index].id;
-
-            document.getElementById("viewName").innerText =
-            residents[index].name;
-
-            document.getElementById("viewFlat").innerText =
-            residents[index].flat;
-
-            document.getElementById("viewMobile").innerText =
-            residents[index].mobile;
-
-            document.getElementById("viewStatus").innerText =
-            residents[index].status;
-
-            document.getElementById("viewEmail").innerText =
-    residents[index].email || "-";
-
-document.getElementById("viewFamily").innerText =
-    residents[index].familyMembers || "-";
-
-            residentModal.style.display = "block";
-
-        }
-
-    });
-
-}
-
-if(closeModal){
-
-    closeModal.addEventListener("click",function(){
-
-        residentModal.style.display = "none";
-
-    });
-
-}
-
-window.addEventListener("click",function(event){
-
-    if(event.target === residentModal){
-
-        residentModal.style.display = "none";
-
-    }
-
-});
-
-// =========================
-// Export Residents CSV
-// =========================
-
-const exportResidents = document.getElementById("exportResidents");
-
-if (exportResidents) {
-
-    exportResidents.addEventListener("click", function () {
-
-        if (residents.length === 0) {
-
-            alert("No Residents Found!");
-
-            return;
-
-        }
-
-        let csv =
-"ID,Name,Flat,Mobile,Email,Family Members,Status\n";
-
-        residents.forEach(function (resident) {
-
-            csv += `${resident.id},${resident.name},${resident.flat},${resident.mobile},${resident.email || ""},${resident.familyMembers || ""},${resident.status}\n`;
-
-        });
-
-        const blob = new Blob([csv], {
-
-            type: "text/csv;charset=utf-8;"
-
-        });
-
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-
-        link.href = url;
-
-        link.download = "Residents.csv";
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        document.body.removeChild(link);
-
-        URL.revokeObjectURL(url);
-
-    });
-
-}
-
-// =========================
-// Import Residents CSV
-// =========================
-
-const importBtn = document.getElementById("importBtn");
-const importResidents = document.getElementById("importResidents");
-
-if (importBtn && importResidents) {
-
-    importBtn.addEventListener("click", function () {
-
-        const file = importResidents.files[0];
-
-        if (!file) {
-
-            alert("Please select a CSV file.");
-            return;
-
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-
-            const csv = e.target.result;
-
-            const rows = csv.trim().split("\n");
-
-            // Header Remove
-            rows.shift();
-
-            residents = [];
-
-            rows.forEach(function (row) {
-
-                const data = row.split(",");
-
-                residents.push({
-
-                    id: data[0],
-                    name: data[1],
-                    flat: data[2],
-                    mobile: data[3],
-                    email: data[4],
-                    familyMembers: data[5],
-                    status: data[6]
-
-                });
-
-            });
-
-            saveResidents();
-            displayResidents();
-
-            importResidents.value = "";
-
-addActivity("Residents imported from CSV.");
-
-            alert("Residents Imported Successfully!");
-
-        };
-
-        reader.readAsText(file);
-
-    });
-
-}
-
-
-// =========================
-// Resident Chart
-// =========================
-
-let residentChart = null;
-let statusChart = null;
-
-function updateResidentChart() {
-
-    console.log("Chart Function Called");
-
-    const chartCanvas = document.getElementById("residentChart");
-
-    if (!chartCanvas) {
-        return;
-    }
-
-    let active = 0;
-    let inactive = 0;
-
-    residents.forEach(function (resident) {
-
-        if (resident.status === "Active") {
-            active++;
-        } else {
-            inactive++;
-        }
-
-    });
-
-    // =========================
-    // Bar Chart
-    // =========================
-
-    if (residentChart) {
-        residentChart.destroy();
-    }
-
-    residentChart = new Chart(chartCanvas.getContext("2d"), {
-
-        type: "bar",
-
-        data: {
-
-            labels: ["Total", "Active", "Inactive"],
-
-            datasets: [{
-
-                label: "Residents",
-
-                data: [
-                    residents.length,
-                    active,
-                    inactive
-                ],
-
-                backgroundColor: [
-                    "#4e73df",
-                    "#28a745",
-                    "#dc3545"
-                ],
-
-                borderRadius: 8
-
-            }]
-
-        },
-
-        options: {
-
-            responsive: true,
-
-            plugins: {
-
-                legend: {
-                    display: false
-                }
-
-            },
-
-            scales: {
-
-                y: {
-
-                    beginAtZero: true,
-
-                    ticks: {
-                        precision: 0
-                    }
-
-                }
-
-            }
-
-        }
-
-    });
-
-    // =========================
-    // Pie Chart
-    // =========================
-
-    const pieCanvas = document.getElementById("statusChart");
-
-    if (pieCanvas) {
-
-        if (statusChart) {
-            statusChart.destroy();
-        }
-
-        statusChart = new Chart(pieCanvas.getContext("2d"), {
-
-            type: "pie",
-
-            data: {
-
-                labels: ["Active", "Inactive"],
-
-                datasets: [{
-
-                    data: [active, inactive],
-
-                    backgroundColor: [
-                        "#28a745",
-                        "#dc3545"
-                    ]
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                plugins: {
-
-                    legend: {
-                        position: "bottom"
-                    }
-
-                }
-
-            }
-
-        });
-
-    }
-
-}
-// =========================
-// Dashboard Statistics
-// =========================
-
-function updateDashboardStats() {
-
-    const totalResidents = document.getElementById("totalResidents");
-    const activeResidents = document.getElementById("activeResidents");
-    const inactiveResidents = document.getElementById("inactiveResidents");
-
-    if (!totalResidents || !activeResidents || !inactiveResidents) {
-        return;
-    }
-
-    let active = 0;
-    let inactive = 0;
-
-    residents.forEach(function (resident) {
-
-        if (resident.status === "Active") {
-            active++;
-        } else {
-            inactive++;
-        }
-
-    });
-
-    totalResidents.innerText = residents.length;
-    activeResidents.innerText = active;
-    inactiveResidents.innerText = inactive;
-
-    // ✅ Chart Update
-    updateResidentChart();
-
-}
 
 // =========================
 // Maintenance Summary
@@ -5375,6 +4694,946 @@ if(filterMonth){
 }
 
 // =========================
+// Residents Data
+// =========================
+
+let residents =
+JSON.parse(localStorage.getItem("residents")) || [];
+
+let editingIndex = -1;
+
+// =========================
+// Current Resident
+// =========================
+
+let currentResident = null;
+
+// =========================
+// Resident Photo
+// =========================
+
+let residentPhotoData = "";
+
+const residentPhoto =
+document.getElementById("residentPhoto");
+
+const photoPreview =
+document.getElementById("photoPreview");
+
+if(residentPhoto){
+
+    residentPhoto.addEventListener("change",function(){
+
+        const file =
+        this.files[0];
+
+        if(!file){
+
+            return;
+
+        }
+
+        const reader =
+        new FileReader();
+
+        reader.onload = function(event){
+
+            residentPhotoData =
+            event.target.result;
+
+            photoPreview.src =
+            residentPhotoData;
+
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+// =========================
+// Save Residents
+// =========================
+
+function saveResidents(){
+
+    localStorage.setItem(
+
+        "residents",
+
+        JSON.stringify(residents)
+
+    );
+
+}
+
+// =========================
+// Generate Resident ID
+// =========================
+
+function generateResidentId(){
+
+    return "R" +
+
+    String(residents.length + 1)
+
+    .padStart(3,"0");
+
+}
+
+// =========================
+// Save Resident
+// =========================
+
+const saveResident =
+document.getElementById("saveResident");
+
+if(saveResident){
+
+    saveResident.addEventListener("click",function(){
+
+        const name =
+        document.getElementById("residentName").value.trim();
+
+        const flat =
+        document.getElementById("flatNumber").value.trim();
+
+        const mobile =
+        document.getElementById("mobileNumber").value.trim();
+
+        const email =
+        document.getElementById("email").value.trim();
+
+        const family =
+        document.getElementById("familyMembers").value.trim();
+
+        const status =
+        document.getElementById("residentStatus").value;
+
+        const isEditing = editingIndex !== -1;
+        // =========================
+        // Validation
+        // =========================
+
+        if(
+
+            name === "" ||
+
+            flat === "" ||
+
+            mobile === ""
+
+        ){
+
+            alert("Please fill all required fields.");
+
+            return;
+
+        }
+
+// =========================
+// Add / Update Resident
+// =========================
+
+if(!isEditing){
+
+residents.push({
+
+    id:generateResidentId(),
+
+    name:name,
+
+    flat:flat,
+
+    mobile:mobile,
+
+    email:email,
+
+    familyMembers:family,
+
+    status:status,
+
+    photo:residentPhotoData
+
+});
+
+}else{
+
+residents[editingIndex] = {
+
+    id:residents[editingIndex].id,
+
+    name:name,
+
+    flat:flat,
+
+    mobile:mobile,
+
+    email:email,
+
+    familyMembers:family,
+
+    status:status,
+
+    photo:
+    residentPhotoData ||
+
+    residents[editingIndex].photo
+
+};
+
+    editingIndex = -1;
+
+}
+
+        // =========================
+        // Save Data
+        // =========================
+
+        saveResidents();
+        displayResidents();
+
+        // =========================
+        // Clear Form
+        // =========================
+
+        document.getElementById("residentName").value = "";
+
+        document.getElementById("flatNumber").value = "";
+
+        document.getElementById("mobileNumber").value = "";
+
+        document.getElementById("email").value = "";
+
+        document.getElementById("familyMembers").value = "";
+
+        document.getElementById("residentStatus").value = "Active";
+
+        residentPhotoData = "";
+
+if(photoPreview){
+
+    photoPreview.src =
+    "../images/default-user.png";
+
+}
+
+if(residentPhoto){
+
+    residentPhoto.value = "";
+
+}
+
+        // =========================
+        // Success Message
+        // =========================
+
+if(isEditing){
+
+    alert("Resident Updated Successfully!");
+
+}else{
+
+    alert("Resident Added Successfully!");
+
+}
+    });
+
+}
+
+// =========================
+// Resident View Modal
+// =========================
+
+const residentModal =
+document.getElementById("residentModal");
+
+const closeModal =
+document.getElementById("closeModal");
+
+
+// =========================
+// Display Residents
+// =========================
+
+function displayResidents(){
+
+    const residentTableBody =
+    document.getElementById("residentTableBody");
+
+    if(!residentTableBody){
+
+        return;
+
+    }
+
+    residentTableBody.innerHTML = "";
+
+    residents.forEach(function(resident,index){
+
+        const row =
+        document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${resident.id}</td>
+
+            <td>${resident.name}</td>
+
+            <td>${resident.flat}</td>
+
+            <td>${resident.mobile}</td>
+
+            <td>${resident.status}</td>
+
+            <td>
+
+                <button
+                    class="view-btn"
+                    data-index="${index}">
+
+                    View
+
+                </button>
+
+                <button
+                    class="edit-btn"
+                    data-index="${index}">
+
+                    Edit
+
+                </button>
+
+                <button
+                    class="delete-btn"
+                    data-index="${index}">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        `;
+
+        residentTableBody.appendChild(row);
+        const editBtn =
+row.querySelector(".edit-btn");
+
+editBtn.addEventListener("click",function(){
+
+    editingIndex = index;
+
+    document.getElementById("residentName").value =
+    resident.name;
+
+    document.getElementById("flatNumber").value =
+    resident.flat;
+
+    document.getElementById("mobileNumber").value =
+    resident.mobile;
+
+    document.getElementById("email").value =
+    resident.email;
+
+    document.getElementById("familyMembers").value =
+    resident.familyMembers;
+
+    document.getElementById("residentStatus").value =
+    resident.status;
+
+});
+
+const deleteBtn =
+row.querySelector(".delete-btn");
+
+deleteBtn.addEventListener("click",function(){
+
+    if(confirm("Are you sure you want to delete this resident?")){
+
+        residents.splice(index,1);
+
+        saveResidents();
+
+        displayResidents();
+
+        alert("Resident Deleted Successfully!");
+
+    }
+
+
+});
+
+const viewBtn =
+row.querySelector(".view-btn");
+
+viewBtn.addEventListener("click",function(){
+
+    document.getElementById("viewId").innerText =
+    resident.id;
+
+    document.getElementById("viewName").innerText =
+    resident.name;
+
+    document.getElementById("viewFlat").innerText =
+    "Flat : " + resident.flat;
+
+    document.getElementById("viewMobile").innerText =
+    resident.mobile;
+
+    document.getElementById("viewEmail").innerText =
+    resident.email;
+
+    document.getElementById("viewFamily").innerText =
+    resident.familyMembers;
+
+const statusBadge =
+document.getElementById("viewStatus");
+
+statusBadge.innerText =
+resident.status;
+
+statusBadge.className =
+"status-badge";
+
+if(resident.status === "Active"){
+
+    statusBadge.classList.add(
+        "status-active"
+    );
+
+}else{
+
+    statusBadge.classList.add(
+        "status-inactive"
+    );
+
+}
+
+    const viewPhoto =
+    document.getElementById("viewPhoto");
+
+    viewPhoto.src =
+    resident.photo
+    ? resident.photo
+    : "../images/default-user.png";
+
+    currentResident = resident;
+    residentModal.style.display = "block";
+
+});
+
+
+    });
+
+}
+
+const closeResidentBtn =
+document.getElementById("closeResidentBtn");
+
+if(closeResidentBtn){
+
+    closeResidentBtn.addEventListener("click",function(){
+
+        residentModal.style.display = "none";
+
+    });
+
+}
+
+window.addEventListener("click",function(event){
+
+    if(event.target === residentModal){
+
+        residentModal.style.display = "none";
+
+    }
+
+});
+
+// =========================
+// Print Resident
+// =========================
+
+const printResident =
+document.getElementById("printResident");
+
+if(printResident){
+
+    printResident.addEventListener("click",function(){
+
+        if(!currentResident){
+
+            return;
+
+        }
+
+        const printWindow =
+        window.open(
+            "",
+            "",
+            "width=900,height=700"
+        );
+
+        printWindow.document.write(`
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<h1>🏢 Shiv Apartment</h1>
+
+<p>Society Management System</p>
+
+<hr>
+
+<h2>Resident Profile</h2>
+
+<style>
+
+body{
+
+font-family:Arial,sans-serif;
+padding:40px;
+color:#333;
+
+}
+
+.header{
+
+text-align:center;
+margin-bottom:30px;
+
+}
+
+.header img{
+
+width:130px;
+height:130px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #0B4DA2;
+
+}
+
+h1{
+
+color:#0B4DA2;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+
+}
+
+table th,
+table td{
+
+border:1px solid #ddd;
+padding:12px;
+text-align:left;
+
+}
+
+table th{
+
+background:#0B4DA2;
+color:#fff;
+width:35%;
+
+}
+
+.footer{
+
+margin-top:40px;
+text-align:center;
+font-size:14px;
+color:#666;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<img src="${
+currentResident.photo ||
+'../images/default-user.png'
+}">
+
+<h1>Resident Profile</h1>
+
+</div>
+
+<p>
+
+<b>Print Date :</b>
+
+${new Date().toLocaleString()}
+
+</p>
+
+<table>
+
+<tr>
+
+<th>Resident ID</th>
+
+<td>${currentResident.id}</td>
+
+</tr>
+
+<tr>
+
+<th>Full Name</th>
+
+<td>${currentResident.name}</td>
+
+</tr>
+
+<tr>
+
+<th>Flat Number</th>
+
+<td>${currentResident.flat}</td>
+
+</tr>
+
+<tr>
+
+<th>Mobile</th>
+
+<td>${currentResident.mobile}</td>
+
+</tr>
+
+<tr>
+
+<th>Email</th>
+
+<td>${currentResident.email}</td>
+
+</tr>
+
+<tr>
+
+<th>Family Members</th>
+
+<td>${currentResident.familyMembers}</td>
+
+</tr>
+
+<tr>
+
+<th>Status</th>
+
+<td>
+
+<span
+style="
+padding:6px 15px;
+border-radius:20px;
+color:white;
+font-weight:bold;
+background:${currentResident.status === "Active" ? "#28a745" : "#dc3545"};
+">
+
+${currentResident.status}
+
+</span>
+
+</td>
+
+</tr>
+
+</table>
+
+<div class="footer">
+
+<hr>
+
+<p>
+
+<b>Shiv Apartment Society Management System</b>
+
+</p>
+
+<p>
+
+This is a computer generated resident profile.
+
+</p>
+
+</div>
+
+</body>
+
+</html>
+
+`);
+
+printWindow.document.close();
+
+printWindow.focus();
+
+setTimeout(function(){
+
+    printWindow.print();
+
+},300);
+
+printWindow.onafterprint = function(){
+
+    printWindow.close();
+
+};
+
+    });
+
+}
+
+// =========================
+// Search Resident
+// =========================
+
+const searchResident =
+document.getElementById("searchResident");
+
+if(searchResident){
+
+    searchResident.addEventListener("keyup",function(){
+
+        const search =
+        this.value.toLowerCase();
+
+        const rows =
+        document.querySelectorAll("#residentTableBody tr");
+
+        rows.forEach(function(row){
+
+            const text =
+            row.innerText.toLowerCase();
+
+            if(text.includes(search)){
+
+                row.style.display = "";
+
+            }else{
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+}
+
+// =========================
+// Export Residents CSV
+// =========================
+
+const exportResidents =
+document.getElementById("exportResidents");
+
+if(exportResidents){
+
+    exportResidents.addEventListener("click",function(){
+
+        if(residents.length === 0){
+
+            alert("No residents available to export.");
+
+            return;
+
+        }
+
+        let csv =
+        "ID,Name,Flat,Mobile,Email,Family Members,Status\n";
+
+        residents.forEach(function(resident){
+
+            csv +=
+
+            resident.id + "," +
+
+            resident.name + "," +
+
+            resident.flat + "," +
+
+            resident.mobile + "," +
+
+            resident.email + "," +
+
+            resident.familyMembers + "," +
+
+            resident.status +
+
+            "\n";
+
+        });
+
+        const blob =
+        new Blob(
+
+            [csv],
+
+            {
+
+                type:"text/csv"
+
+            }
+
+        );
+
+        const url =
+        URL.createObjectURL(blob);
+
+        const link =
+        document.createElement("a");
+
+        link.href = url;
+
+        link.download = "Residents.csv";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+        URL.revokeObjectURL(url);
+
+    });
+
+}
+
+// =========================
+// Import Residents CSV
+// =========================
+
+const importBtn =
+document.getElementById("importBtn");
+
+const importResidents =
+document.getElementById("importResidents");
+
+if(importBtn){
+
+    importBtn.addEventListener("click",function(){
+
+        importResidents.click();
+
+    });
+
+}
+
+if(importResidents){
+
+    importResidents.addEventListener("change",function(){
+
+        const file =
+        this.files[0];
+
+        if(!file){
+
+            return;
+
+        }
+
+        const reader =
+        new FileReader();
+
+        reader.onload = function(event){
+
+            const csv =
+            event.target.result;
+
+            const rows =
+            csv.trim().split("\n");
+
+            rows.shift();
+
+          rows.forEach(function(row){
+
+    const columns =
+    row.split(",");
+
+    if(columns.length >= 7){
+
+        const id =
+        columns[0].trim();
+
+        const flat =
+        columns[2].trim();
+
+        const alreadyExists =
+        residents.some(function(resident){
+
+            return resident.id === id ||
+
+                   resident.flat === flat;
+
+        });
+
+        if(!alreadyExists){
+
+            residents.push({
+
+                id:id,
+
+                name:columns[1].trim(),
+
+                flat:flat,
+
+                mobile:columns[3].trim(),
+
+                email:columns[4].trim(),
+
+                familyMembers:columns[5].trim(),
+
+                status:columns[6].trim()
+
+            });
+
+        }
+
+    }
+
+});
+
+            saveResidents();
+
+            displayResidents();
+
+            alert("Residents Imported Successfully!");
+
+            importResidents.value = "";
+
+        };
+
+        reader.readAsText(file);
+
+    });
+
+}
+
+
+
+
+// =========================
 // Admin Profile
 // =========================
 
@@ -5491,7 +5750,6 @@ if(menuToggle && sidebar){
 // Load Data
 // =========================
 
-loadResidents();
 loadActivities();
 loadMaintenance();
 loadComplaints();
@@ -5500,7 +5758,7 @@ loadVisitors();
 loadFlats();
 loadParking();
 
-displayResidents();
+
 displayActivities();
 displayMaintenance();
 displayComplaints();
@@ -5509,6 +5767,7 @@ displayVisitors();
 displayFlats();
 displayParking();
 displayEvents();
+displayResidents();
 
 updateDashboardStats();
 updateMaintenanceSummary();
