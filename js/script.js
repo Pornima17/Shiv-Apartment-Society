@@ -183,7 +183,9 @@ let editingComplaintIndex = -1;
 // Notice Data
 // =========================
 
-let notices = [];
+let notices =
+JSON.parse(localStorage.getItem("notices")) || [];
+
 let editingNoticeIndex = -1;
 
 // =========================
@@ -2044,11 +2046,30 @@ function saveComplaints() {
 function saveNotices(){
 
     localStorage.setItem(
+
         "notices",
+
         JSON.stringify(notices)
+
     );
 
 }
+
+// =========================
+// Generate Notice ID
+// =========================
+
+function generateNoticeId(){
+
+    return "N" +
+
+    String(notices.length + 1)
+
+    .padStart(3,"0");
+
+}
+
+
 
 // =========================
 // Display Notices
@@ -2071,37 +2092,43 @@ function displayNotices(){
 
         const row = document.createElement("tr");
 
-        row.innerHTML = `
+row.innerHTML = `
 
-            <td>N${String(index + 1).padStart(3,"0")}</td>
+    <td>${notice.id}</td>
 
-            <td>${notice.title}</td>
+    <td>${notice.title}</td>
 
-            <td>${notice.date}</td>
+    <td>${notice.date}</td>
 
-            <td>
+    <td>
 
-                <button
-                    class="view-notice-btn"
-                    data-index="${index}">
-                    View
-                </button>
+        <button
+            class="view-btn"
+            data-index="${index}">
 
-                <button
-                    class="edit-notice-btn"
-                    data-index="${index}">
-                    Edit
-                </button>
+            View
 
-                <button
-                    class="delete-notice-btn"
-                    data-index="${index}">
-                    Delete
-                </button>
+        </button>
 
-            </td>
+        <button
+            class="edit-btn"
+            data-index="${index}">
 
-        `;
+            Edit
+
+        </button>
+
+        <button
+            class="delete-btn"
+            data-index="${index}">
+
+            Delete
+
+        </button>
+
+    </td>
+
+`;
 
         noticeTableBody.appendChild(row);
 
@@ -2120,42 +2147,43 @@ if (noticeTable) {
     noticeTable.addEventListener("click", function (event) {
 
         // Edit Notice
-        if (event.target.classList.contains("edit-notice-btn")) {
+if(event.target.classList.contains("edit-btn")){
 
-            const index = event.target.dataset.index;
+    const index = event.target.dataset.index;
 
-            editingNoticeIndex = index;
+    editingNoticeIndex = index;
 
-            document.getElementById("noticeTitle").value =
-                notices[index].title;
+    document.getElementById("noticeTitle").value =
+    notices[index].title;
 
-            document.getElementById("noticeDate").value =
-                notices[index].date;
+    document.getElementById("noticeDate").value =
+    notices[index].date;
 
-            document.getElementById("noticeDescription").value =
-                notices[index].description;
+    document.getElementById("noticeDescription").value =
+    notices[index].description;
 
-            saveNotice.innerText = "Update Notice";
+    saveNotice.innerText = "Update Notice";
 
-        }
+}
 
         // Delete Notice
-        if (event.target.classList.contains("delete-notice-btn")) {
+if(event.target.classList.contains("delete-btn")){
 
-            const index = event.target.dataset.index;
+    const index = event.target.dataset.index;
 
-            if (confirm("Are you sure you want to delete this notice?")) {
+    if(confirm("Are you sure you want to delete this notice?")){
 
-                notices.splice(index, 1);
+        notices.splice(index,1);
 
-                saveNotices();
-                displayNotices();
+        saveNotices();
 
-                alert("Notice Deleted Successfully!");
+        displayNotices();
 
-            }
+        alert("Notice Deleted Successfully!");
 
-        }
+    }
+
+}
 
     });
 
@@ -2172,25 +2200,25 @@ if (noticeTable) {
 
     noticeTable.addEventListener("click", function (event) {
 
-        if (event.target.classList.contains("view-notice-btn")) {
+if(event.target.classList.contains("view-btn")){
 
-            const index = event.target.dataset.index;
+    const index = event.target.dataset.index;
 
-            document.getElementById("viewNoticeId").innerText =
-                "N" + String(Number(index) + 1).padStart(3, "0");
+    document.getElementById("viewNoticeId").innerText =
+    notices[index].id;
 
-            document.getElementById("viewNoticeTitle").innerText =
-                notices[index].title;
+    document.getElementById("viewNoticeTitle").innerText =
+    notices[index].title;
 
-            document.getElementById("viewNoticeDate").innerText =
-                notices[index].date;
+    document.getElementById("viewNoticeDate").innerText =
+    notices[index].date;
 
-            document.getElementById("viewNoticeDescription").innerText =
-                notices[index].description;
+    document.getElementById("viewNoticeDescription").innerText =
+    notices[index].description;
 
-            noticeModal.style.display = "block";
+    noticeModal.style.display = "block";
 
-        }
+}
 
     });
 
@@ -2269,13 +2297,17 @@ if (editingNoticeIndex !== -1) {
     return;
 
 }
-        notices.push({
+notices.push({
 
-            title: title,
-            date: date,
-            description: description
+    id: generateNoticeId(),
 
-        });
+    title: title,
+
+    date: date,
+
+    description: description
+
+});
 
         saveNotices();
         displayNotices();

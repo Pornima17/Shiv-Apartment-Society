@@ -62,37 +62,92 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
     <div class="main-content">
 
-       <h1>📢 Notice Board</h1>
+<h1>Notice Board</h1>
 
-<p>Manage Society Notices Here.</p>
+<p>
+Manage all society notices and announcements here.
+</p>
+
+<div class="notice-top">
+
+    <input
+        type="text"
+        id="searchNotice"
+        placeholder="Search Notice...">
+
+    <button id="addNoticeBtn">
+
+        ➕ Add Notice
+
+    </button>
+
+    <button id="exportNotice">
+
+        📥 Export CSV
+
+    </button>
+
+</div>
 
 <div class="notice-form">
 
-    <h2>➕ Add Notice</h2>
+    <h2>📢 Add New Notice</h2>
 
     <div class="form-group">
 
-        <input
-            type="text"
-            id="noticeTitle"
-            placeholder="Notice Title">
+        <div class="input-box">
 
-        <input
-            type="date"
-            id="noticeDate">
+            <label>Notice Title</label>
+
+            <input
+                type="text"
+                id="noticeTitle"
+                placeholder="Enter Notice Title">
+
+        </div>
+
+        <div class="input-box">
+
+            <label>Notice Date</label>
+
+            <input
+                type="date"
+                id="noticeDate">
+
+        </div>
 
     </div>
 
-    <textarea
-        id="noticeDescription"
-        placeholder="Notice Description"
-        rows="5"></textarea>
+    <div class="input-box">
 
-    <br><br>
+        <label>Notice Description</label>
 
-    <button id="saveNotice">
-        Save Notice
-    </button>
+        <textarea
+            id="noticeDescription"
+            rows="6"
+            placeholder="Write Notice Details..."></textarea>
+
+    </div>
+
+    <div class="form-buttons">
+
+        <button
+            id="saveNotice"
+            class="save-btn">
+
+            Save Notice
+
+        </button>
+
+        <button
+            type="reset"
+            class="cancel-btn">
+
+            Clear
+
+        </button>
+
+    </div>
 
 </div>
 
