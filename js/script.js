@@ -62,10 +62,12 @@ if (loginForm) {
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
 
-        // Demo Credentials
+// Admin Credentials
 
-        const ADMIN_USERNAME = "admin";
-        const ADMIN_PASSWORD = "admin123";
+const ADMIN_USERNAME = "admin";
+
+const ADMIN_PASSWORD =
+localStorage.getItem("adminPassword") || "admin123";
 
         if (
             username === ADMIN_USERNAME &&
@@ -73,6 +75,26 @@ if (loginForm) {
         ) {
 
             sessionStorage.setItem("adminLoggedIn", "true");
+// =========================
+// Login Statistics
+// =========================
+
+// Last Login
+localStorage.setItem(
+    "lastLogin",
+    new Date().toLocaleString()
+);
+
+// Login Count
+let loginCount =
+Number(localStorage.getItem("loginCount")) || 0;
+
+loginCount++;
+
+localStorage.setItem(
+    "loginCount",
+    loginCount
+);
 
             if (rememberMe.checked) {
 
@@ -88,7 +110,27 @@ if (loginForm) {
                 );
 
             }
+let loginHistory =
+JSON.parse(localStorage.getItem("loginHistory")) || [];
 
+loginHistory.unshift({
+
+    message : "Admin Logged In",
+
+    time : new Date().toLocaleString()
+
+});
+
+if(loginHistory.length > 10){
+
+    loginHistory.pop();
+
+}
+
+localStorage.setItem(
+    "loginHistory",
+    JSON.stringify(loginHistory)
+);
             window.location.href = "dashboard.html";
 
         } else {
@@ -143,12 +185,6 @@ if (darkModeBtn) {
 // =========================
 // Dashboard Header Profile
 // =========================
-
-const headerAdminName =
-document.getElementById("headerAdminName");
-
-const headerProfileImage =
-document.getElementById("headerProfileImage");
 
 const profileData =
 JSON.parse(localStorage.getItem("adminProfile"));
@@ -5663,56 +5699,127 @@ if(importResidents){
 }
 
 
-
-
 // =========================
 // Admin Profile
 // =========================
 
-const profilePhoto = document.getElementById("profilePhoto");
-const profilePreview = document.getElementById("profilePreview");
+const profilePhoto =
+document.getElementById("profilePhoto");
 
-const adminName = document.getElementById("adminName");
-const adminEmail = document.getElementById("adminEmail");
-const adminMobile = document.getElementById("adminMobile");
-const adminPassword = document.getElementById("adminPassword");
+const profilePreview =
+document.getElementById("profilePreview");
 
-const saveProfile = document.getElementById("saveProfile");
+const headerProfileImage =
+document.getElementById("headerProfileImage");
 
+const headerAdminName =
+document.getElementById("headerAdminName");
+
+const adminName =
+document.getElementById("adminName");
+
+const adminEmail =
+document.getElementById("adminEmail");
+
+const adminMobile =
+document.getElementById("adminMobile");
+
+const adminPassword =
+document.getElementById("adminPassword");
+
+const saveProfile =
+document.getElementById("saveProfile");
+
+// =========================
 // Load Saved Profile
-if (adminName) {
+// =========================
 
-    adminName.value = localStorage.getItem("adminName") || "";
-    adminEmail.value = localStorage.getItem("adminEmail") || "";
-    adminMobile.value = localStorage.getItem("adminMobile") || "";
+if(adminName){
 
-    const savedPhoto = localStorage.getItem("adminPhoto");
+    adminName.value =
+    localStorage.getItem("adminName") || "";
 
-    if (savedPhoto) {
-        profilePreview.src = savedPhoto;
+    adminEmail.value =
+    localStorage.getItem("adminEmail") || "";
+
+    adminMobile.value =
+    localStorage.getItem("adminMobile") || "";
+
+    if(headerAdminName){
+
+        headerAdminName.innerText =
+        localStorage.getItem("adminName") || "Admin Name";
+
     }
+
+    const savedPhoto =
+    localStorage.getItem("adminPhoto");
+
+    if(savedPhoto){
+
+        profilePreview.src =
+        savedPhoto;
+
+        if(headerProfileImage){
+
+            headerProfileImage.src =
+            savedPhoto;
+
+        }
+
+    }
+
+    updateProfileProgress();
+    updateAdminDashboard();
+    displayLoginHistory();
 
 }
 
-// Photo Preview
-if (profilePhoto) {
 
-    profilePhoto.addEventListener("change", function () {
+// =========================
+// Photo Upload
+// =========================
 
-        const file = this.files[0];
+if(profilePhoto){
 
-        if (!file) return;
+    profilePhoto.addEventListener("change",function(){
 
-        const reader = new FileReader();
+        const file =
+        this.files[0];
 
-        reader.onload = function (e) {
+        if(!file){
 
-            profilePreview.src = e.target.result;
+            return;
+
+        }
+
+        const reader =
+        new FileReader();
+
+        reader.onload =
+        function(e){
+
+            profilePreview.src =
+            e.target.result;
+
+            if(headerProfileImage){
+
+                headerProfileImage.src =
+                e.target.result;
+
+            }
 
             localStorage.setItem(
                 "adminPhoto",
                 e.target.result
             );
+
+            addProfileActivity(
+                "Profile Photo Updated"
+            );
+
+            updateProfileProgress();
+            updateAdminDashboard();
 
         };
 
@@ -5722,10 +5829,13 @@ if (profilePhoto) {
 
 }
 
+// =========================
 // Save Profile
-if (saveProfile) {
+// =========================
 
-    saveProfile.addEventListener("click", function () {
+if(saveProfile){
+
+    saveProfile.addEventListener("click",function(){
 
         localStorage.setItem(
             "adminName",
@@ -5742,7 +5852,7 @@ if (saveProfile) {
             adminMobile.value
         );
 
-        if (adminPassword.value.trim() !== "") {
+        if(adminPassword.value.trim() !== ""){
 
             localStorage.setItem(
                 "adminPassword",
@@ -5751,7 +5861,498 @@ if (saveProfile) {
 
         }
 
-        alert("Profile Saved Successfully!");
+        if(headerAdminName){
+
+            headerAdminName.innerText =
+            adminName.value;
+
+        }
+
+        addProfileActivity(
+            "Profile Updated"
+        );
+
+        updateProfileProgress();
+        updateAdminDashboard();
+
+        alert(
+            "Profile Saved Successfully!"
+        );
+
+    });
+
+}
+
+// =========================
+// Profile Completion
+// =========================
+
+function updateProfileProgress(){
+
+    const progress =
+    document.getElementById("profileProgress");
+
+    if(!progress){
+        return;
+    }
+
+    let total = 4;
+    let completed = 0;
+
+    const adminName =
+    document.getElementById("adminName");
+
+    const adminEmail =
+    document.getElementById("adminEmail");
+
+    const adminMobile =
+    document.getElementById("adminMobile");
+
+    if(adminName && adminName.value.trim() !== ""){
+        completed++;
+    }
+
+    if(adminEmail && adminEmail.value.trim() !== ""){
+        completed++;
+    }
+
+    if(adminMobile && adminMobile.value.trim() !== ""){
+        completed++;
+    }
+
+    if(localStorage.getItem("adminPhoto")){
+        completed++;
+    }
+
+    const percentage =
+    Math.round((completed / total) * 100);
+
+    progress.style.width = percentage + "%";
+    progress.innerText = percentage + "%";
+}
+
+// =========================
+// Update Admin Dashboard
+// =========================
+
+function updateAdminDashboard(){
+
+    // Profile Completion
+    const profileCompletion =
+    document.getElementById("dashboardProfileCompletion");
+
+    const profileProgress =
+    document.getElementById("profileProgress");
+
+    if(profileCompletion && profileProgress){
+
+        profileCompletion.innerText =
+        profileProgress.innerText;
+
+    }
+
+    // Last Login
+    const dashboardLastLogin =
+    document.getElementById("dashboardLastLogin");
+
+    const lastLogin =
+    localStorage.getItem("lastLogin");
+
+    if(dashboardLastLogin){
+
+        dashboardLastLogin.innerText =
+        lastLogin || "Never";
+
+    }
+
+    // Account Status
+    const dashboardAccountStatus =
+    document.getElementById("dashboardAccountStatus");
+
+    if(dashboardAccountStatus){
+
+        dashboardAccountStatus.innerText =
+        "Active";
+
+    }
+
+    // Total Logins
+    const dashboardLoginCount =
+    document.getElementById("dashboardLoginCount");
+
+    const loginCount =
+    localStorage.getItem("loginCount") || 0;
+
+    if(dashboardLoginCount){
+
+        dashboardLoginCount.innerText =
+        loginCount;
+
+    }
+
+}
+
+// =========================
+// Login History Data
+// =========================
+
+let loginHistory =
+JSON.parse(localStorage.getItem("loginHistory")) || [];
+
+function saveLoginHistory(){
+
+    localStorage.setItem(
+        "loginHistory",
+        JSON.stringify(loginHistory)
+    );
+
+}
+
+// =========================
+// Add Profile Activity
+// =========================
+
+function addProfileActivity(message){
+
+    loginHistory.unshift({
+
+        message: message,
+
+        time: new Date().toLocaleString()
+
+    });
+
+    if(loginHistory.length > 10){
+
+        loginHistory.pop();
+
+    }
+
+    saveLoginHistory();
+
+    displayLoginHistory();
+
+}
+
+// =========================
+// Display Login History
+// =========================
+
+function displayLoginHistory(){
+
+    const activityTimeline =
+    document.getElementById("activityTimeline");
+
+    if(!activityTimeline){
+
+        return;
+
+    }
+
+    activityTimeline.innerHTML = "";
+
+    loginHistory.forEach(function(activity){
+
+        activityTimeline.innerHTML += `
+
+        <div class="activity-item">
+
+            <div class="activity-icon">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+
+            <div class="activity-content">
+
+                <h4>${activity.message}</h4>
+
+                <p>${activity.time}</p>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// =========================
+// Change Password
+// =========================
+
+const currentPassword =
+document.getElementById("currentPassword");
+
+const newPassword =
+document.getElementById("newPassword");
+
+const confirmPassword =
+document.getElementById("confirmPassword");
+
+const changePasswordBtn =
+document.getElementById("changePasswordBtn");
+
+if(changePasswordBtn){
+
+    changePasswordBtn.addEventListener("click",function(){
+
+        const savedPassword =
+        localStorage.getItem("adminPassword") || "";
+
+        // Current Password Check
+        if(currentPassword.value.trim() !== savedPassword){
+
+            alert("Current Password is incorrect!");
+
+            return;
+
+        }
+
+        // New Password Empty Check
+        if(newPassword.value.trim() === ""){
+
+            alert("Please enter a new password.");
+
+            return;
+
+        }
+
+        // Minimum Length
+        if(newPassword.value.length < 6){
+
+            alert("Password must be at least 6 characters.");
+
+            return;
+
+        }
+
+        // Confirm Password Match
+        if(newPassword.value !== confirmPassword.value){
+
+            alert("New Password and Confirm Password do not match.");
+
+            return;
+
+        }
+
+        // Save Password
+        localStorage.setItem(
+            "adminPassword",
+            newPassword.value
+        );
+
+        addProfileActivity(
+            "Password Changed"
+        );
+
+        updateAdminDashboard();
+
+        alert("Password Changed Successfully!");
+
+        // Clear Fields
+        currentPassword.value = "";
+        newPassword.value = "";
+        confirmPassword.value = "";
+
+    });
+
+}
+
+// =========================
+// Show / Hide Password
+// =========================
+
+const passwordToggles =
+document.querySelectorAll(".toggle-password");
+
+passwordToggles.forEach(function(icon){
+
+    icon.addEventListener("click",function(){
+
+        const input =
+        document.getElementById(
+            this.dataset.target
+        );
+
+        if(input.type === "password"){
+
+            input.type = "text";
+
+            this.classList.remove("fa-eye");
+            this.classList.add("fa-eye-slash");
+
+        }else{
+
+            input.type = "password";
+
+            this.classList.remove("fa-eye-slash");
+            this.classList.add("fa-eye");
+
+        }
+
+    });
+
+});
+
+// =========================
+// Password Strength
+// =========================
+
+const passwordStrength =
+document.getElementById("passwordStrength");
+const ruleLength =
+document.getElementById("ruleLength");
+
+const ruleUpper =
+document.getElementById("ruleUpper");
+
+const ruleNumber =
+document.getElementById("ruleNumber");
+
+const ruleSpecial =
+document.getElementById("ruleSpecial");
+if(newPassword){
+
+    newPassword.addEventListener("input",function(){
+
+        if(!passwordStrength){
+
+            return;
+
+        }
+
+        const password =
+        this.value;
+
+        let strength = 0;
+
+        if(password.length >= 6){
+
+            strength++;
+
+        }
+
+        if(/[A-Z]/.test(password)){
+
+            strength++;
+
+        }
+
+        if(/[0-9]/.test(password)){
+
+            strength++;
+
+        }
+
+        if(/[^A-Za-z0-9]/.test(password)){
+
+            strength++;
+
+        }
+
+        passwordStrength.className =
+        "password-strength";
+
+        if(password.length === 0){
+
+            passwordStrength.innerText =
+            "Password Strength";
+
+        }else if(strength <= 1){
+
+            passwordStrength.classList.add("weak");
+
+            passwordStrength.innerText =
+            "🔴 Weak Password";
+
+        }else if(strength <= 3){
+
+            passwordStrength.classList.add("medium");
+
+            passwordStrength.innerText =
+            "🟡 Medium Password";
+
+        }else{
+
+            passwordStrength.classList.add("strong");
+
+            passwordStrength.innerText =
+            "🟢 Strong Password";
+
+        }
+        
+// =========================
+// Password Rules
+// =========================
+
+// Minimum Length
+if(password.length >= 8){
+
+    ruleLength.innerHTML =
+    "✅ Minimum 8 Characters";
+
+    ruleLength.classList.add("valid");
+
+}else{
+
+    ruleLength.innerHTML =
+    "❌ Minimum 8 Characters";
+
+    ruleLength.classList.remove("valid");
+
+}
+
+// Uppercase Letter
+if(/[A-Z]/.test(password)){
+
+    ruleUpper.innerHTML =
+    "✅ One Uppercase Letter";
+
+    ruleUpper.classList.add("valid");
+
+}else{
+
+    ruleUpper.innerHTML =
+    "❌ One Uppercase Letter";
+
+    ruleUpper.classList.remove("valid");
+
+}
+
+// Number
+if(/[0-9]/.test(password)){
+
+    ruleNumber.innerHTML =
+    "✅ One Number";
+
+    ruleNumber.classList.add("valid");
+
+}else{
+
+    ruleNumber.innerHTML =
+    "❌ One Number";
+
+    ruleNumber.classList.remove("valid");
+
+}
+
+// Special Character
+if(/[^A-Za-z0-9]/.test(password)){
+
+    ruleSpecial.innerHTML =
+    "✅ One Special Character";
+
+    ruleSpecial.classList.add("valid");
+
+}else{
+
+    ruleSpecial.innerHTML =
+    "❌ One Special Character";
+
+    ruleSpecial.classList.remove("valid");
+
+}
 
     });
 
@@ -5809,3 +6410,5 @@ updateVisitorSummary();
 displayRecentComplaints();
 updateFlatSummary();
 updateParkingSummary();
+updateProfileProgress();
+updateAdminDashboard();

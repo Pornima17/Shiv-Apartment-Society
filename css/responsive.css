@@ -401,3 +401,23 @@ footer{
 }
 
 }
+
+@media(max-width:992px){
+
+    .profile-stats{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .profile-stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
