@@ -182,31 +182,15 @@ if (darkModeBtn) {
 
 }
 
+
 // =========================
-// Dashboard Header Profile
+// Maintenance Data
 // =========================
 
-const profileData =
-JSON.parse(localStorage.getItem("adminProfile"));
+let maintenanceRecords =
+JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
 
-if(profileData){
-
-    if(headerAdminName && profileData.name){
-
-        headerAdminName.innerText =
-        profileData.name;
-
-    }
-
-    if(headerProfileImage && profileData.photo){
-
-        headerProfileImage.src =
-        profileData.photo;
-
-    }
-
-}
-
+let editingMaintenanceIndex = -1;
 
 // =========================
 // Complaints Data
@@ -1190,10 +1174,51 @@ function displayFlats(){
         return;
 
     }
+const searchValue =
+document.getElementById("searchFlat")?.value.toLowerCase() || "";
+
+const statusFilter =
+document.getElementById("filterStatus")?.value || "";
+
+const typeFilter =
+document.getElementById("filterType")?.value || "";
 
     tableBody.innerHTML = "";
 
-    flats.forEach(function(flat,index){
+    let filteredCount = 0;
+
+flats.forEach(function(flat,index){
+const matchSearch =
+
+flat.flatNumber.toLowerCase().includes(searchValue) ||
+
+flat.ownerName.toLowerCase().includes(searchValue);
+
+const matchStatus =
+
+statusFilter === "" ||
+
+flat.status === statusFilter;
+
+const matchType =
+
+typeFilter === "" ||
+
+flat.flatType === typeFilter;
+
+if(
+
+!matchSearch ||
+
+!matchStatus ||
+
+!matchType
+
+){
+
+    return;
+
+}
 
         const row = document.createElement("tr");
 
@@ -1247,10 +1272,21 @@ Delete
         `;
 
         tableBody.appendChild(row);
-
+filteredCount++;
     });
+const count =
+document.getElementById("filteredFlatCount");
+
+if(count){
+
+    count.innerText =
+    filteredCount;
 
 }
+    updateFlatSummary();
+
+}
+
 
 // =========================
 // Add Flat
@@ -1411,37 +1447,33 @@ alert("Flat Deleted Successfully!");
 }
 
 // =========================
-// Search Flat
+// Flat Filters
 // =========================
 
 const searchFlat =
 document.getElementById("searchFlat");
 
+const filterStatus =
+document.getElementById("filterStatus");
+
+const filterType =
+document.getElementById("filterType");
+
 if(searchFlat){
 
-searchFlat.addEventListener("keyup",function(){
-
-const value=
-this.value.toLowerCase();
-
-const rows=
-document.querySelectorAll("#flatTableBody tr");
-
-rows.forEach(function(row){
-
-if(row.innerText.toLowerCase().includes(value)){
-
-row.style.display="";
-
-}else{
-
-row.style.display="none";
+    searchFlat.addEventListener("keyup", displayFlats);
 
 }
 
-});
+if(filterStatus){
 
-});
+    filterStatus.addEventListener("change", displayFlats);
+
+}
+
+if(filterType){
+
+    filterType.addEventListener("change", displayFlats);
 
 }
 
@@ -1487,11 +1519,443 @@ vacant++;
 
 });
 
-totalFlats.innerText=flats.length;
 
-occupiedFlats.innerText=occupied;
+const total =
+flats.length || 1;
 
-vacantFlats.innerText=vacant;
+const occupiedPercent =
+Math.round((occupied / total) * 100);
+
+const vacantPercent =
+Math.round((vacant / total) * 100);
+
+const occupiedBadge =
+document.getElementById("occupiedPercent");
+
+const vacantBadge =
+document.getElementById("vacantPercent");
+
+if(occupiedBadge){
+
+    occupiedBadge.innerText =
+    occupiedPercent + "% Occupied";
+
+}
+
+if(vacantBadge){
+
+    vacantBadge.innerText =
+    vacantPercent + "% Vacant";
+
+}
+
+animateCounter(
+    "totalFlats",
+    flats.length
+);
+
+animateCounter(
+    "occupiedFlats",
+    occupied
+);
+
+animateCounter(
+    "vacantFlats",
+    vacant
+);
+
+updateFlatChart();
+
+updateFlatPieChart();
+
+updateProgressCircle(
+
+    "occupiedCircle",
+
+    "occupiedProgress",
+
+    occupiedPercent
+
+);
+
+updateProgressCircle(
+
+    "vacantCircle",
+
+    "vacantProgress",
+
+    vacantPercent
+
+);
+
+updateFlatStatusChart();
+updateFloorChart();
+
+}
+
+// =========================
+// Flat Chart
+// =========================
+
+let flatChart = null;
+let flatPieChart = null;
+
+function updateFlatChart(){
+
+    const chartCanvas =
+    document.getElementById("flatChart");
+
+    if(!chartCanvas){
+
+        return;
+
+    }
+
+    let occupied = 0;
+    let vacant = 0;
+
+    flats.forEach(function(flat){
+
+        if(flat.status === "Occupied"){
+
+            occupied++;
+
+        }else{
+
+            vacant++;
+
+        }
+
+    });
+
+    if(flatChart){
+
+        flatChart.destroy();
+
+    }
+
+    flatChart = new Chart(chartCanvas,{
+
+        type:"bar",
+
+        data:{
+
+            labels:[
+                "Occupied",
+                "Vacant"
+            ],
+
+            datasets:[{
+
+                label:"Total Flats",
+
+                data:[
+                    occupied,
+                    vacant
+                ],
+
+                backgroundColor:[
+                    "#22c55e",
+                    "#ef4444"
+                ],
+
+                borderRadius:12
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+                    display:false
+                }
+
+            },
+
+            scales:{
+
+                y:{
+                    beginAtZero:true
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+function updateFlatPieChart(){
+
+    const chartCanvas =
+    document.getElementById("flatPieChart");
+
+    if(!chartCanvas){
+
+        return;
+
+    }
+
+    let occupied = 0;
+    let vacant = 0;
+
+    flats.forEach(function(flat){
+
+        if(flat.status === "Occupied"){
+
+            occupied++;
+
+        }else{
+
+            vacant++;
+
+        }
+
+    });
+
+    if(flatPieChart){
+
+        flatPieChart.destroy();
+
+    }
+
+    flatPieChart = new Chart(chartCanvas,{
+
+        type:"pie",
+
+        data:{
+
+            labels:[
+                "Occupied",
+                "Vacant"
+            ],
+
+            datasets:[{
+
+                data:[
+                    occupied,
+                    vacant
+                ],
+
+                backgroundColor:[
+                    "#22c55e",
+                    "#ef4444"
+                ]
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            plugins:{
+
+                legend:{
+                    position:"bottom"
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+// =========================
+// Flat Status Chart
+// =========================
+
+let flatStatusChart = null;
+let floorChart = null;
+
+// =========================
+// Floor Wise Chart
+// =========================
+
+function updateFloorChart(){
+
+    const chartCanvas =
+    document.getElementById("floorChart");
+
+    if(!chartCanvas){
+
+        return;
+
+    }
+
+    const floorData = {};
+
+    flats.forEach(function(flat){
+
+        const floor = flat.floor;
+
+        if(!floorData[floor]){
+
+            floorData[floor] = 0;
+
+        }
+
+        floorData[floor]++;
+
+    });
+
+    const labels =
+    Object.keys(floorData);
+
+    const data =
+    Object.values(floorData);
+
+    if(floorChart){
+
+        floorChart.destroy();
+
+    }
+
+    floorChart = new Chart(chartCanvas,{
+
+        type:"bar",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[{
+
+                label:"Total Flats",
+
+                data:data,
+
+                backgroundColor:"#4e73df",
+
+                borderRadius:10
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            plugins:{
+
+                legend:{
+                    display:false
+                }
+
+            },
+
+            scales:{
+
+                y:{
+                    beginAtZero:true
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+// =========================
+// Flat Status Donut Chart
+// =========================
+
+function updateFlatStatusChart(){
+
+    const chartCanvas =
+    document.getElementById("flatStatusChart");
+
+    if(!chartCanvas){
+
+        return;
+
+    }
+
+    let occupied = 0;
+    let vacant = 0;
+
+    flats.forEach(function(flat){
+
+        if(flat.status === "Occupied"){
+
+            occupied++;
+
+        }else{
+
+            vacant++;
+
+        }
+
+    });
+
+    if(flatStatusChart){
+
+        flatStatusChart.destroy();
+
+    }
+
+    flatStatusChart = new Chart(chartCanvas,{
+
+        type:"doughnut",
+
+        data:{
+
+            labels:[
+                "Occupied",
+                "Vacant"
+            ],
+
+            datasets:[{
+
+                data:[
+                    occupied,
+                    vacant
+                ],
+
+                backgroundColor:[
+                    "#22c55e",
+                    "#ef4444"
+                ],
+
+                borderWidth:0
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            cutout:"70%",
+
+            plugins:{
+
+                legend:{
+
+                    position:"bottom"
+
+                }
+
+            }
+
+        }
+
+    });
 
 }
 
@@ -4253,12 +4717,6 @@ font-weight:bold;
 
 ${receipt}
 
-<div class="footer">
-
-Generated by Shiv Apartment Society Management System
-
-</div>
-
 </div>
 
 </body>
@@ -4267,98 +4725,28 @@ Generated by Shiv Apartment Society Management System
 
 `);
 
-        printWindow.document.close();
+printWindow.document.close();
 
-        printWindow.focus();
+printWindow.focus();
 
-        printWindow.print();
+// Print after page fully loads
+printWindow.onload = function(){
 
-    });
+    printWindow.print();
 
-}
+};
 
-// =========================
-// Download Receipt PDF
-// =========================
+// Close print window after printing
+printWindow.onafterprint = function(){
 
-const downloadReceipt =
-document.getElementById("downloadReceipt");
+    printWindow.close();
 
-if(downloadReceipt){
-
-    downloadReceipt.addEventListener("click",function(){
-
-        const { jsPDF } = window.jspdf;
-
-        const doc = new jsPDF();
-        // Border
-doc.setDrawColor(0,102,204);
-doc.setLineWidth(1);
-
-doc.rect(10,10,190,277);
-
-       doc.setTextColor(0,102,204);
-doc.setFontSize(22);
-doc.setFont("helvetica","bold");
-
-doc.text("SHIV APARTMENT",50,25);
-
-doc.setTextColor(0,0,0);
-
-      doc.setFontSize(16);
-doc.setFont("helvetica","bold");
-
-doc.text("Maintenance Payment Receipt",45,40);
-
-doc.line(20,45,190,45);
-        doc.setFontSize(12);
-
-        doc.text("Receipt No : " +
-        document.getElementById("receiptNo").innerText,20,60);
-
-        doc.text("Resident : " +
-        document.getElementById("receiptResident").innerText,20,75);
-
-        doc.text("Flat : " +
-        document.getElementById("receiptFlat").innerText,20,90);
-
-        doc.text("Amount : ₹" +
-        document.getElementById("receiptAmount").innerText,20,105);
-
-        doc.text("Status : " +
-        document.getElementById("receiptStatus").innerText,20,120);
-
-        doc.text("Date : " +
-        document.getElementById("receiptDate").innerText,20,135);
-
-doc.setFontSize(16);
-doc.setFont("helvetica","bold");
-
-doc.text("Thank You!",78,165);
-
-doc.line(135,220,185,220);
-
-doc.setFontSize(12);
-
-doc.text(
-"Authorized Signature",
-138,
-228
-);
-
-doc.setFontSize(10);
-
-doc.text(
-"Generated by Shiv Apartment Society Management System",
-25,
-270
-);
-
-        doc.save("Maintenance_Receipt.pdf");
+};
 
     });
 
 }
+
 
 // =========================
 // Search Maintenance
@@ -6378,6 +6766,570 @@ if(menuToggle && sidebar){
 
 }
 
+// =========================
+// Dashboard Header Profile
+// =========================
+
+const profileData =
+JSON.parse(localStorage.getItem("adminProfile"));
+
+if(profileData){
+
+    const headerAdminName =
+    document.getElementById("headerAdminName");
+
+    const headerProfileImage =
+    document.getElementById("adminProfileImage");
+
+    if(headerAdminName && profileData.name){
+
+        headerAdminName.innerText =
+        profileData.name;
+
+    }
+
+    if(headerProfileImage && profileData.photo){
+
+        headerProfileImage.src =
+        profileData.photo;
+
+    }
+
+}
+
+// =========================
+// Current Date
+// =========================
+
+const currentDate =
+document.getElementById("currentDate");
+
+if(currentDate){
+
+    const today =
+    new Date();
+
+    currentDate.innerHTML =
+    "📅 " +
+    today.toLocaleDateString("en-GB",{
+
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+
+    });
+
+}
+
+// =========================
+// Notification Dropdown
+// =========================
+
+const notificationBtn =
+document.getElementById("notificationBtn");
+
+const notificationDropdown =
+document.getElementById("notificationDropdown");
+
+if(notificationBtn && notificationDropdown){
+
+    notificationBtn.addEventListener("click",function(e){
+
+        e.stopPropagation();
+
+        notificationDropdown.style.display =
+        notificationDropdown.style.display === "block"
+        ? "none"
+        : "block";
+
+    });
+
+    document.addEventListener("click",function(){
+
+        notificationDropdown.style.display = "none";
+
+    });
+
+}
+
+// =========================
+// Admin Profile Dropdown
+// =========================
+
+const adminProfile =
+document.getElementById("adminProfile");
+
+const profileDropdown =
+document.getElementById("profileDropdown");
+
+if(adminProfile && profileDropdown){
+
+    adminProfile.addEventListener("click",function(e){
+
+        e.stopPropagation();
+
+        profileDropdown.style.display =
+        profileDropdown.style.display === "block"
+        ? "none"
+        : "block";
+
+    });
+
+    document.addEventListener("click",function(){
+
+        profileDropdown.style.display = "none";
+
+    });
+
+}
+
+// =========================
+// Counter Animation
+// =========================
+
+function animateCounter(id,value){
+
+    const element =
+    document.getElementById(id);
+
+    if(!element){
+
+        return;
+
+    }
+
+    let start = 0;
+
+    const duration = 1000;
+
+    const increment =
+    value / (duration / 20);
+
+    const timer =
+    setInterval(function(){
+
+        start += increment;
+
+        if(start >= value){
+
+            start = value;
+
+            clearInterval(timer);
+
+        }
+
+        element.innerText =
+        Math.floor(start);
+
+    },20);
+
+}
+
+// =========================
+// Circular Progress Function
+// =========================
+
+function updateCircularProgress(circleId,textId,percent){
+
+    const circle =
+    document.getElementById(circleId);
+
+    const text =
+    document.getElementById(textId);
+
+
+    if(!circle || !text){
+
+        return;
+
+    }
+
+
+    const radius = 50;
+
+    const circumference =
+    2 * Math.PI * radius;
+
+
+    circle.style.strokeDasharray =
+    circumference;
+
+
+    const offset =
+    circumference -
+    (percent / 100) * circumference;
+
+
+    circle.style.strokeDashoffset =
+    offset;
+
+
+    text.innerText =
+    percent + "%";
+
+}
+
+// =========================
+// Circular Progress
+// =========================
+
+function updateProgressCircle(
+
+    circleId,
+    textId,
+    percent
+
+){
+
+    const circle =
+    document.getElementById(circleId);
+
+    const text =
+    document.getElementById(textId);
+
+    if(!circle || !text){
+
+        return;
+
+    }
+
+    const radius = 50;
+
+    const circumference =
+    2 * Math.PI * radius;
+
+    const offset =
+    circumference -
+    (percent / 100) * circumference;
+
+    circle.style.strokeDashoffset =
+    offset;
+
+    text.innerText =
+    percent + "%";
+
+}
+
+// =========================
+// Today's Date Widget
+// =========================
+
+const todayDateWidget =
+document.getElementById("todayDateWidget");
+
+if(todayDateWidget){
+
+    todayDateWidget.innerHTML =
+    new Date().toLocaleDateString("en-GB",{
+
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+
+    });
+
+}
+
+// =========================
+// Live Digital Clock
+// =========================
+
+const currentTime =
+document.getElementById("currentTime");
+
+function updateClock(){
+
+    if(!currentTime){
+
+        return;
+
+    }
+
+    const now = new Date();
+
+    currentTime.innerHTML =
+    "🕒 " +
+    now.toLocaleTimeString("en-GB");
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+// =========================
+// Circular Progress
+// =========================
+
+function updateCircularProgress(id,textId,percent){
+
+    const circle =
+    document.getElementById(id);
+
+    const text =
+    document.getElementById(textId);
+
+    if(!circle || !text){
+
+        return;
+
+    }
+
+    const degree =
+    percent * 3.6;
+
+    circle.style.background =
+    `conic-gradient(#4e73df ${degree}deg,#e9ecef ${degree}deg)`;
+
+    text.innerText =
+    percent + "%";
+
+}
+
+// =========================
+// Dashboard Overview
+// =========================
+
+function updateOverview(){
+
+    const residents =
+    JSON.parse(localStorage.getItem("residents")) || [];
+
+    const totalFlats = 50;
+
+    const occupied =
+    residents.length;
+
+    const vacant =
+    totalFlats - occupied;
+
+    const flats =
+    document.getElementById("overviewFlats");
+
+    const occupiedBox =
+    document.getElementById("overviewOccupied");
+
+    const vacantBox =
+    document.getElementById("overviewVacant");
+
+    if(flats){
+
+        flats.innerText =
+        totalFlats;
+
+    }
+
+    if(occupiedBox){
+
+        occupiedBox.innerText =
+        occupied;
+
+    }
+
+    if(vacantBox){
+
+        vacantBox.innerText =
+        vacant;
+
+    }
+
+}
+
+// =========================
+// Dashboard Statistics
+// =========================
+
+function updateDashboardStats(){
+
+    const total =
+    document.getElementById("totalResidents");
+
+    const active =
+    document.getElementById("activeResidents");
+
+    const inactive =
+    document.getElementById("inactiveResidents");
+
+
+    if(!total || !active || !inactive){
+        return;
+    }
+
+
+    const residents =
+    JSON.parse(localStorage.getItem("residents")) || [];
+
+
+    let activeCount = 0;
+    let inactiveCount = 0;
+
+
+    residents.forEach(function(resident){
+
+        if(resident.status === "Active"){
+
+            activeCount++;
+
+        }
+        else{
+
+            inactiveCount++;
+
+        }
+
+    });
+
+animateCounter(
+    "totalResidents",
+    residents.length
+);
+
+animateCounter(
+    "activeResidents",
+    activeCount
+);
+
+animateCounter(
+    "inactiveResidents",
+    inactiveCount
+);
+
+// =========================
+// Circular Progress
+// =========================
+
+const residentTotal =
+residents.length || 1;
+
+
+const paidResidentsCount =
+residents.filter(function(resident){
+
+    return resident.status === "Active";
+
+}).length;
+
+
+const activePercent =
+Math.round(
+(paidResidentsCount / residentTotal) * 100
+);
+
+
+updateCircularProgress(
+    "paidCircle",
+    "paidPercent",
+    activePercent
+);
+
+
+updateCircularProgress(
+    "collectionCircle",
+    "collectionPercent",
+    activePercent
+);
+
+
+// =========================
+// Complaint Resolution Rate
+// =========================
+
+const complaints =
+JSON.parse(localStorage.getItem("complaints")) || [];
+
+
+let resolvedComplaints = 0;
+
+
+complaints.forEach(function(complaint){
+
+    if(
+        complaint.status === "Resolved" ||
+        complaint.status === "Closed"
+    ){
+
+        resolvedComplaints++;
+
+    }
+
+});
+
+
+const complaintTotal =
+complaints.length || 1;
+
+
+const complaintPercent =
+Math.round(
+(resolvedComplaints / complaintTotal) * 100
+);
+
+
+
+// =========================
+// Maintenance Collection Rate
+// =========================
+
+const maintenanceRecords =
+JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
+
+
+let paidAmount = 0;
+
+let totalAmount = 0;
+
+
+maintenanceRecords.forEach(function(record){
+
+
+    const amount =
+    Number(record.amount) || 0;
+
+
+    totalAmount += amount;
+
+
+    if(
+        record.status === "Paid" ||
+        record.status === "Paid"
+    ){
+
+        paidAmount += amount;
+
+    }
+
+
+});
+
+
+const collectionPercent =
+
+totalAmount === 0
+
+?
+
+0
+
+:
+
+Math.round(
+(paidAmount / totalAmount) * 100
+);
+
+
+
+updateCircularProgress(
+
+    "collectionCircle",
+
+    "collectionPercent",
+
+    collectionPercent
+
+);
+
+}
+
 
 // =========================
 // Load Data
@@ -6403,6 +7355,7 @@ displayEvents();
 displayResidents();
 
 updateDashboardStats();
+updateOverview();
 updateMaintenanceSummary();
 displayRecentMaintenance();
 updateMaintenanceChart(); 

@@ -113,13 +113,17 @@ Events
 
         <h1>🏠 Flat Management</h1>
 
-        <!-- =========================
+<!-- =========================
 Flat Summary
 ========================= -->
 
-<div class="dashboard-cards">
+<div class="flat-summary">
 
-    <div class="card">
+    <div class="summary-card total">
+
+        <div class="summary-icon">
+            <i class="fa-solid fa-building"></i>
+        </div>
 
         <h3>Total Flats</h3>
 
@@ -127,25 +131,147 @@ Flat Summary
 
     </div>
 
-    <div class="card">
+    <div class="summary-card occupied">
 
-        <h3>Occupied</h3>
+        <div class="summary-icon">
+            <i class="fa-solid fa-house-circle-check"></i>
+        </div>
+
+        <h3>Occupied Flats</h3>
 
         <h2 id="occupiedFlats">0</h2>
 
+        <span id="occupiedPercent" class="summary-badge">
+            0%
+        </span>
+
     </div>
 
-    <div class="card">
+    <div class="summary-card vacant">
 
-        <h3>Vacant</h3>
+        <div class="summary-icon">
+            <i class="fa-solid fa-house-circle-xmark"></i>
+        </div>
+
+        <h3>Vacant Flats</h3>
 
         <h2 id="vacantFlats">0</h2>
+
+        <span id="vacantPercent" class="summary-badge">
+            0%
+        </span>
 
     </div>
 
 </div>
 
-        <!-- Add Flat -->
+<!-- =========================
+Flat Analytics
+========================= -->
+
+<div class="flat-analytics">
+
+    <div class="progress-card">
+
+        <div class="progress-circle">
+
+            <svg width="120" height="120">
+
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-bg">
+                </circle>
+
+                <circle
+                    id="occupiedCircle"
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-fill">
+                </circle>
+
+            </svg>
+
+            <div
+                class="progress-text"
+                id="occupiedProgress">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <h3>Occupied Rate</h3>
+
+    </div>
+
+    <div class="progress-card">
+
+        <div class="progress-circle">
+
+            <svg width="120" height="120">
+
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-bg">
+                </circle>
+
+                <circle
+                    id="vacantCircle"
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-fill">
+                </circle>
+
+            </svg>
+
+            <div
+                class="progress-text"
+                id="vacantProgress">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <h3>Vacant Rate</h3>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Flat Status Chart
+========================= -->
+
+<div class="chart-card">
+
+    <h2>🏠 Flat Occupancy Overview</h2>
+
+    <canvas id="flatStatusChart"></canvas>
+
+</div>
+
+<!-- =========================
+Floor Wise Flats
+========================= -->
+
+<div class="chart-card">
+
+    <h2>🏢 Floor Wise Flats</h2>
+
+    <canvas id="floorChart"></canvas>
+
+</div>
+
+<!-- Add Flat -->
 
         <div class="form-container">
 
@@ -197,26 +323,113 @@ Flat Summary
 
                 </select>
 
-                <button id="saveFlat">
+<button id="saveFlat">
 
-                    Save Flat
+    <i class="fa-solid fa-floppy-disk"></i>
 
-                </button>
+    Save Flat
+
+</button>
 
             </div>
 
         </div>
-
         <br>
 
-        <!-- Search -->
-
-        <input
-            type="text"
-            id="searchFlat"
-            placeholder="🔍 Search Flat...">
-
         <br><br>
+
+        <!-- =========================
+Flat Search & Filters
+========================= -->
+
+<div class="flat-filters">
+
+    <input
+        type="text"
+        id="searchFlat"
+        placeholder="🔍 Search Flat / Owner">
+
+    <select id="filterStatus">
+
+        <option value="">
+            All Status
+        </option>
+
+        <option value="Occupied">
+            Occupied
+        </option>
+
+        <option value="Vacant">
+            Vacant
+        </option>
+
+    </select>
+
+    <select id="filterType">
+
+        <option value="">
+            All Types
+        </option>
+
+        <option value="1 BHK">
+            1 BHK
+        </option>
+
+        <option value="2 BHK">
+            2 BHK
+        </option>
+
+        <option value="3 BHK">
+            3 BHK
+        </option>
+
+    </select>
+
+    <button id="resetFlatFilters">
+
+    <i class="fa-solid fa-rotate-left"></i>
+
+    Reset
+
+</button>
+
+<div class="filter-count">
+
+    Total :
+
+    <span id="filteredFlatCount">0</span>
+
+</div>
+
+</div>
+
+<!-- =========================
+Flat Charts
+========================= -->
+
+<div class="charts-container">
+
+    <!-- Bar Chart -->
+
+    <div class="chart-card">
+
+        <h2>🏢 Flat Statistics</h2>
+
+        <canvas id="flatChart"></canvas>
+
+    </div>
+
+    <!-- Pie Chart -->
+
+    <div class="chart-card">
+
+        <h2>🥧 Occupied vs Vacant</h2>
+
+        <canvas id="flatPieChart"></canvas>
+
+    </div>
+
+</div>
 
         <!-- Table -->
 
@@ -276,8 +489,8 @@ Flat View Modal
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/script.js"></script>
-
 </body>
 
 </html>

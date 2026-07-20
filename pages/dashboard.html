@@ -156,6 +156,40 @@ Events
                 <input type="text" placeholder="Search...">
 
             </div>
+        <div class="header-right">
+
+    <div class="current-date" id="currentDate">
+        📅 19 July 2026
+    </div>
+    <div class="current-time" id="currentTime">
+    🕒 00:00:00
+</div>
+
+<div class="notification-icon" id="notificationBtn">
+
+    <i class="fa-solid fa-bell"></i>
+
+    <span class="notification-count">3</span>
+
+    <div class="notification-dropdown" id="notificationDropdown">
+
+        <h4>Notifications</h4>
+
+        <ul>
+
+            <li>🏠 New Resident Added</li>
+
+            <li>💰 Maintenance Received</li>
+
+            <li>📢 New Notice Published</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+</div>
 <div class="admin-profile" id="adminProfile">
 
     <img
@@ -197,32 +231,102 @@ Events
 
         </div>
 
+<!-- =========================
+Dashboard Overview
+========================= -->
+
+<div class="overview-banner">
+
+    <div class="overview-item">
+
+        <h4>Total Flats</h4>
+
+        <h2 id="overviewFlats">0</h2>
+
+    </div>
+
+    <div class="overview-item">
+
+        <h4>Occupied Flats</h4>
+
+        <h2 id="overviewOccupied">0</h2>
+
+    </div>
+
+    <div class="overview-item">
+
+        <h4>Vacant Flats</h4>
+
+        <h2 id="overviewVacant">0</h2>
+
+    </div>
+
+</div>
+<!-- =========================
+Quick Actions
+========================= -->
+
+<div class="quick-actions">
+
+    <button onclick="location.href='residents.html'">
+        <i class="fa-solid fa-user-plus"></i>
+        Add Resident
+    </button>
+
+    <button onclick="location.href='maintenance.html'">
+        <i class="fa-solid fa-wallet"></i>
+        Add Maintenance
+    </button>
+
+    <button onclick="location.href='complaints.html'">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        View Complaints
+    </button>
+
+    <button onclick="location.href='notice.html'">
+        <i class="fa-solid fa-bullhorn"></i>
+        Add Notice
+    </button>
+
+</div>
         <!-- Dashboard Cards -->
         <div class="dashboard-cards">
 
-            <div class="card">
+<div class="card">
 
-                <h3>Total Residents</h3>
+    <div class="card-icon">
+        <i class="fa-solid fa-users"></i>
+    </div>
 
-                <h2 id="totalResidents">0</h2>
+    <h3>Total Residents</h3>
 
-            </div>
+    <h2 id="totalResidents">0</h2>
 
-            <div class="card">
+</div>
 
-                <h3>Active Residents</h3>
+<div class="card">
 
-                <h2 id="activeResidents">0</h2>
+    <div class="card-icon">
+        <i class="fa-solid fa-user-check"></i>
+    </div>
 
-            </div>
+    <h3>Active Residents</h3>
 
-            <div class="card">
+    <h2 id="activeResidents">0</h2>
 
-                <h3>Inactive Residents</h3>
+</div>
 
-                <h2 id="inactiveResidents">0</h2>
+<div class="card">
 
-            </div>
+    <div class="card-icon">
+        <i class="fa-solid fa-user-xmark"></i>
+    </div>
+
+    <h3>Inactive Residents</h3>
+
+    <h2 id="inactiveResidents">0</h2>
+
+</div>
 
         </div>
 
@@ -303,6 +407,125 @@ Maintenance Summary
 </div>
 
 <!-- =========================
+Dashboard Progress Analytics
+========================= -->
+
+<div class="progress-dashboard">
+
+    <div class="progress-card">
+
+        <div class="progress-circle">
+
+            <svg width="120" height="120">
+
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-bg">
+                </circle>
+
+                <circle
+                    id="paidCircle"
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-fill">
+                </circle>
+
+            </svg>
+
+            <div
+                id="paidPercent"
+                class="progress-text">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <h3>Paid Residents</h3>
+
+    </div>
+
+    <div class="progress-card">
+
+        <div class="progress-circle">
+
+            <svg width="120" height="120">
+
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-fill"
+                    id="collectionCircle">
+                </circle>
+
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-bg">
+                </circle>
+
+            </svg>
+
+            <div
+                id="collectionPercent"
+                class="progress-text">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <h3>Collection Rate</h3>
+
+    </div>
+
+    <div class="progress-card">
+
+        <div class="progress-circle">
+
+            <svg width="120" height="120">
+
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-bg">
+                </circle>
+
+                <circle
+                    id="complaintCircle"
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    class="progress-fill">
+                </circle>
+
+            </svg>
+
+            <div
+                id="complaintPercent"
+                class="progress-text">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <h3>Complaint Resolution</h3>
+
+    </div>
+
+</div>
+
+<!-- =========================
 Monthly Collection Chart
 ========================= -->
 
@@ -371,7 +594,7 @@ Recent Maintenance
 
 </div>
 
-       <!-- =========================
+<!-- =========================
 Recent Complaints
 ========================= -->
 
@@ -399,6 +622,124 @@ Recent Complaints
         </tbody>
 
     </table>
+
+</div>
+
+<!-- =========================
+Recent Notifications
+========================= -->
+
+<div class="notification-card">
+
+    <h2>🔔 Recent Notifications</h2>
+
+    <ul id="dashboardNotifications">
+
+        <li>
+            <i class="fa-solid fa-user-plus"></i>
+            New Resident Added
+        </li>
+
+        <li>
+            <i class="fa-solid fa-wallet"></i>
+            Maintenance Payment Received
+        </li>
+
+        <li>
+            <i class="fa-solid fa-bullhorn"></i>
+            New Notice Published
+        </li>
+
+        <li>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Complaint Submitted
+        </li>
+
+    </ul>
+
+</div>
+
+<!-- =========================
+System Status
+========================= -->
+
+<div class="system-status">
+
+    <div class="status-card">
+
+        <h3>🟢 Server Status</h3>
+
+        <p>Online</p>
+
+    </div>
+
+    <div class="status-card">
+
+        <h3>💾 Storage</h3>
+
+        <p>68% Used</p>
+
+    </div>
+
+    <div class="status-card">
+
+        <h3>👥 Visitors Today</h3>
+
+        <p id="todayVisitors">0</p>
+
+    </div>
+
+    <div class="status-card">
+
+        <h3>📅 Today's Date</h3>
+
+        <p id="todayDateWidget"></p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+Circular Progress Cards
+========================= -->
+
+<div class="progress-section">
+
+    <div class="progress-card">
+
+        <div class="circle" id="collectionCircle">
+
+            <span id="collectionPercent">0%</span>
+
+        </div>
+
+        <h3>Maintenance Collection</h3>
+
+    </div>
+
+    <div class="progress-card">
+
+        <div class="circle" id="paidCircle">
+
+            <span id="paidPercent">0%</span>
+
+        </div>
+
+        <h3>Paid Residents</h3>
+
+    </div>
+
+    <div class="progress-card">
+
+        <div class="circle" id="complaintCircle">
+
+            <span id="complaintPercent">0%</span>
+
+        </div>
+
+        <h3>Resolved Complaints</h3>
+
+    </div>
 
 </div>
 
