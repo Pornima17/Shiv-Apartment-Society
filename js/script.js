@@ -4098,6 +4098,168 @@ function displayActivities(){
 }
 
 // =========================
+// Complaint Status Chart
+// =========================
+
+function updateComplaintChart(){
+
+
+    const canvas =
+    document.getElementById("complaintChart");
+
+
+    if(!canvas){
+        return;
+    }
+
+
+    const complaints =
+    JSON.parse(localStorage.getItem("complaints")) || [];
+
+
+
+    let pending = 0;
+
+    let resolved = 0;
+
+
+
+    complaints.forEach(function(item){
+
+
+        if(item.status === "Pending"){
+
+            pending++;
+
+        }
+
+
+        if(item.status === "Resolved"){
+
+            resolved++;
+
+        }
+
+
+    });
+
+
+
+    let total = complaints.length;
+
+
+
+    if(complaintChart){
+
+        complaintChart.destroy();
+
+    }
+
+
+
+    complaintChart =
+    new Chart(canvas, {
+        plugins:[ChartDataLabels],
+
+
+        type:"bar",
+
+
+        data:{
+
+
+            labels:[
+
+                "Pending",
+                "Resolved",
+                "Total"
+
+            ],
+
+
+datasets:[{
+
+    label:"Complaints",
+
+    data:[
+
+        pending,
+        resolved,
+        total
+
+    ],
+
+
+    backgroundColor:[
+
+        "#ff9800",
+        "#28a745",
+        "#007bff"
+
+    ],
+
+
+    borderColor:[
+
+        "#ff9800",
+        "#28a745",
+        "#007bff"
+
+    ],
+
+
+    borderWidth:1,
+
+
+    borderRadius:8
+
+
+}]
+
+
+        },
+
+
+options:{
+
+
+    responsive:true,
+
+
+    animation:{
+
+
+        duration:1500,
+
+
+        easing:"easeOutBounce"
+
+
+    },
+
+
+    scales:{
+
+
+                y:{
+
+
+                    beginAtZero:true
+
+                }
+
+            }
+
+
+        }
+
+
+    });
+
+
+}
+
+// =========================
 // View All Activities Modal
 // =========================
 
@@ -7189,6 +7351,7 @@ function animateCounter(id,value){
 
 let residentChart = null;
 let statusChart = null;
+let complaintChart = null;
 
 function updateResidentChart(){
 
@@ -7757,6 +7920,8 @@ updateResidentChart();
 }
 
 
+
+
 // =========================
 // Load Data
 // =========================
@@ -7791,3 +7956,4 @@ updateFlatSummary();
 updateParkingSummary();
 updateProfileProgress();
 updateAdminDashboard();
+updateComplaintChart();

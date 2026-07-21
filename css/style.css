@@ -3817,18 +3817,43 @@ Maintenance Status Badge
 }
 
 /* =========================
-Maintenance Pie Chart
+   Side By Side Charts
 ========================= */
 
-#maintenancePieChart{
 
-    max-width:350px;
+.charts-row{
 
-    max-height:350px;
+    display:grid;
 
-    margin:auto;
+    grid-template-columns: repeat(2, 1fr);
 
-    display:block;
+    gap:25px;
+
+    margin-top:20px;
+
+}
+
+
+
+.chart-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
+}
+
+
+
+.chart-card canvas{
+
+    width:100% !important;
+
+    height:300px !important;
 
 }
 
