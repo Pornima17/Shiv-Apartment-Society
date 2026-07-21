@@ -330,16 +330,86 @@ Quick Actions
 
         </div>
 
-        <!-- Recent Activities -->
+<!-- Recent Activities -->
 
-        <div class="activity-card">
+<div class="activity-card">
 
-            <h2>📝 Recent Activities</h2>
 
-            <ul id="activityList"></ul>
+    <div class="activity-header">
+
+        <h2>📝 Recent Activities</h2>
+
+
+        <button id="viewAllActivities">
+            View All Activities
+        </button>
+
+
+    </div>
+
+
+    <div id="activityList"></div>
+
+<!-- =========================
+     All Activities Modal
+========================= -->
+
+<div id="activityModal" class="modal">
+
+
+    <div class="modal-content activity-modal">
+
+
+        <span id="closeActivityModal" class="close">
+            &times;
+        </span>
+
+
+        <h2>📋 All Activities</h2>
+
+
+        <div class="table-container">
+
+
+            <table class="activity-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Activity</th>
+
+                        <th>Date</th>
+
+                        <th>Time</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="allActivityList">
+
+                </tbody>
+
+
+            </table>
+
 
         </div>
 
+
+    </div>
+
+
+</div>
+
+</div>
 <!-- =========================
 Resident Statistics Chart
 ========================= -->
@@ -526,26 +596,26 @@ Dashboard Progress Analytics
 </div>
 
 <!-- =========================
-Monthly Collection Chart
+Monthly Charts
 ========================= -->
 
-<div class="chart-card">
+<div class="dashboard-chart-row">
 
-    <h2>📊 Monthly Maintenance Collection</h2>
+    <div class="chart-card">
 
-    <canvas id="maintenanceChart"></canvas>
+        <h2>📊 Monthly Maintenance Collection</h2>
 
-</div>
+        <canvas id="maintenanceChart"></canvas>
 
-<!-- =========================
-Monthly Collection Trend
-========================= -->
+    </div>
 
-<div class="chart-card">
+    <div class="chart-card">
 
-    <h2>📈 Monthly Collection Trend</h2>
+        <h2>📈 Monthly Collection Trend</h2>
 
-    <canvas id="maintenanceTrendChart"></canvas>
+        <canvas id="maintenanceTrendChart"></canvas>
+
+    </div>
 
 </div>
 
@@ -626,6 +696,50 @@ Recent Complaints
 </div>
 
 <!-- =========================
+Dashboard Widgets
+========================= -->
+
+<div class="dashboard-widgets">
+
+    <div class="widget-card">
+
+        <h3>📢 Recent Notices</h3>
+
+        <ul id="dashboardNoticeList">
+
+            <li>No notices available</li>
+
+        </ul>
+
+    </div>
+
+    <div class="widget-card">
+
+        <h3>🚶 Recent Visitors</h3>
+
+        <ul id="dashboardVisitorList">
+
+            <li>No visitors available</li>
+
+        </ul>
+
+    </div>
+
+    <div class="widget-card">
+
+        <h3>🎉 Upcoming Events</h3>
+
+        <ul id="dashboardEventList">
+
+            <li>No events available</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<!-- =========================
 Recent Notifications
 ========================= -->
 
@@ -699,57 +813,13 @@ System Status
 
 </div>
 
-<!-- =========================
-Circular Progress Cards
-========================= -->
-
-<div class="progress-section">
-
-    <div class="progress-card">
-
-        <div class="circle" id="collectionCircle">
-
-            <span id="collectionPercent">0%</span>
-
-        </div>
-
-        <h3>Maintenance Collection</h3>
-
-    </div>
-
-    <div class="progress-card">
-
-        <div class="circle" id="paidCircle">
-
-            <span id="paidPercent">0%</span>
-
-        </div>
-
-        <h3>Paid Residents</h3>
-
-    </div>
-
-    <div class="progress-card">
-
-        <div class="circle" id="complaintCircle">
-
-            <span id="complaintPercent">0%</span>
-
-        </div>
-
-        <h3>Resolved Complaints</h3>
-
     </div>
 
 </div>
 
-    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/script.js"></script>
 
 </body>
-
 </html>

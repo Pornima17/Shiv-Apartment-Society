@@ -183,6 +183,7 @@ if (darkModeBtn) {
 }
 
 
+
 // =========================
 // Maintenance Data
 // =========================
@@ -221,6 +222,12 @@ let editingVisitorIndex = -1;
 
 let flats = [];
 let editingFlatIndex = -1;
+
+// =========================
+// Dashboard Activities
+// =========================
+
+let activities = [];
 
 // =========================
 // Parking Data
@@ -1940,6 +1947,7 @@ function updateFlatStatusChart(){
         options:{
 
             responsive:true,
+            maintainAspectRatio:false,
 
             cutout:"70%",
 
@@ -3899,13 +3907,21 @@ function loadMaintenance() {
 // Load Activities
 // =========================
 
-function loadActivities() {
+function loadActivities(){
 
-    const savedActivities = localStorage.getItem("activities");
+    const data =
+    localStorage.getItem("activities");
 
-    if (savedActivities) {
 
-        activities = JSON.parse(savedActivities);
+    if(data){
+
+        activities =
+        JSON.parse(data);
+
+    }
+    else{
+
+        activities = [];
 
     }
 
@@ -3929,9 +3945,12 @@ function saveMaintenance() {
 // Save Activities
 // =========================
 
-function saveActivities() {
+function saveActivities(){
 
-    localStorage.setItem("activities", JSON.stringify(activities));
+    localStorage.setItem(
+        "activities",
+        JSON.stringify(activities)
+    );
 
 }
 
@@ -3939,67 +3958,283 @@ function saveActivities() {
 // Add Activity
 // =========================
 
-function addActivity(message) {
+function addActivity(message,type="default"){
 
-    const now = new Date();
+    const now =
+    new Date();
 
-    const time = now.toLocaleTimeString([], {
+    const activity = {
 
-        hour: "2-digit",
-        minute: "2-digit"
+        message:message,
 
-    });
+        type:type,
 
-    activities.unshift({
+        time:now.toLocaleTimeString([],{
 
-        time: time,
+            hour:"2-digit",
 
-        message: message
+            minute:"2-digit"
 
-    });
+        }),
 
-    // फक्त शेवटच्या 10 Activities ठेवायच्या
-    if (activities.length > 10) {
+        date:now.toLocaleDateString()
+
+    };
+
+    activities.unshift(activity);
+
+    if(activities.length > 10){
 
         activities.pop();
 
     }
 
-    saveActivities();
+    localStorage.setItem(
+
+        "activities",
+
+        JSON.stringify(activities)
+
+    );
 
     displayActivities();
 
 }
 
+
 // =========================
 // Display Activities
 // =========================
 
-function displayActivities() {
+function displayActivities(){
 
-    const activityList = document.getElementById("activityList");
+    const activityList =
+    document.getElementById("activityList");
 
-    if (!activityList) {
 
+    if(!activityList){
         return;
-
     }
 
-    activityList.innerHTML = "";
 
-    activities.forEach(function(activity){
+    let activities =
+    JSON.parse(localStorage.getItem("activities")) || [];
 
-        const li = document.createElement("li");
 
-        li.innerHTML = `<strong>${activity.time}</strong> - ${activity.message}`;
+    activityList.innerHTML="";
 
-        activityList.appendChild(li);
+
+    activities.forEach(activity=>{
+
+
+        let icon="↩";
+        let type="default";
+
+
+        if(activity.message.toLowerCase().includes("maintenance")){
+
+            icon="💰";
+            type="maintenance";
+
+        }
+        else if(activity.message.toLowerCase().includes("complaint")){
+
+            icon="⚠️";
+            type="complaint";
+
+        }
+        else if(activity.message.toLowerCase().includes("notice")){
+
+            icon="📢";
+            type="notice";
+
+        }
+        else if(activity.message.toLowerCase().includes("resident")){
+
+            icon="👤";
+            type="resident";
+
+        }
+
+
+
+        activityList.innerHTML += `
+
+
+        <div class="activity-item">
+
+
+            <div class="activity-icon ${type}">
+
+                ${icon}
+
+            </div>
+
+
+            <div class="activity-content">
+
+                <h4>
+                ${activity.message}
+                </h4>
+
+
+                <p>
+                ${activity.date} | ${activity.time}
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+        `;
+
 
     });
+
+
+}
+
+// =========================
+// View All Activities Modal
+// =========================
+
+
+const viewAllActivities =
+document.getElementById("viewAllActivities");
+
+
+const activityModal =
+document.getElementById("activityModal");
+
+
+const closeActivityModal =
+document.getElementById("closeActivityModal");
+
+
+const allActivityList =
+document.getElementById("allActivityList");
+
+
+
+if(viewAllActivities){
+
+
+viewAllActivities.addEventListener("click",function(){
+
+
+    displayAllActivities();
+
+
+    activityModal.style.display="block";
+
+
+});
+
 
 }
 
 
+
+if(closeActivityModal){
+
+
+closeActivityModal.onclick=function(){
+
+    activityModal.style.display="none";
+
+}
+
+
+}
+
+
+
+function displayAllActivities(){
+
+
+    let activities =
+    JSON.parse(localStorage.getItem("activities")) || [];
+
+
+    allActivityList.innerHTML="";
+
+
+    activities.forEach(function(item,index){
+
+
+        allActivityList.innerHTML += `
+
+
+        <tr>
+
+            <td>A${String(index+1).padStart(3,'0')}</td>
+
+
+            <td>${item.message}</td>
+
+
+            <td>${item.date || "-"}</td>
+
+
+            <td>${item.time || "-"}</td>
+
+
+            <td>
+
+            <button 
+            class="activity-delete-btn"
+            onclick="deleteActivity(${index})">
+
+            Delete
+
+            </button>
+
+            </td>
+
+
+        </tr>
+
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+// =========================
+// Delete Activity
+// =========================
+
+
+function deleteActivity(index){
+
+
+    let activities =
+    JSON.parse(localStorage.getItem("activities")) || [];
+
+
+    activities.splice(index,1);
+
+
+    localStorage.setItem(
+        "activities",
+        JSON.stringify(activities)
+    );
+
+
+    displayAllActivities();
+
+    displayActivities();
+
+
+}
 
 // =========================
 // Maintenance Summary
@@ -4276,12 +4511,12 @@ function updateMaintenanceTrendChart() {
 // Maintenance Pie Chart
 // =========================
 
-function updateMaintenancePieChart() {
+function updateMaintenancePieChart(){
 
     const chartCanvas =
-        document.getElementById("maintenancePieChart");
+    document.getElementById("maintenancePieChart");
 
-    if (!chartCanvas) {
+    if(!chartCanvas){
 
         return;
 
@@ -4325,7 +4560,13 @@ function updateMaintenancePieChart() {
                 backgroundColor:[
                     "#22c55e",
                     "#ef4444"
-                ]
+                ],
+
+                borderColor:"#ffffff",
+
+                borderWidth:3,
+
+                hoverOffset:15
 
             }]
 
@@ -4335,11 +4576,29 @@ function updateMaintenancePieChart() {
 
             responsive:true,
 
+            maintainAspectRatio:true,
+
+            aspectRatio:1,
+
             plugins:{
 
                 legend:{
 
-                    position:"bottom"
+                    position:"bottom",
+
+                    labels:{
+
+                        padding:20,
+
+                        font:{
+
+                            size:14,
+
+                            weight:"bold"
+
+                        }
+
+                    }
 
                 }
 
@@ -4350,7 +4609,6 @@ function updateMaintenancePieChart() {
     });
 
 }
-
 // =========================
 // Recent Maintenance (Dashboard)
 // =========================
@@ -6926,6 +7184,166 @@ function animateCounter(id,value){
 }
 
 // =========================
+// Resident Charts
+// =========================
+
+let residentChart = null;
+let statusChart = null;
+
+function updateResidentChart(){
+
+    const residentCanvas =
+    document.getElementById("residentChart");
+
+    const statusCanvas =
+    document.getElementById("statusChart");
+
+    if(!residentCanvas || !statusCanvas){
+
+        return;
+
+    }
+
+    const residents =
+    JSON.parse(localStorage.getItem("residents")) || [];
+
+    let active = 0;
+    let inactive = 0;
+
+    residents.forEach(function(resident){
+
+        if(resident.status === "Active"){
+
+            active++;
+
+        }else{
+
+            inactive++;
+
+        }
+
+    });
+
+    if(residentChart){
+
+        residentChart.destroy();
+
+    }
+
+    residentChart = new Chart(residentCanvas,{
+
+        type:"bar",
+
+        data:{
+
+            labels:[
+                "Total",
+                "Active",
+                "Inactive"
+            ],
+
+            datasets:[{
+
+                label:"Residents",
+
+                data:[
+                    residents.length,
+                    active,
+                    inactive
+                ],
+
+                backgroundColor:[
+                    "#2563eb",
+                    "#22c55e",
+                    "#ef4444"
+                ],
+
+                borderRadius:10
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+                    display:false
+                }
+
+            },
+
+            scales:{
+
+                y:{
+                    beginAtZero:true
+                }
+
+            }
+
+        }
+
+    });
+
+    if(statusChart){
+
+        statusChart.destroy();
+
+    }
+
+    statusChart = new Chart(statusCanvas,{
+
+        type:"doughnut",
+
+        data:{
+
+            labels:[
+                "Active",
+                "Inactive"
+            ],
+
+            datasets:[{
+
+                data:[
+                    active,
+                    inactive
+                ],
+
+                backgroundColor:[
+                    "#22c55e",
+                    "#ef4444"
+                ]
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+                    position:"bottom"
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+// =========================
 // Circular Progress Function
 // =========================
 
@@ -7230,6 +7648,8 @@ updateCircularProgress(
 );
 
 
+
+
 // =========================
 // Complaint Resolution Rate
 // =========================
@@ -7327,6 +7747,12 @@ updateCircularProgress(
     collectionPercent
 
 );
+
+// =========================
+// Update Resident Charts
+// =========================
+
+updateResidentChart();
 
 }
 
