@@ -9,6 +9,7 @@
     <title>Dashboard</title>
 
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -35,8 +36,8 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
 <div class="dashboard">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
+<!-- Sidebar -->
+<div class="sidebar">
 
         <h2>🏢 Shiv Apartment</h2>
 
@@ -137,17 +138,18 @@ Events
 
         </ul>
 
-    </div>
+</div>
 
 <button id="menuToggle" class="menu-toggle">
     <i class="fa-solid fa-bars"></i>
 </button>
-
-    <!-- Main Content -->
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+    
+<!-- Main Content -->
     <div class="main-content">
 
-        <!-- Header -->
-        <div class="top-header">
+<!-- Header -->
+<div class="top-header">
 
             <div class="search-box">
 
@@ -213,9 +215,9 @@ Events
 
 </div>
 
-        </div>
+</div>
 
-        <!-- Welcome -->
+ <!-- Welcome -->
         <p class="welcome-text">Welcome Back, Admin 👋</p>
 
         <div class="welcome-card">

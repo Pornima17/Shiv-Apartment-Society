@@ -10,55 +10,31 @@
 
 }
 
-.sidebar{
-
-    width:100%;
-    min-height:auto;
-    padding:15px;
-
-}
-
-.sidebar h2{
-
-    text-align:center;
-    margin-bottom:20px;
-
-}
-
-.sidebar ul{
-
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:10px;
-
-}
-
-.sidebar ul li{
-
-    list-style:none;
-
-}
-
-.sidebar ul li a{
-
-    padding:10px 15px;
-    font-size:15px;
-
-}
-
 .main-content{
 
     width:100%;
+    margin-left:0;
     padding:20px;
 
 }
 
-.cards,
-.report-summary,
-.parking-summary,
-.maintenance-summary,
 .dashboard-cards{
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+
+}
+
+.overview-banner{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+
+}
+
+.quick-actions{
 
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -66,7 +42,9 @@
 
 }
 
-.charts-container{
+.charts-container,
+.dashboard-chart-row,
+.charts-row{
 
     display:grid;
     grid-template-columns:1fr;
@@ -74,31 +52,27 @@
 
 }
 
-.resident-form .form-group,
-.complaint-form .form-group,
-.visitor-form .form-group,
-.notice-form .form-group,
-.maintenance-form .form-group,
-.flat-form,
-.form-container .form-group{
+.progress-dashboard{
 
-display:grid;
-grid-template-columns:1fr;
-gap:15px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
 
 }
 
-form input,
-form select,
-form textarea{
+.dashboard-widgets{
 
-width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
 
 }
 
-form button{
+.system-status{
 
-width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
 
 }
 
@@ -108,21 +82,790 @@ width:100%;
 
 }
 
-.resident-table,
-.notice-table,
-.visitor-table,
-#maintenanceTable,
-#parkingTable{
+}
 
-min-width:900px;
+
+
+/* =====================================
+   MOBILE RESPONSIVE (768px)
+===================================== */
+
+@media (max-width:768px){
+
+/* ==========================
+   Mobile Menu Button
+========================== */
+
+.menu-toggle{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:fixed;
+
+    top:15px;
+    left:15px;
+
+    width:50px;
+    height:50px;
+
+    border:none;
+    border-radius:12px;
+
+    background:#0B4DA2;
+
+    color:#fff;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    z-index:10001;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
 
 }
 
-.modal-content{
 
-    width:90%;
+/* ==========================
+   Sidebar
+========================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+    left:-280px;
+
+    width:280px;
+
+    height:100vh;
+
+    overflow-y:auto;
+
+   -webkit-overflow-scrolling:touch;
+
+    transition:.35s;
+
+    z-index:10000;
+
+    background:#0B4DA2;
+
+    padding-top:80px;
 
 }
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+/* ==========================
+   Sidebar Overlay
+========================== */
+
+.sidebar-overlay{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100vh;
+
+    background:rgba(0,0,0,.45);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:9999;
+
+}
+
+.sidebar-overlay.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+
+/* ==========================
+   Main Content
+========================== */
+
+.main-content{
+
+    width:100%;
+
+    margin-left:0;
+
+    padding:80px 15px 20px;
+
+}
+
+
+/* ==========================
+   Search Box
+========================== */
+
+.search-box{
+
+    width:100%;
+
+    margin-top:10px;
+
+
+}
+
+.search-box input{
+
+    width:100%;
+
+
+}
+
+/* ==========================
+   Top Header
+========================== */
+
+.top-header{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+
+}
+
+
+/* ==========================
+   Date / Time / Notification
+========================== */
+
+.header-right{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+.current-date,
+.current-time{
+
+    font-size:14px;
+
+}
+
+.notification-icon{
+
+    width:45px;
+
+    height:45px;
+
+}
+
+
+/* ==========================
+   Admin Profile
+========================== */
+
+.admin-profile{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:10px;
+
+}
+
+.admin-profile img{
+
+    width:50px;
+
+    height:50px;
+
+}
+
+#headerAdminName{
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   Welcome Banner
+========================== */
+
+.welcome-banner,
+.welcome-card{
+
+    padding:20px;
+
+    border-radius:15px;
+
+}
+
+.welcome-banner h2,
+.welcome-card h2{
+
+    font-size:28px;
+
+    line-height:1.3;
+
+}
+
+.welcome-banner p,
+.welcome-card p{
+
+    font-size:15px;
+
+    line-height:1.6;
+
+}
+
+
+/* ==========================
+   Overview Banner
+========================== */
+
+.overview-banner{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+.overview-card{
+
+    width:100%;
+
+    padding:20px;
+
+    border-radius:15px;
+
+}
+
+.overview-card h2{
+
+    font-size:30px;
+
+}
+
+.overview-card h4{
+
+    font-size:16px;
+
+}
+
+/* ==========================
+   Quick Actions
+========================== */
+
+.quick-actions{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+.quick-actions button{
+
+    width:100%;
+
+    min-height:50px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+}
+
+
+/* ==========================
+   Dashboard Cards
+========================== */
+
+.dashboard-cards{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+.summary-card{
+
+    width:100%;
+
+    padding:25px 20px;
+
+    border-radius:15px;
+
+}
+
+.summary-card h2{
+
+    font-size:36px;
+
+}
+
+.summary-card h3{
+
+    font-size:18px;
+
+}
+
+/* ==========================
+   Section Spacing
+========================== */
+
+.main-content > *{
+
+    margin-bottom:20px;
+
+}
+
+.chart-card,
+.summary-card,
+.activity-card,
+.dashboard-widget,
+.system-card,
+.recent-maintenance,
+.recent-complaints{
+
+    border-radius:18px;
+
+}
+
+/* ==========================
+   Equal Card Height
+========================== */
+
+.summary-card,
+.chart-card,
+.dashboard-widget,
+.system-card{
+
+    min-height:180px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+/* ==========================
+   Typography
+========================== */
+
+h1{
+
+    font-size:28px;
+
+}
+
+h2{
+
+    font-size:22px;
+
+}
+
+h3{
+
+    font-size:18px;
+
+}
+
+p{
+
+    font-size:15px;
+
+    line-height:1.6;
+
+}
+
+/* ==========================
+   Buttons
+========================== */
+
+button{
+
+    min-height:48px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+
+
+/* ==========================
+   Charts Container
+========================== */
+
+.charts-container,
+.dashboard-chart-row,
+.charts-row{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:20px;
+
+}
+
+/* ==========================
+   Chart Card
+========================== */
+
+.chart-card{
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+.chart-card h2{
+
+    font-size:18px;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+.chart-card canvas{
+
+    width:100% !important;
+
+    height:280px !important;
+
+}
+
+
+/* ==========================
+   Progress Cards
+========================== */
+
+.progress-dashboard{
+
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+
+}
+
+
+/* ==========================
+   Maintenance Summary
+========================== */
+
+.maintenance-summary{
+
+    display:grid;
+    grid-template-columns:1fr;
+    gap:15px;
+
+}
+
+/* ==========================
+   All Dashboard Charts
+========================== */
+
+#residentChart,
+#statusChart,
+#maintenancePieChart,
+#complaintChart,
+#maintenanceTrendChart,
+#maintenanceChart{
+
+    width:100% !important;
+
+    max-width:100% !important;
+
+    height:260px !important;
+
+}
+
+/* ==========================
+   Recent Activities
+========================== */
+
+.activity-card{
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:15px;
+
+}
+
+.activity-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+}
+
+.activity-list{
+
+    max-height:350px;
+
+    overflow-y:auto;
+
+}
+
+.activity-item{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+}
+
+.activity-delete-btn{
+
+    width:100%;
+
+}
+
+/* ==========================
+   Recent Maintenance
+========================== */
+
+.recent-maintenance{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border-radius:15px;
+
+}
+
+.recent-maintenance table{
+
+    min-width:750px;
+
+}
+
+/* ==========================
+   Recent Complaints
+========================== */
+
+.recent-complaints{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border-radius:15px;
+
+}
+
+.recent-complaints table{
+
+    min-width:750px;
+
+}
+
+
+/* ==========================
+   Dashboard Widgets
+========================== */
+
+.dashboard-widgets{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:20px;
+
+}
+
+.dashboard-widget{
+
+    width:100%;
+
+    padding:18px;
+
+    border-radius:15px;
+
+}
+
+
+/* ==========================
+   System Status
+========================== */
+
+.system-status{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+.system-card{
+
+    width:100%;
+
+    padding:18px;
+
+    border-radius:15px;
+
+}
+
+
+/* ==========================
+   Dashboard Tables
+========================== */
+
+.table-container{
+
+    overflow-x:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+.table-container table{
+
+    min-width:700px;
+
+}
+
+
+}
+
+/* ==========================
+   Card Hover
+========================== */
+
+.summary-card,
+.chart-card,
+.activity-card,
+.dashboard-widget,
+.system-card{
+
+    transition:.3s ease;
+
+}
+
+.summary-card:hover,
+.chart-card:hover,
+.activity-card:hover,
+.dashboard-widget:hover,
+.system-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+img{
+
+    max-width:100%;
+
+    height:auto;
+
+}
+
+table{
+
+    border-collapse:collapse;
+
+    width:100%;
+
+}
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+    height:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#0B4DA2;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
 
 }
 
@@ -133,291 +876,6 @@ min-width:900px;
 
 @media (max-width:480px){
 
-.main-content{
 
-    padding:10px;
-
-}
-
-.sidebar h2{
-
-    font-size:24px;
-
-}
-
-h1{
-
-    font-size:24px;
-
-}
-
-.summary-card h2{
-
-    font-size:26px;
-
-}
-
-.summary-card h3{
-
-    font-size:16px;
-
-}
-
-form input,
-form select,
-form textarea{
-
-padding:12px;
-font-size:15px;
-
-}
-
-button{
-
-    padding:12px;
-    font-size:15px;
-
-}
-
-.resident-table,
-.notice-table,
-.visitor-table,
-#maintenanceTable,
-#parkingTable{
-
-min-width:700px;
-
-}
-
-.modal-content{
-
-    width:98%;
-    border-radius:10px;
-
-}
-
-.profile-image img{
-
-    width:100px;
-    height:100px;
-
-}
-
-}
-
-/* ==========================
-   Mobile Menu
-========================== */
-
-.menu-toggle{
-
-    display:none;
-    position:fixed;
-    top:15px;
-    left:15px;
-    width:50px;
-    height:50px;
-    border:none;
-    border-radius:10px;
-    background:#0B4DA2;
-    color:#fff;
-    font-size:22px;
-    cursor:pointer;
-    z-index:9999;
-    box-shadow:0 5px 15px rgba(0,0,0,.25);
-
-}
-
-@media(max-width:768px){
-
-    
-    .hero{
-
-    height:auto;
-    padding:40px 20px;
-    flex-direction:column;
-    text-align:center;
-
-}
-
-.hero-content{
-
-    width:100%;
-
-}
-
-.hero-content h1{
-
-    font-size:36px;
-    line-height:1.3;
-
-}
-
-.hero-content p{
-
-    font-size:16px;
-
-}
-
-.buttons{
-
-    justify-content:center;
-    flex-wrap:wrap;
-
-}
-
-.announcement{
-
-    width:100%;
-    margin-top:30px;
-
-}
-.menu-toggle{
-
-    display:block;
-
-}
-
-.sidebar{
-
-    position:fixed;
-    left:-270px;
-    top:0;
-    width:260px;
-    height:100vh;
-    transition:.35s;
-    z-index:9998;
-
-}
-
-nav{
-
-    flex-wrap:wrap;
-    padding:15px 20px;
-    height:auto;
-
-}
-
-nav ul{
-
-    display:none;
-    width:100%;
-    flex-direction:column;
-    margin-top:15px;
-    gap:10px;
-
-}
-
-nav.active ul{
-
-    display:flex;
-
-}
-
-.right{
-
-    display:none;
-
-}
-
-#darkModeBtn{
-
-    display:none;
-
-}
-
-.logo{
-
-    font-size:22px;
-
-}
-
-.sidebar.active{
-
-    left:0;
-
-}
-
-.main-content{
-
-    margin-left:0;
-    width:100%;
-    padding-top:80px;
-
-}
-
-.stats{
-
-    flex-direction:column;
-
-}
-
-.card{
-
-    width:100%;
-
-}
-.community-container{
-
-    flex-direction:column;
-
-}
-
-.footer-container{
-
-    flex-direction:column;
-    text-align:center;
-
-}
-
-footer{
-
-    padding:40px 20px;
-
-}
-
-
-/* Top Header */
-
-.top-header{
-
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-
-}
-
-.search-box{
-
-    width:100%;
-
-}
-
-.header-right{
-
-    justify-content:center;
-    flex-wrap:wrap;
-
-}
-
-}
-
-@media(max-width:992px){
-
-    .profile-stats{
-
-        grid-template-columns:repeat(2,1fr);
-
-    }
-
-}
-
-@media(max-width:768px){
-
-    .profile-stats{
-
-        grid-template-columns:1fr;
-
-    }
 
 }

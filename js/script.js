@@ -4127,18 +4127,14 @@ function updateComplaintChart(){
     complaints.forEach(function(item){
 
 
-        if(item.status === "Pending"){
+if(
+    item.status === "Resolved" ||
+    item.status === "Closed"
+){
 
-            pending++;
+    resolved++;
 
-        }
-
-
-        if(item.status === "Resolved"){
-
-            resolved++;
-
-        }
+}
 
 
     });
@@ -4182,78 +4178,90 @@ datasets:[{
     label:"Complaints",
 
     data:[
-
         pending,
         resolved,
         total
-
     ],
-
 
     backgroundColor:[
-
         "#ff9800",
         "#28a745",
         "#007bff"
-
     ],
-
 
     borderColor:[
-
         "#ff9800",
         "#28a745",
         "#007bff"
-
     ],
-
 
     borderWidth:1,
 
-
-    borderRadius:8
-
-
+    borderRadius:8,
 }]
-
-
         },
 
 
 options:{
 
-
     responsive:true,
 
+    maintainAspectRatio:false,
 
     animation:{
 
-
         duration:1500,
-
 
         easing:"easeOutBounce"
 
-
     },
 
+    plugins:{
 
-    scales:{
+        legend:{
 
+            display:false
 
-                y:{
+        },
 
+        datalabels:{
 
-                    beginAtZero:true
+            color:"#333",
 
-                }
+            anchor:"end",
+
+            align:"top",
+
+            font:{
+
+                weight:"bold",
+
+                size:14
 
             }
 
-
         }
 
+    },
 
+    scales:{
+
+y:{
+
+    beginAtZero:true,
+
+    ticks:{
+
+        precision:0,
+
+        stepSize:1
+
+    }
+
+}
+    }
+
+}
     });
 
 
@@ -7176,15 +7184,48 @@ document.getElementById("menuToggle");
 const sidebar =
 document.querySelector(".sidebar");
 
+const sidebarOverlay =
+document.getElementById("sidebarOverlay");
+
 if(menuToggle && sidebar){
 
     menuToggle.addEventListener("click",function(){
 
         sidebar.classList.toggle("active");
 
+        sidebarOverlay.classList.toggle("active");
+
     });
 
 }
+
+if(sidebarOverlay){
+
+    sidebarOverlay.addEventListener("click",function(){
+
+        sidebar.classList.remove("active");
+
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+}
+
+
+const sidebarLinks =
+document.querySelectorAll(".sidebar a");
+
+sidebarLinks.forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        sidebar.classList.remove("active");
+
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+});
 
 // =========================
 // Dashboard Header Profile
