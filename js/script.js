@@ -5873,31 +5873,31 @@ function displayResidents(){
 
             <td>
 
-                <button
-                    class="view-btn"
-                    data-index="${index}">
+<div class="action-buttons">
 
-                    View
+<button class="view-btn" onclick="viewResident(${index})">
 
-                </button>
+👁 View
 
-                <button
-                    class="edit-btn"
-                    data-index="${index}">
+</button>
 
-                    Edit
 
-                </button>
+<button class="edit-btn" onclick="editResident(${index})">
 
-                <button
-                    class="delete-btn"
-                    data-index="${index}">
+✏ Edit
 
-                    Delete
+</button>
 
-                </button>
 
-            </td>
+<button class="delete-btn" onclick="deleteResident(${index})">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+</td>
 
         `;
 
