@@ -3140,30 +3140,31 @@ if (complaintTable) {
         // Edit Complaint
         // =========================
 
-        if (event.target.classList.contains("edit-complaint-btn")) {
+if (event.target.classList.contains("edit-complaint-btn")) {
 
-            const index = event.target.dataset.index;
+    const index =
+    event.target.closest(".edit-complaint-btn").dataset.index;
 
-            editingComplaintIndex = index;
+    editingComplaintIndex = index;
 
-            document.getElementById("complaintResident").value =
-                complaints[index].resident;
+    document.getElementById("complaintResident").value =
+    complaints[index].resident;
 
-            document.getElementById("complaintFlat").value =
-                complaints[index].flat;
+    document.getElementById("complaintFlat").value =
+    complaints[index].flat;
 
-            document.getElementById("complaintTitle").value =
-                complaints[index].title;
+    document.getElementById("complaintTitle").value =
+    complaints[index].title;
 
-            document.getElementById("complaintDescription").value =
-                complaints[index].description;
+    document.getElementById("complaintDescription").value =
+    complaints[index].description;
 
-            document.getElementById("complaintStatus").value =
-                complaints[index].status;
+    document.getElementById("complaintStatus").value =
+    complaints[index].status;
 
-            saveComplaint.innerText = "Update Complaint";
+    saveComplaint.innerText = "Update Complaint";
 
-        }
+}
 
         // =========================
         // Delete Complaint
@@ -7275,6 +7276,26 @@ if(maintenanceMenuToggle && maintenanceSidebar){
     maintenanceMenuToggle.addEventListener("click", function(){
 
         maintenanceSidebar.classList.toggle("active");
+
+    });
+
+}
+
+// =========================
+// Complaints Page Mobile Menu
+// =========================
+
+const complaintsMenuToggle =
+document.getElementById("complaintsMenuToggle");
+
+const complaintsSidebar =
+document.querySelector(".sidebar");
+
+if(complaintsMenuToggle && complaintsSidebar){
+
+    complaintsMenuToggle.addEventListener("click",function(){
+
+        complaintsSidebar.classList.toggle("active");
 
     });
 

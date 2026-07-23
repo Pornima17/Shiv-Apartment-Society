@@ -10,6 +10,7 @@
     <title>Complaints</title>
 
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link
@@ -28,6 +29,7 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
 </script>
 
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
 <div class="dashboard">
 
     <div class="sidebar">
@@ -57,45 +59,36 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
     </div>
 
     <div class="main-content">
+<div class="top-header">
+
+    <button
+        type="button"
+        id="complaintsMenuToggle"
+        class="menu-toggle">
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+    <div class="header-left">
 
         <h1>Complaint Management</h1>
 
-        <p>Manage society complaints here.</p>
-<!-- =========================
-Complaint Summary
-========================= -->
-
-<div class="complaint-summary">
-
-    <div class="summary-card total">
-
-        <h3>Total Complaints</h3>
-
-        <h2 id="totalComplaints">0</h2>
+        <p>Manage and track all society complaints.</p>
 
     </div>
 
-    <div class="summary-card pending">
+    <div class="header-actions">
 
-        <h3>Pending</h3>
+        <button id="exportComplaint">
+            <i class="fa-solid fa-download"></i>
+            Export
+        </button>
 
-        <h2 id="pendingComplaints">0</h2>
-
-    </div>
-
-    <div class="summary-card progress">
-
-        <h3>In Progress</h3>
-
-        <h2 id="progressComplaints">0</h2>
-
-    </div>
-
-    <div class="summary-card solved">
-
-        <h3>Solved</h3>
-
-        <h2 id="solvedComplaints">0</h2>
+        <button id="printComplaint">
+            <i class="fa-solid fa-print"></i>
+            Print
+        </button>
 
     </div>
 
@@ -125,6 +118,77 @@ Complaint Summary
     </button>
 
 </div>
+<!-- =========================
+Complaint Summary
+========================= -->
+
+<div class="complaint-summary">
+
+<div class="summary-card total">
+
+    <div class="summary-icon">
+        <i class="fa-solid fa-file-circle-exclamation"></i>
+    </div>
+
+    <div>
+
+        <h3>Total Complaints</h3>
+
+        <h2 id="totalComplaints">0</h2>
+
+    </div>
+
+</div>
+
+<div class="summary-card pending">
+
+    <div class="summary-icon">
+        <i class="fa-solid fa-clock"></i>
+    </div>
+
+    <div>
+
+        <h3>Pending</h3>
+
+        <h2 id="pendingComplaints">0</h2>
+
+    </div>
+
+</div>
+
+<div class="summary-card progress">
+
+    <div class="summary-icon">
+        <i class="fa-solid fa-spinner"></i>
+    </div>
+
+    <div>
+
+        <h3>In Progress</h3>
+
+        <h2 id="progressComplaints">0</h2>
+
+    </div>
+
+</div>
+
+<div class="summary-card solved">
+
+    <div class="summary-icon">
+        <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <div>
+
+        <h3>Solved</h3>
+
+        <h2 id="solvedComplaints">0</h2>
+
+    </div>
+
+</div>
+
+</div>
 
 
 <!-- =========================
@@ -133,7 +197,16 @@ Add Complaint
 
 <div class="complaint-form">
 
-    <h2>➕ Add Complaint</h2>
+    <div class="form-header">
+
+        <h2>
+            <i class="fa-solid fa-circle-plus"></i>
+            Add Complaint
+        </h2>
+
+        <p>Register a new complaint for society residents.</p>
+
+    </div>
 
     <div class="form-group">
 
@@ -185,8 +258,10 @@ Add Complaint
 
     <br><br>
 
-    <button id="saveComplaint">Save Complaint</button>
-
+<button id="saveComplaint">
+    <i class="fa-solid fa-floppy-disk"></i>
+    Save Complaint
+</button>
 </div>
 
 <!-- =========================
@@ -216,8 +291,8 @@ Complaints Table
     </tbody>
 </table>
     </div>
-
 </div>
+
 <!-- =========================
 Complaint View Modal
 ========================= -->
