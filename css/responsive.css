@@ -979,6 +979,494 @@ nav ul li a:hover{
         text-align:center;
     }
 
+
+
+/* =========================
+   Maintenance Responsive
+========================= */
+
+    /* Menu Button */
+
+    #maintenanceMenuToggle{
+
+        display:flex;
+
+        position:fixed;
+
+        top:15px;
+
+        left:15px;
+
+        width:45px;
+
+        height:45px;
+
+        align-items:center;
+
+        justify-content:center;
+
+        z-index:10001;
+
+    }
+
+    /* Sidebar */
+
+    #maintenanceSidebar{
+
+        position:fixed;
+
+        top:0;
+
+        left:-270px;
+
+        width:260px;
+
+        height:100vh;
+
+        background:#0B4DA2;
+
+        overflow-y:auto;
+
+        transition:0.35s ease;
+
+        z-index:9999;
+
+    }
+
+    #maintenanceSidebar.active{
+
+        left:0;
+
+    }
+
+    /* Main Content */
+
+    .main-content{
+
+        width:100%;
+
+        margin-left:0 !important;
+
+        padding:80px 15px 20px;
+
+    }
+
+    /* Heading */
+
+    .main-content h1{
+
+        font-size:26px;
+
+    }
+
+    .welcome-text{
+
+        font-size:14px;
+
+    }
+
+/* =========================
+   Maintenance Form Mobile
+========================= */
+
+
+    /* Form Card */
+
+    .maintenance-form{
+
+        width:100%;
+
+        padding:20px;
+
+        border-radius:15px;
+
+        box-sizing:border-box;
+
+    }
+
+    .maintenance-form h2{
+
+        font-size:28px;
+
+        text-align:center;
+
+        margin-bottom:20px;
+
+    }
+
+    /* Form Group */
+
+    .maintenance-form .form-group{
+
+        display:flex;
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    /* Inputs */
+
+    .maintenance-form input,
+
+    .maintenance-form select{
+
+        width:100%;
+
+        font-size:16px;
+
+        padding:14px;
+
+        box-sizing:border-box;
+
+    }
+
+    /* Save Button */
+
+    #saveMaintenance{
+
+        width:100%;
+
+        padding:15px;
+
+        font-size:18px;
+
+        margin-top:20px;
+
+    }
+
+    /* Filter */
+
+    .maintenance-filter{
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:12px;
+
+        margin:20px 0;
+
+    }
+
+    .maintenance-filter input{
+
+        width:100%;
+
+    }
+
+    /* Search */
+
+    #searchMaintenance{
+
+        width:100%;
+
+        margin-bottom:15px;
+
+    }
+
+    /* Export & Import */
+
+    .export-btn,
+
+    .import-btn{
+
+        width:100%;
+
+        margin-bottom:12px;
+
+    }
+
+    #importMaintenance{
+
+        width:100%;
+
+        margin-bottom:12px;
+
+    }
+
+/* =========================
+   Maintenance Table Mobile
+========================= */
+
+    /* Table Wrapper */
+
+.table-responsive{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+    /* Table */
+
+    #maintenanceTable{
+
+    width:100%;
+
+    min-width:750px;
+
+        border-collapse:collapse;
+
+    }
+
+ #maintenanceTable th,
+    #maintenanceTable td{
+
+        padding:8px;
+
+        font-size:13px;
+
+        white-space:nowrap;
+
+    }
+
+ #maintenanceTable th:nth-child(2),
+    #maintenanceTable td:nth-child(2){
+
+        min-width:140px;
+
+    }
+
+    #maintenanceTable th:nth-child(7),
+    #maintenanceTable td:nth-child(7){
+
+        min-width:150px;
+
+    }
+
+    /* =========================
+   Maintenance Modal Mobile
+========================= */
+
+
+    .modal-content{
+
+        width:95%;
+
+        max-width:420px;
+
+        max-height:90vh;
+
+        overflow-y:auto;
+
+        padding:20px;
+
+        border-radius:15px;
+
+        box-sizing:border-box;
+
+    }
+
+    .receipt-logo{
+
+        width:80px;
+
+    }
+
+    .receipt-box{
+
+        width:100%;
+
+        padding:15px;
+
+        box-sizing:border-box;
+
+    }
+
+    .receipt-box img{
+
+        width:80px;
+
+        height:auto;
+
+    }
+
+    .receipt-box h2{
+
+        font-size:22px;
+
+    }
+
+    .receipt-box h3{
+
+        font-size:18px;
+
+    }
+
+    .receipt-box p{
+
+        font-size:14px;
+
+        line-height:1.6;
+
+    }
+
+    #qrcode{
+
+        display:flex;
+
+        justify-content:center;
+
+        margin:15px 0;
+
+    }
+
+    .receipt-buttons{
+
+        display:flex;
+
+        flex-direction:column;
+
+        gap:12px;
+
+        margin-top:20px;
+
+    }
+
+    .receipt-buttons button{
+
+        width:100%;
+
+    }
+
+/* =========================
+   Maintenance Mobile Polish
+========================= */
+
+
+    /* Main Content */
+
+    .main-content{
+
+        padding:75px 15px 20px;
+
+    }
+
+    /* Heading */
+
+    .main-content h1{
+
+        font-size:28px;
+
+        line-height:1.3;
+
+        text-align:center;
+
+        margin-bottom:10px;
+
+    }
+
+    .welcome-text{
+
+        text-align:center;
+
+        font-size:15px;
+
+        margin-bottom:20px;
+
+    }
+
+    /* Cards */
+
+    .maintenance-form,
+
+    .maintenance-filter,
+
+    .table-responsive{
+
+        background:#fff;
+
+        border-radius:15px;
+
+        box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+        margin-bottom:20px;
+
+    }
+
+    /* Search */
+
+    #searchMaintenance{
+
+        border-radius:10px;
+
+        margin-bottom:15px;
+
+    }
+
+    /* Buttons */
+
+    #saveMaintenance,
+
+    .export-btn,
+
+    .import-btn{
+
+        border-radius:10px;
+
+        font-size:16px;
+
+        font-weight:600;
+
+    }
+
+    /* Table */
+
+    #maintenanceTable th{
+
+        font-size:14px;
+
+    }
+
+    #maintenanceTable td{
+
+        font-size:13px;
+
+    }
+
+    /* Status Button */
+
+    .status-btn{
+
+        font-size:13px;
+
+        padding:6px 12px;
+
+        border-radius:20px;
+
+    }
+
+    /* Action Buttons */
+
+    .view-btn,
+
+    .edit-btn,
+
+    .delete-btn,
+
+    .receipt-btn{
+
+        padding:8px 12px;
+
+        font-size:13px;
+
+        margin:2px;
+
+        border-radius:8px;
+
+    }
+
+
+
 }
 
 

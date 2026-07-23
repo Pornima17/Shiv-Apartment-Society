@@ -7247,6 +7247,10 @@ sidebarLinks.forEach(function(link){
 
 });
 
+//====================
+// HOME TOGGLE 
+//====================
+
 const homeMenuToggle = document.getElementById("menuToggle");
 const homeNavMenu = document.querySelector("nav ul");
 
@@ -7254,6 +7258,26 @@ if (homeMenuToggle && homeNavMenu) {
     homeMenuToggle.addEventListener("click", function () {
         homeNavMenu.classList.toggle("active");
     });
+}
+
+// =========================
+// Maintenance Mobile Menu
+// =========================
+
+const maintenanceMenuToggle =
+document.getElementById("maintenanceMenuToggle");
+
+const maintenanceSidebar =
+document.getElementById("maintenanceSidebar");
+
+if(maintenanceMenuToggle && maintenanceSidebar){
+
+    maintenanceMenuToggle.addEventListener("click", function(){
+
+        maintenanceSidebar.classList.toggle("active");
+
+    });
+
 }
 
 // =========================

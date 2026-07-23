@@ -1122,6 +1122,7 @@ margin:30px 0;
 
 }
 
+
 .maintenance-top input{
 
 width:300px;
@@ -3440,6 +3441,14 @@ Professional Receipt Modal
     margin:auto;
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
+
+}
+
+.receipt-logo{
+
+    width:100px;
+
+    height:auto;
 
 }
 
