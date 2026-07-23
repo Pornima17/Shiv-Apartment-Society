@@ -11,13 +11,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
     <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -31,7 +27,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <!-- Navbar Start -->
 
-   <nav>
+<nav>
+
+        <!-- Mobile Menu Button -->
+<button class="home-menu-toggle" id="menuToggle">
+            <i class="fa-solid fa-bars"></i>
+    </button>
+
 
     <div class="logo">
         <i class="fa-solid fa-building"></i>
@@ -39,36 +41,26 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     </div>
 
     <ul>
-
-        <li><a class="active" href="#">Home</a></li>
-
-        <li><a href="#">Residents</a></li>
-
-        <li><a href="#">Complaints</a></li>
-
-        <li><a href="#">Maintenance</a></li>
-
-        <li><a href="#">Notice</a></li>
-
-        <li><a href="#">Dashboard</a></li>
-
-        <li><a href="pages/admin-login.html">Admin Login</a></li>
-
-        <li><a href="#">Documents</a></li>
-
+<li><a class="active" href="index.html">Home</a></li>
+<li><a href="pages/residents.html">Residents</a></li>
+<li><a href="pages/complaints.html">Complaints</a></li>
+<li><a href="pages/maintenance.html">Maintenance</a></li>
+<li><a href="pages/notice.html">Notice</a></li>
+<li><a href="pages/dashboard.html">Dashboard</a></li>
+<li><a href="pages/documents.html">Documents</a></li>
+<li><a href="pages/admin-login.html">Admin Login</a></li>
     </ul>
 
     <div class="right">
 
         <i class="fa-solid fa-bell"></i>
 
-        <div class="profile">
-            R
-        </div>
+<a href="pages/profile.html" class="profile" id="homeProfile">
+    R
+</a>
 
     </div>
 
-<button id="darkModeBtn">🌙 Dark Mode</button>
 
 </nav>
 
@@ -87,9 +79,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
         <div class="buttons">
 
-            <a href="#" class="btn1">Get Started</a>
+<a href="pages/admin-login.html" class="btn1">Get Started</a>
 
-            <a href="#" class="btn2">View Notice</a>
+<a href="pages/notice.html" class="btn2">View Notice</a>
 
         </div>
 
@@ -177,37 +169,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <h2>Quick Actions</h2>
 
-    <div class="action-container">
+<div class="action-container">
 
-        <div class="action-card">
-            📝
-            <h3>Raise Complaint</h3>
-        </div>
+<a href="pages/complaints.html" class="action-card">
+    📝
+    <h3>Raise Complaint</h3>
+</a>
 
-        <div class="action-card">
-            💳
+<a href="pages/maintenance.html" class="action-card">
+     💳
             <h3>Pay Maintenance</h3>
-        </div>
+</a>
 
-        <div class="action-card">
-            📢
+<a href="pages/notice.html" class="action-card">
+ 📢
             <h3>View Notices</h3>
-        </div>
+</a>           
 
-        <div class="action-card">
+        <a href="pages/profile.html" class="action-card">
             👤
             <h3>My Profile</h3>
-        </div>
+        </a>
 
-        <div class="action-card">
-            📄
-            <h3>Documents</h3>
-        </div>
+<a href="pages/documents.html" class="action-card">
+    📄
+    <h3>Documents</h3>
+</a>
 
-        <div class="action-card">
-            🏢
+<a href="pages/residents.html" class="action-card">
+🏢
             <h3>Residents</h3>
-        </div>
+</a>            
 
     </div>
 
@@ -260,8 +252,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         for any queries or assistance.
     </p>
 
-    <a href="#" class="help-btn">Contact Us</a>
-
+<a href="mailto:shivapartment@gmail.com" class="help-btn">
+    Contact Us
+</a>
 </section>
 
 <!-- Footer Start -->
@@ -298,14 +291,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <h3>Quick Links</h3>
 
             <ul>
-
-                <li><a href="#">Home</a></li>
-
-                <li><a href="#">Residents</a></li>
-
-                <li><a href="#">Complaints</a></li>
-
-                <li><a href="#">Maintenance</a></li>
+<li><a href="index.html">Home</a></li>
+<li><a href="pages/residents.html">Residents</a></li>
+<li><a href="pages/complaints.html">Complaints</a></li>
+<li><a href="pages/maintenance.html">Maintenance</a></li>
 
             </ul>
 

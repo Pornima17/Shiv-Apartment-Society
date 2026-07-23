@@ -148,43 +148,6 @@ localStorage.setItem(
 
 
 // =========================
-// Dark Mode with Local Storage
-// =========================
-
-const darkModeBtn = document.getElementById("darkModeBtn");
-
-if (darkModeBtn) {
-
-    if (localStorage.getItem("theme") === "dark") {
-
-        document.body.classList.add("dark-mode");
-        darkModeBtn.innerHTML = "☀️ Light Mode";
-
-    }
-
-    darkModeBtn.addEventListener("click", function () {
-
-        document.body.classList.toggle("dark-mode");
-
-        if (document.body.classList.contains("dark-mode")) {
-
-            localStorage.setItem("theme", "dark");
-            darkModeBtn.innerHTML = "☀️ Light Mode";
-
-        } else {
-
-            localStorage.setItem("theme", "light");
-            darkModeBtn.innerHTML = "🌙 Dark Mode";
-
-        }
-
-    });
-
-}
-
-
-
-// =========================
 // Maintenance Data
 // =========================
 
@@ -6808,6 +6771,36 @@ function updateAdminDashboard(){
 
 }
 
+    // =========================
+// Home Profile
+// =========================
+
+const homeProfile =
+document.getElementById("homeProfile");
+
+if(homeProfile){
+
+    const savedName =
+    localStorage.getItem("adminName");
+
+    const savedPhoto =
+    localStorage.getItem("adminPhoto");
+
+    if(savedPhoto){
+
+        homeProfile.innerHTML =
+        `<img src="${savedPhoto}" alt="Profile">`;
+
+    }
+    else if(savedName){
+
+        homeProfile.textContent =
+        savedName.charAt(0).toUpperCase();
+
+    }
+
+}
+
 // =========================
 // Login History Data
 // =========================
@@ -6860,12 +6853,39 @@ function displayLoginHistory(){
     document.getElementById("activityTimeline");
 
     if(!activityTimeline){
+        return;
+    }
+
+    const loginHistory =
+    JSON.parse(localStorage.getItem("loginHistory")) || [];
+
+    activityTimeline.innerHTML = "";
+
+    if(loginHistory.length === 0){
+
+        activityTimeline.innerHTML = `
+
+        <div class="activity-item">
+
+            <div class="activity-icon">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+
+            <div class="activity-content">
+
+                <h4>No Login Activity</h4>
+
+                <p>Login records will appear here.</p>
+
+            </div>
+
+        </div>
+
+        `;
 
         return;
 
     }
-
-    activityTimeline.innerHTML = "";
 
     loginHistory.forEach(function(activity){
 
@@ -7226,6 +7246,15 @@ sidebarLinks.forEach(function(link){
     });
 
 });
+
+const homeMenuToggle = document.getElementById("menuToggle");
+const homeNavMenu = document.querySelector("nav ul");
+
+if (homeMenuToggle && homeNavMenu) {
+    homeMenuToggle.addEventListener("click", function () {
+        homeNavMenu.classList.toggle("active");
+    });
+}
 
 // =========================
 // Dashboard Header Profile
