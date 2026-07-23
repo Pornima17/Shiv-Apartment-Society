@@ -1032,39 +1032,41 @@ footer hr{
 
 .complaint-top{
 
-display:flex;
+    display:flex;
 
-justify-content:space-between;
+    align-items:center;
 
-margin:30px 0;
+    gap:15px;
+
+    margin:30px 0;
 
 }
 
 .complaint-top input{
 
-width:300px;
+    flex:1;
 
-padding:12px;
+    height:45px;
 
-border:1px solid #ccc;
+}
 
-border-radius:8px;
+.complaint-top select{
+
+    width:180px;
+
+    height:45px;
+
+    flex:none;
 
 }
 
 .complaint-top button{
 
-background:#0B4DA2;
+    width:170px;
 
-color:white;
+    height:45px;
 
-border:none;
-
-padding:12px 25px;
-
-border-radius:8px;
-
-cursor:pointer;
+    flex:none;
 
 }
 
