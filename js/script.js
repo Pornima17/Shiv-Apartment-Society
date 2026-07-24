@@ -2872,30 +2872,34 @@ ${complaint.status}
 
 <td class="complaint-actions">
 
-    <button class="view-complaint-btn"
-        data-index="${index}">
-        👁 View
+    <button class="view-complaint-btn" data-index="${index}" title="View">
+        <i class="fa-solid fa-eye"></i>
+        <span>View</span>
     </button>
 
-    <button class="edit-complaint-btn"
-        data-index="${index}">
-        ✏ Edit
+    <button class="edit-complaint-btn" data-index="${index}" title="Edit">
+        <i class="fa-solid fa-pen"></i>
+        <span>Edit</span>
     </button>
 
-    <button class="delete-complaint-btn"
-        data-index="${index}">
-        🗑 Delete
+    <button class="delete-complaint-btn" data-index="${index}" title="Delete">
+        <i class="fa-solid fa-trash"></i>
+        <span>Delete</span>
     </button>
 
     <button class="pdf-complaint-btn"
-        onclick="downloadComplaintPDF(${index})">
-        📄 PDF
+            onclick="downloadComplaintPDF(${index})"
+            title="PDF">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>PDF</span>
     </button>
-    <button
-class="print-complaint-btn"
-onclick="printComplaint(${index})">
-🖨 Print
-</button>
+
+    <button class="print-complaint-btn"
+            onclick="printComplaint(${index})"
+            title="Print">
+        <i class="fa-solid fa-print"></i>
+        <span>Print</span>
+    </button>
 
 </td>
         `;

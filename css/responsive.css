@@ -1878,25 +1878,20 @@ Mobile Action Buttons
 
 .complaint-table{
 
-    min-width:950px;
+width:max-content;
 
-    width:100%;
+    min-width:1000px;
 
     border-collapse:collapse;
 
 }
 
 .complaint-table th,
-
 .complaint-table td{
-
-    padding:12px 10px;
-
-    font-size:13px;
 
     white-space:nowrap;
 
-    text-align:center;
+    padding:12px;
 
 }
 
@@ -1941,6 +1936,38 @@ Mobile Action Buttons
         width:100%;
 
     }
+
+    .complaint-actions{
+
+    flex-wrap:nowrap;
+
+    gap:5px;
+
+}
+
+.complaint-actions button{
+
+    min-width:38px;
+
+    width:38px;
+
+    height:38px;
+
+    padding:0;
+
+}
+
+.complaint-actions button span{
+
+    display:none;
+
+}
+
+.complaint-actions button i{
+
+    margin:0;
+
+}
 
 }
 

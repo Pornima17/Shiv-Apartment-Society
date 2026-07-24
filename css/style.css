@@ -7673,19 +7673,15 @@ Login History
 
 .table-container{
 
-    background:#fff;
-
-    margin:30px 0;
-
-    padding:25px;
-
-    border-radius:18px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    width:100%;
 
     overflow-x:auto;
 
-    border:1px solid #e5e7eb;
+    -webkit-overflow-scrolling:touch;
+
+    background:#fff;
+
+    border-radius:12px;
 
 }
 
