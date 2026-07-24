@@ -4891,22 +4891,41 @@ ${record.status}
 <td>
     <div class="action-buttons">
 
-        <button class="view-btn" data-index="${index}">
-            <i class="fa-solid fa-eye"></i> View
-        </button>
+<button class="view-btn"
+        data-index="${index}"
+        title="View">
 
-        <button class="edit-btn" data-index="${index}">
-            <i class="fa-solid fa-pen"></i> Edit
-        </button>
+    <i class="fa-solid fa-eye"></i>
+    <span>View</span>
 
-        <button class="delete-btn" data-index="${index}">
-            <i class="fa-solid fa-trash"></i> Delete
-        </button>
+</button>
 
-        <button class="receipt-btn" onclick="generateReceipt(${index})">
-            <i class="fa-solid fa-file-invoice"></i> Receipt
-        </button>
+<button class="edit-btn"
+        data-index="${index}"
+        title="Edit">
 
+    <i class="fa-solid fa-pen"></i>
+    <span>Edit</span>
+
+</button>
+
+<button class="delete-btn"
+        data-index="${index}"
+        title="Delete">
+
+    <i class="fa-solid fa-trash"></i>
+    <span>Delete</span>
+
+</button>
+
+<button class="receipt-btn"
+        onclick="generateReceipt(${index})"
+        title="Receipt">
+
+    <i class="fa-solid fa-file-invoice"></i>
+    <span>Receipt</span>
+
+</button>
     </div>
 </td>
 
@@ -5292,9 +5311,15 @@ if(maintenanceTable){
 
     maintenanceTable.addEventListener("click",function(event){
 
-        if(event.target.classList.contains("view-btn")){
+        const button = event.target.closest("button");
 
-    const index = event.target.dataset.index;
+if(!button){
+    return;
+}
+
+if(button.classList.contains("view-btn")){
+
+    const index = button.dataset.index;
 
     document.getElementById("viewMaintenanceId").innerText =
     "M00" + (Number(index) + 1);
@@ -5315,9 +5340,9 @@ if(maintenanceTable){
 
 }
 
-        if(event.target.classList.contains("edit-btn")){
+if(button.classList.contains("edit-btn")){
 
-            const index = event.target.dataset.index;
+    const index = button.dataset.index;
 
             editingMaintenanceIndex = index;
 
@@ -5340,9 +5365,9 @@ maintenanceRecords[index].month;
 
         }
 
-        if(event.target.classList.contains("delete-btn")){
+if(button.classList.contains("delete-btn")){
 
-            const index = event.target.dataset.index;
+    const index = button.dataset.index;
 
             const confirmDelete = confirm(
                 "Are you sure you want to delete this maintenance record?"

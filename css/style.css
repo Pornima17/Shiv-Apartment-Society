@@ -3105,8 +3105,7 @@ Professional Maintenance Summary
 
     display:flex;
     flex-direction:column;
-    gap:8px;
-    justify-content:center;
+    gap:5px;
     align-items:center;
 
 }
@@ -3114,23 +3113,12 @@ Professional Maintenance Summary
 
 .action-buttons button{
 
-    width:85px;
-    height:32px;
+    width:75px;
+    height:28px;
 
-    border:none;
-    border-radius:8px;
+    padding:4px 6px;
 
-    font-size:13px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:5px;
-
-    transition:.3s ease;
+    font-size:11px;
 
 }
 
