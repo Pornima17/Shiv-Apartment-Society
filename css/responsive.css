@@ -92,6 +92,16 @@
 
 @media (max-width:768px){
 
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+}
+
 /* ==========================
    Mobile Menu Button
 ========================== */
@@ -887,6 +897,7 @@ nav ul.active{
 
 nav ul li{
     width:100%;
+    box-sizing:border-box;
 }
 
 nav ul li a{
@@ -988,38 +999,102 @@ nav ul li a:hover{
 
     /* Quick Actions */
 
-    .action-container{
-        grid-template-columns:repeat(2,1fr);
-        gap:20px;
-    }
+.action-container{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+/* =========================
+Community Responsive
+========================= */
 
-    /* Community */
+.community{
 
-    .community-container{
-        grid-template-columns:1fr;
-        gap:20px;
-    }
+    width:100%;
+    padding:0 20px;
 
-    /* Help */
+}
 
-    .help{
-        padding:50px 20px;
-    }
+.community h2{
 
-    .help p{
-        width:100%;
-    }
+    font-size:32px;
 
-    /* Footer */
+}
 
-    .footer-container{
-        grid-template-columns:1fr;
-        gap:30px;
-        text-align:center;
-    }
+.community-container{
+
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+
+}
+
+.community-card{
+
+    width:100%;
+    padding:25px;
+
+}
 
 
+/* =========================
+Need Help Responsive
+========================= */
 
+.help{
+
+    width:100%;
+    margin:40px 0;
+    padding:40px 20px;
+    border-radius:15px;
+
+}
+
+.help h2{
+
+    font-size:34px;
+
+}
+
+.help p{
+
+    font-size:16px;
+    line-height:28px;
+
+}
+
+.help-btn{
+
+    width:100%;
+    text-align:center;
+
+}
+
+
+/* =========================
+Footer Responsive
+========================= */
+
+footer{
+
+    padding:40px 20px;
+
+}
+
+.footer-container{
+
+    display:grid;
+    grid-template-columns:1fr;
+    gap:30px;
+    text-align:center;
+
+}
+
+.footer-box{
+
+    width:100%;
+
+}
 /* =========================
    Maintenance Responsive
 ========================= */
