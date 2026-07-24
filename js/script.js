@@ -5630,6 +5630,91 @@ if(residentPhoto){
 }
 
 // =========================
+// Add Resident Button
+// =========================
+
+const addResidentBtn =
+document.getElementById("addResidentBtn");
+
+const residentForm =
+document.getElementById("residentForm");
+
+if (addResidentBtn && residentForm) {
+
+    addResidentBtn.addEventListener("click", function () {
+
+        residentForm.scrollIntoView({
+
+            behavior: "smooth",
+            block: "start"
+
+        });
+
+        document.getElementById("residentName").focus();
+
+    });
+
+}
+
+// =========================
+// Resident Form Modal
+// =========================
+
+const residentFormModal =
+document.getElementById("residentFormModal");
+
+const closeResidentForm =
+document.getElementById("closeResidentForm");
+
+const residentFormTitle =
+document.getElementById("residentFormTitle");
+
+const clearResident =
+document.getElementById("clearResident");
+
+if(addResidentBtn){
+
+    addResidentBtn.addEventListener("click",function(){
+
+        editingIndex = -1;
+
+        residentFormTitle.innerText =
+        "Add New Resident";
+
+        residentForm.reset();
+
+        photoPreview.src =
+        "../images/default-user.png";
+
+        residentFormModal.style.display =
+        "block";
+
+    });
+
+}
+
+
+if(closeResidentForm){
+
+    closeResidentForm.addEventListener("click",function(){
+
+        residentFormModal.style.display = "none";
+
+    });
+
+}
+
+window.addEventListener("click",function(event){
+
+    if(event.target === residentFormModal){
+
+        residentFormModal.style.display = "none";
+
+    }
+
+});
+
+// =========================
 // Save Residents
 // =========================
 
@@ -5760,8 +5845,6 @@ residents[editingIndex] = {
 
 };
 
-    editingIndex = -1;
-
 }
 
         // =========================
@@ -5813,6 +5896,25 @@ if(isEditing){
 }else{
 
     alert("Resident Added Successfully!");
+
+}
+
+// Reset Heading
+
+residentFormTitle.innerText =
+"Add New Resident";
+
+// Reset Editing Index
+
+editingIndex = -1;
+
+// =========================
+// Close Resident Form Modal
+// =========================
+
+if(residentFormModal){
+
+    residentFormModal.style.display = "none";
 
 }
     });
@@ -5919,6 +6021,13 @@ editBtn.addEventListener("click",function(){
 
     document.getElementById("residentStatus").value =
     resident.status;
+
+    residentFormTitle.innerText =
+"Edit Resident";
+
+    // Open Resident Form Modal
+
+residentFormModal.style.display = "block";
 
 });
 
@@ -7331,6 +7440,64 @@ if(complaintsMenuToggle && complaintsSidebar){
 }
 
 // =========================
+// Residents Menu Toggle
+// =========================
+
+const residentMenuToggle =
+    document.getElementById("residentMenuToggle");
+
+const residentSidebar =
+    document.querySelector(".sidebar");
+
+if (residentMenuToggle) {
+
+    residentMenuToggle.addEventListener("click", function () {
+
+        residentSidebar.classList.toggle("active");
+
+    });
+
+}
+
+// =========================
+// Clear Resident Form
+// =========================
+
+if(clearResident){
+
+    clearResident.addEventListener("click",function(){
+
+        residentForm.reset();
+
+        photoPreview.src =
+        "../images/default-user.png";
+
+    });
+
+}
+
+// =========================
+// Residents Sidebar Auto Close
+// =========================
+
+if (residentMenuToggle) {
+
+    const residentSidebarLinks =
+        document.querySelectorAll(".sidebar a");
+
+    residentSidebarLinks.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            residentSidebar.classList.remove("active");
+
+        });
+
+    });
+
+}
+
+// =========================
 // Dashboard Header Profile
 // =========================
 
@@ -7970,14 +8137,11 @@ let resolvedComplaints = 0;
 
 complaints.forEach(function(complaint){
 
-    if(
-        complaint.status === "Resolved" ||
-        complaint.status === "Closed"
-    ){
-
-        resolvedComplaints++;
-
-    }
+if (
+    complaint.status === "Solved"
+) {
+    resolvedComplaints++;
+}
 
 });
 
@@ -8016,10 +8180,9 @@ maintenanceRecords.forEach(function(record){
     totalAmount += amount;
 
 
-    if(
-        record.status === "Paid" ||
-        record.status === "Paid"
-    ){
+if(record.status === "Paid"){
+    paidAmount += amount;
+}{
 
         paidAmount += amount;
 

@@ -1193,6 +1193,64 @@ background:#f5f7fa;
 }
 
 /* =========================
+Recent Complaints Dashboard
+========================= */
+
+.complaints-section{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-top:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+#recentComplaintTable{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+#recentComplaintTable thead{
+
+    background:#4f6fd5;
+
+    color:#fff;
+
+}
+
+#recentComplaintTable th{
+
+    padding:16px;
+
+    text-align:left;
+
+    font-weight:600;
+
+}
+
+#recentComplaintTable td{
+
+    padding:16px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+#recentComplaintTable tbody tr:hover{
+
+    background:#f8faff;
+
+}
+
+/* =========================
 Professional Header
 ========================= */
 
@@ -2905,33 +2963,26 @@ Professional Maintenance Summary
 /* Total Collection */
 
 .summary-card.income::before{
-
     background:#16a34a;
-
 }
+
 
 /* Pending */
 
 .summary-card.pending::before{
-
     background:#f59e0b;
-
 }
 
 /* Paid */
 
 .summary-card.paid::before{
-
     background:#2563eb;
-
 }
 
 /* Unpaid */
 
 .summary-card.unpaid::before{
-
     background:#dc2626;
-
 }
 
 .summary-card h3{
@@ -5911,50 +5962,136 @@ Event Summary
 }
 
 
+
+
 /* =========================
-Residents Top Bar
+Residents Page Header
+========================= */
+
+.main-content{
+
+    padding:30px;
+
+}
+
+.main-content h1{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#1f2937;
+
+    margin:10px 0 8px;
+
+    letter-spacing:.5px;
+
+}
+
+.main-content p{
+
+    font-size:15px;
+
+    color:#6b7280;
+
+    line-height:1.7;
+
+    margin-bottom:30px;
+
+    max-width:720px;
+
+}
+
+/* =========================
+Top Action Bar
 ========================= */
 
 .resident-top{
 
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
+
     gap:15px;
-    margin:30px 0;
+
+    margin-bottom:30px;
+
     flex-wrap:wrap;
+
+    background:#ffffff;
+
+    padding:18px;
+
+    border-radius:12px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
 
 }
 
 .resident-top input{
 
     flex:1;
+
     min-width:250px;
-    padding:12px;
-    border:1px solid #ccc;
+
+    height:45px;
+
+    padding:0 15px;
+
+    border:1px solid #dcdfe6;
+
     border-radius:8px;
+
     font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.resident-top input:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
 
 }
 
 .resident-top button{
 
-    background:#0B4DA2;
-    color:#fff;
+    height:45px;
+
+    padding:0 18px;
+
     border:none;
-    padding:12px 18px;
+
     border-radius:8px;
-    cursor:pointer;
+
+    font-size:14px;
+
     font-weight:600;
+
+    cursor:pointer;
+
     transition:.3s;
 
 }
 
-.resident-top button:hover{
+#addResidentBtn{
 
-    background:#083d82;
+    background:#2563eb;
+
+    color:#fff;
 
 }
+
+#addResidentBtn:hover{
+
+    background:#1d4ed8;
+
+}
+
 
 /* =========================
 Residents Table
@@ -5998,6 +6135,86 @@ Residents Table
 .resident-table tr:hover{
 
     background:#f7f9fc;
+
+}
+
+/* =========================
+Resident Search Box
+========================= */
+
+#searchResident{
+
+    flex:1;
+
+    min-width:260px;
+
+    height:48px;
+
+    padding:0 18px 0 45px;
+
+    border:1px solid #d6dbe5;
+
+    border-radius:10px;
+
+    background:#ffffff;
+
+    font-size:15px;
+
+    font-family:'Poppins',sans-serif;
+
+    color:#333;
+
+    outline:none;
+
+    transition:all .3s ease;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+
+}
+
+#searchResident::placeholder{
+
+    color:#8a8a8a;
+
+}
+
+#searchResident:focus{
+
+    border-color:#0B4DA2;
+
+    box-shadow:0 0 0 4px rgba(11,77,162,.15);
+
+}
+
+.search-resident-box{
+
+    position:relative;
+
+    flex:1;
+
+}
+
+.search-resident-box i{
+
+    position:absolute;
+
+    top:50%;
+
+    left:16px;
+
+    transform:translateY(-50%);
+
+    color:#6b7280;
+
+    font-size:15px;
+
+}
+
+.search-resident-box input{
+
+    width:100%;
+
+    padding-left:45px;
 
 }
 
@@ -8031,10 +8248,9 @@ Login History
 /* Total */
 
 .summary-card.total{
-
     background:linear-gradient(135deg,#2563eb,#1d4ed8);
-
 }
+
 
 /* Pending */
 
@@ -8047,19 +8263,14 @@ Login History
 /* In Progress */
 
 .summary-card.progress{
-
     background:linear-gradient(135deg,#8b5cf6,#6d28d9);
-
 }
 
 /* Solved */
 
 .summary-card.solved{
-
     background:linear-gradient(135deg,#10b981,#059669);
-
 }
-
 
 /* =====================================================
    Complaint Chart

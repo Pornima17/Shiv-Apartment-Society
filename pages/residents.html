@@ -9,7 +9,9 @@
     <title>Residents</title>
 
     <link rel="stylesheet" href="../css/style.css">
-
+    <link rel="stylesheet" href="../css/responsive.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
@@ -58,16 +60,32 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
     <div class="main-content">
 
+<!-- Mobile Menu Button -->
+
+<button
+    id="residentMenuToggle"
+    class="menu-toggle">
+
+    ☰
+
+</button>
         <h1>Residents Management</h1>
 
-        <p>Manage all society residents here.</p>
-
+<p>
+    Efficiently manage resident profiles, flat information, contact details, family members, and occupancy status.
+</p>
 <div class="resident-top">
+
+<div class="search-resident-box">
+
+    <i class="fa-solid fa-magnifying-glass"></i>
 
     <input
         type="text"
         id="searchResident"
         placeholder="Search Resident...">
+
+</div>
 
     <button id="addResidentBtn">
         + Add Resident
@@ -126,11 +144,29 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
 </div>
 
-<div class="resident-form">
+<!-- =========================
+Add Resident Modal
+========================= -->
 
-    <h2>Add New Resident</h2>
+<div
+    id="residentFormModal"
+    class="modal">
 
-<form id="residentForm">
+    <div class="modal-content resident-form">
+
+        <span
+            id="closeResidentForm"
+            class="close">
+
+            &times;
+
+        </span>
+
+<h2 id="residentFormTitle">
+    Add New Resident
+</h2>
+        <form id="residentForm">
+
 
     <div class="form-group">
 
@@ -232,18 +268,20 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
         </button>
 
-        <button
-            type="reset"
-            class="cancel-btn">
+<button
+    type="button"
+    id="clearResident"
+    class="cancel-btn">
 
-            Clear
+    Clear
 
-        </button>
+</button>
 
     </div>
 
 </form>
 
+</div>
 </div>
 
 <!-- =========================
