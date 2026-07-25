@@ -212,8 +212,7 @@ nav ul li a:hover{
 
 .hero-content p{
 
-    font-size:18px;
-
+font-size:13px;
     line-height:30px;
 
     margin-bottom:30px;
@@ -940,8 +939,7 @@ footer hr{
 
     text-decoration:none;
 
-    font-size:18px;
-
+font-size:18px;
 }
 
 .sidebar ul li a:hover{
@@ -1581,55 +1579,6 @@ color:#0B4DA2;
 
 }
 
-/* Notification Dropdown */
-
-.notification-dropdown{
-
-    display:none;
-
-    position:absolute;
-
-    top:55px;
-
-    right:0;
-
-    width:260px;
-
-    background:white;
-
-    border-radius:10px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-
-    padding:15px;
-
-    z-index:1000;
-
-}
-
-.notification-dropdown h4{
-
-    color:#0B4DA2;
-
-    margin-bottom:10px;
-
-}
-
-.notification-dropdown p{
-
-    padding:10px 0;
-
-    border-bottom:1px solid #eee;
-
-    font-size:14px;
-
-}
-
-.notification-dropdown p:last-child{
-
-    border-bottom:none;
-
-}
 
 
 .today-date{
@@ -1988,8 +1937,7 @@ Modal Scrollbar
 
     margin:0;
 
-    font-size:18px;
-
+font-size:13px;
     color:#111827;
 
 }
@@ -2298,7 +2246,7 @@ Activity Colors
 
 .welcome-text{
 
-    font-size:18px;
+font-size:13px;
     font-weight:600;
     margin:20px 0 10px;
 
@@ -2916,27 +2864,6 @@ Professional Maintenance Summary
 
 }
 
-.summary-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:-50%;
-
-    left:-40%;
-
-    width:80px;
-
-    height:220%;
-
-    background:rgba(255,255,255,.18);
-
-    transform:rotate(25deg);
-
-    transition:.5s;
-
-}
 
 .summary-badge{
 
@@ -2960,50 +2887,93 @@ Professional Maintenance Summary
 
 }
 
+
+/* Dashboard Maintenance Summary */
+
 /* Total Collection */
 
-.summary-card.income::before{
-    background:#16a34a;
+.maintenance-summary .summary-card.income::before{
+
+    background:linear-gradient(180deg,#22c55e,#15803d);
+
 }
 
 
 /* Pending */
 
-.summary-card.pending::before{
-    background:#f59e0b;
+.maintenance-summary .summary-card.pending::before{
+
+    background:linear-gradient(180deg,#fbbf24,#d97706);
+
 }
+
 
 /* Paid */
 
 .summary-card.paid::before{
-    background:#2563eb;
+
+    background:linear-gradient(180deg,#3b82f6,#1d4ed8);
+
 }
+
 
 /* Unpaid */
 
-.summary-card.unpaid::before{
-    background:#dc2626;
-}
+.maintenance-summary .summary-card.unpaid::before{
 
-.summary-card h3{
-
-    color:#666;
-
-    font-size:17px;
-
-    margin-bottom:15px;
-
-    font-weight:600;
+    background:linear-gradient(180deg,#ef4444,#b91c1c);
 
 }
 
-.summary-card h2{
+/* Total */
+
+.complaint-summary .summary-card.total{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+/* Pending */
+
+.complaint-summary .summary-card.pending{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+/* In Progress */
+
+.complaint-summary .summary-card.progress{
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+}
+
+/* Solved */
+
+.complaint-summary .summary-card.solved{
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+
+
+.complaint-summary .summary-card h2{
+
+    margin-top:8px;
 
     color:#111827;
 
     font-size:32px;
 
     font-weight:700;
+
+}
+
+.maintenance-summary .summary-card h2{
+
+    margin:0;
+
+    color:#111827;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
 
 }
 /* =========================
@@ -3448,7 +3418,7 @@ Professional Receipt Modal
 
     text-align:center;
     color:#666;
-    font-size:13px;
+font-size:13px;
     margin-top:8px;
 
 }
@@ -3480,8 +3450,9 @@ Professional Receipt Modal
     display:block;
     border:none;
     color:#666;
-    font-size:13px;
-    text-align:center;
+font-size:13px;
+
+text-align:center;
 
 }
 
@@ -3857,7 +3828,7 @@ Maintenance Analytics Cards
 
 .analytics-card h3{
 
-    font-size:18px;
+font-size:13px;
 
     color:#555;
 
@@ -5092,8 +5063,8 @@ Status Badges
     color:#fff;
     padding:6px 12px;
     border-radius:20px;
-    font-size:13px;
-    font-weight:600;
+font-size:13px;
+   font-weight:600;
 
 }
 
@@ -5103,7 +5074,7 @@ Status Badges
     color:#fff;
     padding:6px 12px;
     border-radius:20px;
-    font-size:13px;
+font-size:13px;
     font-weight:600;
 
 }
@@ -5201,7 +5172,7 @@ Dashboard Card Icons
 
     margin-bottom:12px;
     color:#555;
-    font-size:18px;
+font-size:13px;
     font-weight:600;
 
 }
@@ -5402,19 +5373,8 @@ Parking Page
 
 }
 
-.summary-card h3{
 
-    color:#666;
-    margin-bottom:10px;
 
-}
-
-.summary-card h2{
-
-    font-size:40px;
-    color:#0B4DA2;
-
-}
 
 .table-container{
 
@@ -5502,7 +5462,7 @@ Parking Page
     color:white;
     padding:8px 18px;
     border-radius:30px;
-    font-size:13px;
+font-size:13px;
     font-weight:bold;
 
 }
@@ -5513,7 +5473,7 @@ Parking Page
     color:white;
     padding:8px 18px;
     border-radius:30px;
-    font-size:13px;
+font-size:13px;
     font-weight:bold;
 
 }
@@ -5552,7 +5512,7 @@ Parking Page
 .report-summary .summary-card h3{
 
     color:#666;
-    font-size:18px;
+font-size:13px;
     margin-bottom:15px;
 
 }
@@ -5795,7 +5755,7 @@ Event Management
 
 #saveEvent i{
     margin-right:10px;
-    font-size:18px;
+font-size:13px;
 }
 
 /* Table */
@@ -5932,14 +5892,6 @@ Event Summary
     margin:25px 0;
 }
 
-.summary-card{
-    background:#fff;
-    border-radius:15px;
-    padding:25px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    transition:.3s;
-}
 
 .summary-card:hover{
     transform:translateY(-5px);
@@ -5951,15 +5903,8 @@ Event Summary
     margin-bottom:10px;
 }
 
-.summary-card h3{
-    margin:10px 0;
-    color:#555;
-}
 
-.summary-card h2{
-    color:#1e56a0;
-    font-size:32px;
-}
+
 
 
 
@@ -6806,8 +6751,7 @@ Footer
 
     margin-bottom:10px;
     color:#333;
-    font-size:18px;
-
+font-size:13px;
 }
 
 .profile-stat-card p{
@@ -6896,7 +6840,7 @@ Footer
     color:#fff;
     text-align:center;
     line-height:22px;
-    font-size:13px;
+font-size:13px;
     font-weight:bold;
     transition:.4s;
 
@@ -7053,7 +6997,7 @@ Footer
     transform:translateY(-50%);
     cursor:pointer;
     color:#666;
-    font-size:18px;
+font-size:13px;
     transition:.3s;
 
 }
@@ -7208,8 +7152,7 @@ Admin Dashboard
 
 .admin-card h3{
 
-    font-size:18px;
-
+font-size:13px;
     margin-bottom:10px;
 
     font-weight:600;
@@ -7843,9 +7786,8 @@ Login History
 
     border-radius:20px;
 
-    font-size:13px;
-
-    font-weight:600;
+font-size:13px; 
+   font-weight:600;
 
 }
 
@@ -7860,8 +7802,7 @@ Login History
 
     border-radius:20px;
 
-    font-size:13px;
-
+font-size:13px;
     font-weight:600;
 
 }
@@ -7877,8 +7818,7 @@ Login History
 
     border-radius:20px;
 
-    font-size:13px;
-
+font-size:13px;
     font-weight:600;
 
 }
@@ -7997,7 +7937,7 @@ Login History
     display:inline-block;
     padding:6px 12px;
     border-radius:20px;
-    font-size:13px;
+font-size:13px;
     font-weight:600;
 }
 
@@ -8063,7 +8003,7 @@ Login History
     border:none;
     border-radius:8px;
     color:#fff;
-    font-size:13px;
+font-size:13px;
     font-weight:600;
     cursor:pointer;
     transition:.3s;
@@ -8141,29 +8081,6 @@ Login History
 
 }
 
-.summary-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:18px;
-
-    padding:22px;
-
-    border-radius:16px;
-
-    color:#fff;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
-
-    transition:all .3s ease;
-
-    overflow:hidden;
-
-    position:relative;
-
-}
 
 .summary-card:hover{
 
@@ -8179,17 +8096,15 @@ Login History
 
     position:absolute;
 
-    top:-40px;
+    left:0;
 
-    right:-40px;
+    top:0;
 
-    width:120px;
+    width:6px;
 
-    height:120px;
+    height:100%;
 
-    background:rgba(255,255,255,.15);
-
-    border-radius:50%;
+    transform:none;
 
 }
 
@@ -8223,54 +8138,59 @@ Login History
 
 }
 
-.summary-card h3{
+.complaint-summary .summary-card h3{
 
-    margin:0;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    margin:0 0 12px;
+
+    color:#4b5563;
 
     font-size:15px;
 
-    font-weight:500;
+    font-weight:600;
 
-    opacity:.95;
+    letter-spacing:.4px;
 
-}
+    text-transform:uppercase;
 
-.summary-card h2{
-
-    margin-top:6px;
-
-    font-size:32px;
-
-    font-weight:700;
+    line-height:1.4;
 
 }
 
-/* Total */
 
-.summary-card.total{
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+.maintenance-summary .summary-card h3{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    margin:0 0 12px;
+
+    color:#4b5563;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:.4px;
+
+    text-transform:uppercase;
+
+    line-height:1.4;
+
 }
 
-
-/* Pending */
-
-.summary-card.pending{
-
-    background:linear-gradient(135deg,#f59e0b,#d97706);
-
-}
-
-/* In Progress */
-
-.summary-card.progress{
-    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
-}
-
-/* Solved */
-
-.summary-card.solved{
-    background:linear-gradient(135deg,#10b981,#059669);
-}
 
 /* =====================================================
    Complaint Chart
