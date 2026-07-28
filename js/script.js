@@ -1996,6 +1996,33 @@ flatModal.style.display="none";
 });
 
 // =========================
+// Format Date & Time
+// =========================
+
+function formatDateTime(dateTime){
+
+    if(!dateTime){
+
+        return "-";
+
+    }
+
+    const date = new Date(dateTime);
+
+    return date.toLocaleString("en-IN",{
+
+        day:"2-digit",
+        month:"short",
+        year:"numeric",
+        hour:"numeric",
+        minute:"2-digit",
+        hour12:true
+
+    });
+
+}
+
+// =========================
 // Load Visitors
 // =========================
 
@@ -2046,21 +2073,25 @@ function displayVisitors(){
 
         const row = document.createElement("tr");
 
-        row.innerHTML = `
+row.innerHTML = `
 
-        <td>V${String(index+1).padStart(3,"0")}</td>
+<td>V${String(index + 1).padStart(3,"0")}</td>
 
-        <td>${visitor.name}</td>
+<td>${visitor.name}</td>
 
-        <td>${visitor.mobile}</td>
+<td>${visitor.mobile}</td>
 
-        <td>${visitor.flat}</td>
+<td>${visitor.flat}</td>
 
-        <td>${visitor.purpose}</td>
+<td>${formatDateTime(visitor.inTime)}</td>
+
+<td>${formatDateTime(visitor.outTime)}</td>
+
+<td>${visitor.purpose}</td>
 
 <td>
 
-<span class="${visitor.status === "Inside"
+<span class="${visitor.status==="Inside"
 ? "inside-badge"
 : "outside-badge"}">
 
@@ -2070,35 +2101,29 @@ ${visitor.status}
 
 </td>
 
-<td>
+<td class="visitor-actions">
 
-<button class="view-visitor-btn"
-data-index="${index}">
-View
+<button class="view-visitor-btn" data-index="${index}" title="View">
+    <i class="fa-solid fa-eye"></i>
 </button>
 
-<button class="status-visitor-btn"
-data-index="${index}">
-
-${visitor.status==="Inside"
-? "Check Out"
-: "Check In"}
-
+<button class="status-visitor-btn" data-index="${index}" title="${visitor.status==="Inside" ? "Check Out" : "Check In"}">
+    ${visitor.status==="Inside"
+    ? '<i class="fa-solid fa-right-from-bracket"></i>'
+    : '<i class="fa-solid fa-right-to-bracket"></i>'}
 </button>
 
-<button class="edit-visitor-btn"
-data-index="${index}">
-Edit
+<button class="edit-visitor-btn" data-index="${index}" title="Edit">
+    <i class="fa-solid fa-pen"></i>
 </button>
 
-<button class="delete-visitor-btn"
-data-index="${index}">
-Delete
+<button class="delete-visitor-btn" data-index="${index}" title="Delete">
+    <i class="fa-solid fa-trash"></i>
 </button>
 
-        </td>
+</td>
 
-        `;
+`;
 
         visitorTableBody.appendChild(row);
 
@@ -2245,6 +2270,8 @@ saveVisitors();
 
 displayVisitors();
 
+updateVisitorSummary();
+
 document.getElementById("visitorName").value="";
 document.getElementById("visitorMobile").value="";
 document.getElementById("visitorFlat").value="";
@@ -2271,11 +2298,15 @@ if(visitorTable){
 
 visitorTable.addEventListener("click",function(event){
 
+    const button = event.target.closest("button");
+
+if(!button){
+    return;
+}
+
 // Edit
-if(event.target.classList.contains("edit-visitor-btn")){
-
-const index = event.target.dataset.index;
-
+if(button.classList.contains("edit-visitor-btn")){
+const index = button.dataset.index;
 editingVisitorIndex = index;
 
 document.getElementById("visitorName").value =
@@ -2303,10 +2334,9 @@ saveVisitor.innerText = "Update Visitor";
 // Check In / Check Out
 // =========================
 
-if(event.target.classList.contains("status-visitor-btn")){
+if(button.classList.contains("status-visitor-btn")){
 
-const index = event.target.dataset.index;
-
+const index = button.dataset.index;
 if(visitors[index].status==="Inside"){
 
 visitors[index].status="Outside";
@@ -2321,13 +2351,14 @@ saveVisitors();
 
 displayVisitors();
 
+updateVisitorSummary();
+
 }
 
 // Delete
-if(event.target.classList.contains("delete-visitor-btn")){
+if(button.classList.contains("delete-visitor-btn")){
 
-const index = event.target.dataset.index;
-
+const index = button.dataset.index;
 if(confirm("Delete this visitor?")){
 
 visitors.splice(index,1);
@@ -2335,6 +2366,8 @@ visitors.splice(index,1);
 saveVisitors();
 
 displayVisitors();
+
+updateVisitorSummary();
 
 alert("Visitor Deleted Successfully!");
 
@@ -2360,9 +2393,15 @@ if(visitorTable){
 
 visitorTable.addEventListener("click",function(event){
 
-if(event.target.classList.contains("view-visitor-btn")){
+    const button = event.target.closest("button");
 
-const index = event.target.dataset.index;
+if(!button){
+    return;
+}
+
+if(button.classList.contains("view-visitor-btn")){
+
+const index = button.dataset.index;
 
 document.getElementById("viewVisitorId").innerText =
 "V"+String(Number(index)+1).padStart(3,"0");
@@ -2380,10 +2419,10 @@ document.getElementById("viewVisitorPurpose").innerText =
 visitors[index].purpose;
 
 document.getElementById("viewVisitorInTime").innerText =
-visitors[index].inTime || "-";
+formatDateTime(visitors[index].inTime);
 
 document.getElementById("viewVisitorOutTime").innerText =
-visitors[index].outTime || "-";
+formatDateTime(visitors[index].outTime);
 
 visitorModal.style.display = "block";
 
@@ -7454,6 +7493,26 @@ if (residentMenuToggle) {
     residentMenuToggle.addEventListener("click", function () {
 
         residentSidebar.classList.toggle("active");
+
+    });
+
+}
+
+// =========================
+// Visitors Menu Toggle
+// =========================
+
+const visitorMenuToggle =
+document.getElementById("visitorMenuToggle");
+
+const visitorSidebar =
+document.querySelector(".sidebar");
+
+if(visitorMenuToggle && visitorSidebar){
+
+    visitorMenuToggle.addEventListener("click",function(){
+
+        visitorSidebar.classList.toggle("active");
 
     });
 

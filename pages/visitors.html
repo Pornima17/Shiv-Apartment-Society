@@ -10,7 +10,10 @@
     <title>Visitors Management</title>
 
     <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/responsive.css">
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
@@ -35,38 +38,62 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
         <h2>🏢 Shiv Apartment</h2>
 
-        <ul>
+<ul>
 
-            <li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
 
-            <li><a href="residents.html">Residents</a></li>
+<li><a href="residents.html"><i class="fa-solid fa-users"></i> Residents</a></li>
 
-            <li><a href="complaints.html">Complaints</a></li>
+<li><a href="complaints.html"><i class="fa-solid fa-circle-exclamation"></i> Complaints</a></li>
 
-            <li><a href="maintenance.html">Maintenance</a></li>
+<li><a href="maintenance.html"><i class="fa-solid fa-wallet"></i> Maintenance</a></li>
 
-            <li><a href="notice.html">Notice</a></li>
+<li><a href="notice.html"><i class="fa-solid fa-bullhorn"></i> Notice</a></li>
 
-            <li><a href="events.html">events</a></li>
+<li><a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events</a></li>
 
+<li><a href="visitors.html" class="active"><i class="fa-solid fa-user-check"></i> Visitors</a></li>
 
-            <li><a class="active" href="visitors.html" class="active">Visitors</a></li>
+<li><a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
 
-            <li><a href="../index.html">Logout</a></li>
-
-        </ul>
+</ul>
 
     </div>
 
+<!-- =========================
+Visitors Menu Toggle
+========================= -->
+
+<button
+type="button"
+id="visitorMenuToggle"
+class="menu-toggle">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
     <!-- Main Content -->
+<div class="main-content">
 
-    <div class="main-content">
+<div class="page-header">
 
-        <h1>🚶 Visitors Management</h1>
+    <div>
 
-        <p>Manage Society Visitors Here.</p>
+        <h1>
+            <i class="fa-solid fa-user-check"></i>
+            Visitors Management
+        </h1>
 
-        <!-- =========================
+        <p>
+            Register, monitor and manage society visitors efficiently.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
 Visitor Summary
 ========================= -->
 
@@ -101,16 +128,32 @@ Visitor Summary
         <input
 type="text"
 id="searchVisitor"
-placeholder="🔍 Search Visitor..."
+placeholder="Search by Name, Mobile or Flat..."
 class="search-box">
 
-        <!-- =========================
+<!-- =========================
+ Add Visitor
+========================= -->
+
+<div class="visitor-form">
+
+<div class="form-header">
+
+    <h2>
+
+        <i class="fa-solid fa-user-plus"></i>
+
         Add Visitor
-        ========================= -->
 
-        <div class="visitor-form">
+    </h2>
 
-            <h2>➕ Add Visitor</h2>
+    <p>
+
+        Register a visitor entering the society.
+
+    </p>
+
+</div>
 
             <div class="form-group">
 
@@ -158,11 +201,15 @@ class="search-box">
 
             </div>
 
-            <button id="saveVisitor">
+<button
+type="button"
+id="saveVisitor">
 
-                Save Visitor
+<i class="fa-solid fa-floppy-disk"></i>
 
-            </button>
+Save Visitor
+
+</button>
 
         </div>
 
@@ -172,8 +219,17 @@ class="search-box">
 
         <div class="table-container">
 
-            <h2>📋 Visitors List</h2>
+<div class="table-header">
 
+    <h2>
+
+        <i class="fa-solid fa-table-list"></i>
+
+        Visitors List
+
+    </h2>
+
+</div>
             <table id="visitorTable" class="visitor-table">
 
                 <thead>
@@ -215,8 +271,13 @@ Visitor View Modal
 
         <span id="closeVisitorModal" class="close">&times;</span>
 
-        <h2>🚶 Visitor Details</h2>
+<h2>
 
+<i class="fa-solid fa-id-card"></i>
+
+Visitor Details
+
+</h2>
         <p><strong>ID:</strong> <span id="viewVisitorId"></span></p>
 
         <p><strong>Name:</strong> <span id="viewVisitorName"></span></p>

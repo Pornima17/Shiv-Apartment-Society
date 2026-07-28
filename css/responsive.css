@@ -2157,6 +2157,164 @@ Resident Search Responsive
 
 }
 
+/* ========================================
+   Visitors Responsive - Mobile
+======================================== */
+
+    /* Menu Toggle */
+
+    #visitorMenuToggle{
+
+        display:block;
+        position:fixed;
+        top:15px;
+        left:15px;
+        z-index:1100;
+
+    }
+
+    /* Sidebar */
+
+    .sidebar{
+
+        position:fixed;
+        top:0;
+        left:-270px;
+        width:260px;
+        height:100vh;
+        transition:.35s;
+        z-index:1000;
+
+    }
+
+    .sidebar.active{
+
+        left:0;
+
+    }
+
+    /* Main Content */
+
+    .main-content{
+
+        margin-left:0;
+        width:100%;
+        padding:80px 20px 20px;
+
+    }
+
+    /* Header */
+
+    .page-header{
+
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+
+    }
+
+    .page-header h1{
+
+        font-size:24px;
+
+    }
+
+    /* Summary */
+
+    .visitor-summary{
+
+        grid-template-columns:1fr;
+
+    }
+
+    /* Search */
+
+    .search-box{
+
+        width:100%;
+
+    }
+
+    /* Save Button */
+
+    #saveVisitor{
+
+        width:100%;
+
+    }
+
+    /* ========================================
+       Visitors Table
+    ======================================== */
+
+    .table-container{
+
+        width:100%;
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+        border-radius:12px;
+
+    }
+
+    .visitor-table{
+
+        width:100%;
+        min-width:1200px;
+        border-collapse:collapse;
+
+    }
+
+    .visitor-table th,
+    .visitor-table td{
+
+        padding:14px 12px;
+        text-align:center;
+        vertical-align:middle;
+        white-space:nowrap;
+
+    }
+
+    .visitor-table th{
+
+        font-size:14px;
+
+    }
+
+    .visitor-table td{
+
+        font-size:13px;
+
+    }
+
+    /* Action Buttons */
+
+    .visitor-table td:last-child{
+
+        min-width:260px;
+
+    }
+
+    .view-visitor-btn,
+    .status-visitor-btn,
+    .edit-visitor-btn,
+    .delete-visitor-btn{
+
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:6px;
+
+        padding:8px 12px;
+        margin:2px;
+
+        border-radius:8px;
+        font-size:13px;
+        white-space:nowrap;
+
+    }
+
+
+
 }
 
 
