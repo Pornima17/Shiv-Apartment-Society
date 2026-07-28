@@ -10,13 +10,6 @@
 
 }
 
-.main-content{
-
-    width:100%;
-    margin-left:0;
-    padding:20px;
-
-}
 
 .dashboard-cards{
 
@@ -207,20 +200,6 @@ body{
 
 }
 
-
-/* ==========================
-   Main Content
-========================== */
-
-.main-content{
-
-    width:100%;
-
-    margin-left:0;
-
-    padding:80px 15px 20px;
-
-}
 
 
 /* ==========================
@@ -1459,14 +1438,6 @@ footer{
 ========================= */
 
 
-    /* Main Content */
-
-    .main-content{
-
-        padding:75px 15px 20px;
-
-    }
-
     /* Heading */
 
     .main-content h1{
@@ -1999,20 +1970,20 @@ Residents Page Responsive
 
 }
 
-.form-group{
+.resident-form .form-group{
 
     margin-bottom:15px;
 
 }
 
-.form-group input,
-.form-group select{
+.resident-form .form-group input,
+.resident-form .form-group select{
 
     width:100%;
 
 }
 
-.form-buttons{
+.resident-form .form-buttons{
 
     display:flex;
     flex-direction:column;
@@ -2020,7 +1991,7 @@ Residents Page Responsive
 
 }
 
-.form-buttons button{
+.resident-form .form-buttons button{
 
     width:100%;
 
@@ -2056,16 +2027,6 @@ Residents Page Responsive
 Resident Modal Responsive
 ========================= */
 
-.modal-content{
-
-    width:95%;
-    max-width:400px;
-
-    margin:30px auto;
-
-    padding:20px;
-
-}
 
 .resident-view-header{
 
@@ -2173,33 +2134,9 @@ Resident Search Responsive
 
     }
 
-    /* Sidebar */
-
-    .sidebar{
-
-        position:fixed;
-        top:0;
-        left:-270px;
-        width:260px;
-        height:100vh;
-        transition:.35s;
-        z-index:1000;
-
-    }
-
     .sidebar.active{
 
         left:0;
-
-    }
-
-    /* Main Content */
-
-    .main-content{
-
-        margin-left:0;
-        width:100%;
-        padding:80px 20px 20px;
 
     }
 
@@ -2247,14 +2184,20 @@ Resident Search Responsive
        Visitors Table
     ======================================== */
 
-    .table-container{
+.visitor-table-container{
 
-        width:100%;
-        overflow-x:auto;
-        -webkit-overflow-scrolling:touch;
-        border-radius:12px;
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
 
-    }
+    border-radius:15px;
+
+    background:#fff;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
 
     .visitor-table{
 
@@ -2290,9 +2233,36 @@ Resident Search Responsive
 
     .visitor-table td:last-child{
 
-        min-width:260px;
+        min-width:220px;
 
     }
+
+    .visitor-table td:last-child button{
+
+    width:36px;
+    height:36px;
+
+    padding:0;
+
+    margin:2px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:8px;
+
+}
+
+.visitor-table td:last-child button i{
+
+    margin:0;
+
+    font-size:14px;
+
+}
 
     .view-visitor-btn,
     .status-visitor-btn,

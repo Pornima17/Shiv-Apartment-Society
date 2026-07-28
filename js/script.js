@@ -7417,9 +7417,17 @@ sidebarLinks.forEach(function(link){
 
     link.addEventListener("click",function(){
 
-        sidebar.classList.remove("active");
+        if(sidebar){
 
-        sidebarOverlay.classList.remove("active");
+            sidebar.classList.remove("active");
+
+        }
+
+        if(sidebarOverlay){
+
+            sidebarOverlay.classList.remove("active");
+
+        }
 
     });
 
