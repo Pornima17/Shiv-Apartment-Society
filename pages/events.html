@@ -23,14 +23,23 @@
 
 <body>
 
+    <button
+id="eventMenuToggle"
+class="menu-toggle">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
 <div class="dashboard">
 
 <!-- =========================
 Professional Sidebar
 ========================= -->
 
-<div class="sidebar">
-
+<div
+id="eventSidebar"
+class="sidebar">
 
     <div class="sidebar-header">
 
@@ -203,126 +212,312 @@ Professional Sidebar
 Main Content
 ========================= -->
 
-<div class="main-content">
+<div
+id="eventMainContent"
+class="main-content">
 
-<h1>📅 Event Management</h1>
+    <!-- =========================
+    Page Header
+    ========================= -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Event Management
+
+            </h1>
+
+            <p>
+
+                Create, schedule and manage society events professionally.
+
+            </p>
+
+        </div>
+
+    </div>
 
 <!-- =========================
-Event Form
+Add New Event
 ========================= -->
 
 <div class="event-container">
 
-<h2>Add Event</h2>
 
-<form class="event-form">
+    <div class="form-header">
 
-<div class="form-group">
 
-<input
-type="text"
-id="eventTitle"
-placeholder="Event Title">
+        <h2>
 
-<input
-type="date"
-id="eventDate">
+            <i class="fa-solid fa-calendar-plus"></i>
 
-</div>
+            Add New Event
 
-<div class="form-group">
+        </h2>
 
-<input
-type="time"
-id="eventTime">
 
-<input
-type="text"
-id="eventLocation"
-placeholder="Event Location">
+        <p>
 
-</div>
+            Schedule upcoming events for society residents.
 
-<div class="form-group">
+        </p>
 
-<textarea
-id="eventDescription"
-placeholder="Event Description"></textarea>
 
-</div>
+    </div>
 
-<button id="saveEvent">
-    <i class="fa-solid fa-calendar-plus"></i>
-    Save Event
-</button>
 
-</form>
+
+    <form 
+    class="event-form"
+    autocomplete="off">
+
+
+        <div class="form-group">
+
+
+            <input
+            type="text"
+            id="eventTitle"
+            placeholder="Event Title">
+
+
+            <input
+            type="date"
+            id="eventDate">
+
+
+        </div>
+
+
+
+
+        <div class="form-group">
+
+
+            <input
+            type="time"
+            id="eventTime">
+
+
+            <input
+            type="text"
+            id="eventLocation"
+            placeholder="Event Location">
+
+
+        </div>
+
+
+
+
+        <div class="form-group">
+
+
+            <textarea
+            id="eventDescription"
+            rows="5"
+            placeholder="Event Description"></textarea>
+
+
+        </div>
+
+
+
+
+        <button
+        type="button"
+        id="saveEvent"
+        class="primary-btn">
+
+
+            <i class="fa-solid fa-calendar-plus"></i>
+
+            Save Event
+
+
+        </button>
+
+
+    </form>
+
 
 </div>
 
 <!-- =========================
-Event Summary
+Event Summary Cards
 ========================= -->
+
 
 <div class="event-summary">
 
-    <div class="summary-card">
 
-        <i class="fa-solid fa-calendar-days"></i>
-
-        <h3>Total Events</h3>
-
-        <h2 id="totalEvents">0</h2>
-
-    </div>
+    <!-- Total Events -->
 
     <div class="summary-card">
 
-        <i class="fa-solid fa-clock"></i>
 
-        <h3>Upcoming</h3>
+        <div class="summary-icon">
 
-        <h2 id="upcomingEvents">0</h2>
+            <i class="fa-solid fa-calendar-days"></i>
+
+        </div>
+
+
+        <div class="summary-content">
+
+
+            <h3>
+                Total Events
+            </h3>
+
+
+            <h2 id="totalEvents">
+                0
+            </h2>
+
+
+        </div>
+
 
     </div>
+
+
+
+
+
+    <!-- Upcoming Events -->
+
 
     <div class="summary-card">
 
-        <i class="fa-solid fa-check-circle"></i>
 
-        <h3>Completed</h3>
+        <div class="summary-icon">
 
-        <h2 id="completedEvents">0</h2>
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+
+        <div class="summary-content">
+
+
+            <h3>
+                Upcoming
+            </h3>
+
+
+            <h2 id="upcomingEvents">
+                0
+            </h2>
+
+
+        </div>
+
 
     </div>
+
+
+
+
+
+    <!-- Completed Events -->
+
+
+    <div class="summary-card">
+
+
+        <div class="summary-icon">
+
+
+            <i class="fa-solid fa-circle-check"></i>
+
+
+        </div>
+
+
+        <div class="summary-content">
+
+
+            <h3>
+                Completed
+            </h3>
+
+
+            <h2 id="completedEvents">
+                0
+            </h2>
+
+
+        </div>
+
+
+    </div>
+
 
 </div>
 
 <!-- =========================
-Search
+Event List Section
 ========================= -->
+
 
 <div class="table-container">
 
-<div class="table-top">
 
-    <h2>
-        <i class="fa-solid fa-calendar-days"></i>
-        Event List
-    </h2>
+    <div class="table-top">
 
-    <div class="search-box">
 
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <div class="table-title">
 
-        <input
+
+            <h2>
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Event List
+
+            </h2>
+
+
+            <p>
+
+                View and manage all society events.
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+
+            <input
+
             type="text"
+
             id="searchEvent"
-            placeholder="Search Event...">
+
+            placeholder="Search event...">
+
+
+        </div>
+
 
     </div>
-
-</div>
 
 <!-- =========================
 Event Table
@@ -330,20 +525,62 @@ Event Table
 
 <table id="eventTable">
 
+
 <thead>
+
 
 <tr>
 
-<th>ID</th>
-<th>Title</th>
-<th>Date</th>
-<th>Time</th>
-<th>Location</th>
-<th>Action</th>
+
+<th>
+#
+</th>
+
+
+<th>
+Event Name
+</th>
+
+
+<th>
+Date
+</th>
+
+
+<th>
+Time
+</th>
+
+
+<th>
+Location
+</th>
+
+<th>Status</th>
+
+<th>
+Action
+</th>
+
 
 </tr>
 
+
 </thead>
+
+
+
+<tbody id="eventTableBody">
+
+
+</tbody>
+
+
+
+</table>
+
+
+</div>
 
 <tbody id="eventTableBody">
 
@@ -361,29 +598,168 @@ Event Table
 Event View Modal
 ========================= -->
 
-<div id="eventModal" class="modal">
 
-<div class="modal-content">
+<div 
+id="eventModal"
+class="modal">
 
-<span class="close" id="closeEventModal">&times;</span>
 
-<h2>📅 Event Details</h2>
+    <div class="modal-content">
 
-<hr>
 
-<p><strong>ID :</strong> <span id="viewEventId"></span></p>
+        <!-- Close Button -->
 
-<p><strong>Title :</strong> <span id="viewEventTitle"></span></p>
+        <span 
+        class="close"
+        id="closeEventModal">
 
-<p><strong>Date :</strong> <span id="viewEventDate"></span></p>
+            &times;
 
-<p><strong>Time :</strong> <span id="viewEventTime"></span></p>
+        </span>
 
-<p><strong>Location :</strong> <span id="viewEventLocation"></span></p>
 
-<p><strong>Description :</strong> <span id="viewEventDescription"></span></p>
 
-</div>
+
+        <!-- Modal Header -->
+
+
+        <div class="modal-header">
+
+
+            <h2>
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Event Details
+
+            </h2>
+
+
+        </div>
+
+
+
+        <hr>
+
+
+
+
+        <!-- Modal Body -->
+
+
+        <div class="modal-body">
+
+
+            <p>
+
+                <strong>
+                    Event ID :
+                </strong>
+
+                <span id="viewEventId"></span>
+
+            </p>
+
+
+
+            <p>
+
+                <strong>
+                    Title :
+                </strong>
+
+                <span id="viewEventTitle"></span>
+
+            </p>
+
+
+
+            <p>
+
+                <strong>
+                    Date :
+                </strong>
+
+                <span id="viewEventDate"></span>
+
+            </p>
+
+
+
+            <p>
+
+                <strong>
+                    Time :
+                </strong>
+
+                <span id="viewEventTime"></span>
+
+            </p>
+
+
+
+            <p>
+
+                <strong>
+                    Location :
+                </strong>
+
+                <span id="viewEventLocation"></span>
+
+            </p>
+
+
+
+            <p>
+
+                <strong>
+                    Description :
+                </strong>
+
+                <span id="viewEventDescription"></span>
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+        <!-- Modal Buttons -->
+
+
+        <div class="modal-actions">
+
+
+            <button 
+            class="edit-btn">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit
+
+            </button>
+
+
+
+            <button 
+            class="delete-btn">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </button>
+
+
+        </div>
+
+
+
+    </div>
+
 
 </div>
 

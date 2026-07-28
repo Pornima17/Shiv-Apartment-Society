@@ -222,6 +222,54 @@ function saveEvents(){
 }
 
 // =========================
+// Get Event Status
+// =========================
+
+function getEventStatus(eventDate){
+
+    const today = new Date();
+
+    today.setHours(0,0,0,0);
+
+    const selectedDate = new Date(eventDate);
+
+    selectedDate.setHours(0,0,0,0);
+
+    if(selectedDate.getTime() === today.getTime()){
+
+        return "Today";
+
+    }
+
+    if(selectedDate > today){
+
+        return "Upcoming";
+
+    }
+
+    return "Completed";
+
+}
+
+// =========================
+// Format Event Date
+// =========================
+
+function formatEventDate(date){
+
+    return new Date(date).toLocaleDateString("en-GB",{
+
+        day:"2-digit",
+
+        month:"short",
+
+        year:"numeric"
+
+    });
+
+}
+
+// =========================
 // Display Events
 // =========================
 
@@ -234,17 +282,26 @@ function displayEvents(){
 
     tableBody.innerHTML = "";
 
+    // Sort events by date
+    events.sort(function(a,b){
+
+        return new Date(a.date) - new Date(b.date);
+
+    });
+
     events.forEach(function(event,index){
+
+        const status = getEventStatus(event.date);
 
         tableBody.innerHTML += `
 
 <tr>
 
-<td>E${String(index+1).padStart(3,"0")}</td>
+<td>${event.id}</td>
 
 <td>${event.title}</td>
 
-<td>${event.date}</td>
+<td>${formatEventDate(event.date)}</td>
 
 <td>${event.time}</td>
 
@@ -252,26 +309,46 @@ function displayEvents(){
 
 <td>
 
-<button class="view-event-btn"
-data-index="${index}">
+<span class="status-badge ${status.toLowerCase()}">
+
+${status}
+
+</span>
+
+</td>
+
+<td>
+
+<div class="action-buttons">
+
+<button
+class="view-event-btn"
+data-index="${index}"
+title="View">
 
 <i class="fa-solid fa-eye"></i>
 
 </button>
 
-<button class="edit-event-btn"
-data-index="${index}">
+<button
+class="edit-event-btn"
+data-index="${index}"
+title="Edit">
 
 <i class="fa-solid fa-pen"></i>
 
 </button>
 
-<button class="delete-event-btn"
-data-index="${index}">
+<button
+class="delete-event-btn"
+data-index="${index}"
+title="Delete">
 
 <i class="fa-solid fa-trash"></i>
 
 </button>
+
+</div>
 
 </td>
 
@@ -281,7 +358,7 @@ data-index="${index}">
 
     });
 
-updateEventSummary();
+    updateEventSummary();
 
 }
 
@@ -320,7 +397,7 @@ events.forEach(function(event){
 
         eventDate.setHours(0,0,0,0);
 
-        if(eventDate >= today){
+if(getEventStatus(event.date)!=="Completed"){
 
             upcoming++;
 
@@ -382,6 +459,9 @@ if(editingEventIndex!==-1){
 
 events[editingEventIndex]={
 
+id:
+events[editingEventIndex].id,
+
 title,
 date,
 time,
@@ -392,13 +472,17 @@ description
 
 editingEventIndex=-1;
 
-saveEvent.innerText="Save Event";
-
+saveEvent.innerHTML = `
+<i class="fa-solid fa-calendar-plus"></i>
+Save Event`;
 addActivity(title+" event updated.");
 
 }else{
 
 events.push({
+
+id:
+"E"+String(events.length+1).padStart(3,"0"),
 
 title,
 date,
@@ -424,8 +508,7 @@ document.getElementById("eventTime").value="";
 document.getElementById("eventLocation").value="";
 document.getElementById("eventDescription").value="";
 
-alert("Event Saved Successfully.");
-
+alert("✅ Event saved successfully.");
 });
 
 }
@@ -468,13 +551,14 @@ events[index].location;
 document.getElementById("eventDescription").value=
 events[index].description;
 
-saveEvent.innerText="Update Event";
-
+saveEvent.innerHTML = `
+<i class="fa-solid fa-pen"></i>
+Update Event`;
 }
 
 if(button.classList.contains("delete-event-btn")){
 
-if(confirm("Delete Event?")){
+if(confirm("Are you sure you want to delete this event?")){
 
 addActivity(events[index].title+" event deleted.");
 
@@ -492,14 +576,14 @@ updateEventSummary();
 
 if(button.classList.contains("view-event-btn")){
 
-document.getElementById("viewEventId").innerText=
-"E"+String(Number(index)+1).padStart(3,"0");
+document.getElementById("viewEventId").innerText =
+events[index].id;
 
 document.getElementById("viewEventTitle").innerText=
 events[index].title;
 
-document.getElementById("viewEventDate").innerText=
-events[index].date;
+document.getElementById("viewEventDate").innerText =
+formatEventDate(events[index].date);
 
 document.getElementById("viewEventTime").innerText=
 events[index].time;
@@ -705,8 +789,7 @@ if(saveParkingBtn){
             vehicleType === ""
         ){
 
-            alert("Please fill all fields.");
-
+alert("⚠ Please fill in all required fields.");
             return;
 
         }
@@ -7748,6 +7831,64 @@ if(noticeMenuToggle && noticeSidebar){
 
     });
 
+
+}
+
+// =========================
+// Events Mobile Menu Toggle
+// =========================
+
+const eventMenuToggle =
+document.getElementById("eventMenuToggle");
+
+const eventSidebar =
+document.getElementById("eventSidebar");
+
+
+if(eventMenuToggle && eventSidebar){
+
+
+    // Open / Close Sidebar
+
+    eventMenuToggle.addEventListener("click", function(e){
+
+        e.stopPropagation();
+
+        eventSidebar.classList.toggle("active");
+
+    });
+
+
+    // Close Sidebar when clicking outside
+
+    document.addEventListener("click", function(e){
+
+        if(
+            !eventSidebar.contains(e.target) &&
+            !eventMenuToggle.contains(e.target)
+        ){
+
+            eventSidebar.classList.remove("active");
+
+        }
+
+    });
+
+
+    // Close Sidebar after clicking menu link
+
+    const eventLinks =
+    eventSidebar.querySelectorAll("a");
+
+    eventLinks.forEach(function(link){
+
+        link.addEventListener("click", function(){
+
+            eventSidebar.classList.remove("active");
+
+        });
+
+    });
 
 }
 
