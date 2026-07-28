@@ -7467,62 +7467,287 @@ if(maintenanceMenuToggle && maintenanceSidebar){
 }
 
 // =========================
-// Complaints Page Mobile Menu
+// Complaints Mobile Menu Toggle
 // =========================
 
 const complaintsMenuToggle =
 document.getElementById("complaintsMenuToggle");
 
+
 const complaintsSidebar =
 document.querySelector(".sidebar");
 
+
+
 if(complaintsMenuToggle && complaintsSidebar){
 
-    complaintsMenuToggle.addEventListener("click",function(){
+
+    // Open / Close menu button
+
+    complaintsMenuToggle.addEventListener("click", function(e){
+
+
+        e.stopPropagation();
+
 
         complaintsSidebar.classList.toggle("active");
 
+
     });
+
+
+
+    // Close menu when clicking outside sidebar
+
+    document.addEventListener("click", function(e){
+
+
+        if(
+            !complaintsSidebar.contains(e.target) &&
+            !complaintsMenuToggle.contains(e.target)
+        ){
+
+            complaintsSidebar.classList.remove("active");
+
+        }
+
+
+    });
+
+
+
+    // Close menu after clicking sidebar link
+
+    const complaintsLinks =
+    complaintsSidebar.querySelectorAll("a");
+
+
+    complaintsLinks.forEach(function(link){
+
+
+        link.addEventListener("click", function(){
+
+
+            complaintsSidebar.classList.remove("active");
+
+
+        });
+
+
+    });
+
 
 }
 
 // =========================
-// Residents Menu Toggle
+// Residents Mobile Menu Toggle
 // =========================
 
 const residentMenuToggle =
-    document.getElementById("residentMenuToggle");
+document.getElementById("residentMenuToggle");
+
 
 const residentSidebar =
-    document.querySelector(".sidebar");
+document.querySelector(".sidebar");
 
-if (residentMenuToggle) {
 
-    residentMenuToggle.addEventListener("click", function () {
+
+if(residentMenuToggle && residentSidebar){
+
+
+    // Open / Close menu button
+
+    residentMenuToggle.addEventListener("click", function(e){
+
+
+        e.stopPropagation();
+
 
         residentSidebar.classList.toggle("active");
 
+
     });
+
+
+
+    // Close menu when clicking outside sidebar
+
+    document.addEventListener("click", function(e){
+
+
+        if(
+            !residentSidebar.contains(e.target) &&
+            !residentMenuToggle.contains(e.target)
+        ){
+
+            residentSidebar.classList.remove("active");
+
+        }
+
+
+    });
+
+
+
+    // Close menu after clicking sidebar link
+
+    const residentLinks =
+    residentSidebar.querySelectorAll("a");
+
+
+    residentLinks.forEach(function(link){
+
+
+        link.addEventListener("click", function(){
+
+
+            residentSidebar.classList.remove("active");
+
+
+        });
+
+
+    });
+
 
 }
 
 // =========================
-// Visitors Menu Toggle
+// Visitors Mobile Menu Toggle
 // =========================
 
 const visitorMenuToggle =
 document.getElementById("visitorMenuToggle");
 
+
 const visitorSidebar =
 document.querySelector(".sidebar");
 
+
+
 if(visitorMenuToggle && visitorSidebar){
 
-    visitorMenuToggle.addEventListener("click",function(){
+
+    // Open / Close menu button
+
+    visitorMenuToggle.addEventListener("click", function(e){
+
+
+        e.stopPropagation();
+
 
         visitorSidebar.classList.toggle("active");
 
+
     });
+
+
+
+    // Close menu when clicking outside sidebar
+
+    document.addEventListener("click", function(e){
+
+
+        if(
+            !visitorSidebar.contains(e.target) &&
+            !visitorMenuToggle.contains(e.target)
+        ){
+
+            visitorSidebar.classList.remove("active");
+
+        }
+
+
+    });
+
+
+
+    // Close menu after clicking sidebar link
+
+    const visitorLinks =
+    visitorSidebar.querySelectorAll("a");
+
+
+    visitorLinks.forEach(function(link){
+
+
+        link.addEventListener("click", function(){
+
+
+            visitorSidebar.classList.remove("active");
+
+
+        });
+
+
+    });
+
+
+}
+
+// =========================
+// Notice Mobile Menu Toggle
+// =========================
+
+const noticeMenuToggle =
+document.getElementById("noticeMenuToggle");
+
+const noticeSidebar =
+document.getElementById("noticeSidebar");
+
+
+if(noticeMenuToggle && noticeSidebar){
+
+
+    // Open / Close menu button
+
+    noticeMenuToggle.addEventListener("click", function(e){
+
+        e.stopPropagation();
+
+        noticeSidebar.classList.toggle("active");
+
+    });
+
+
+
+    // Close menu when clicking outside sidebar
+
+    document.addEventListener("click", function(e){
+
+
+        if(
+            !noticeSidebar.contains(e.target) &&
+            !noticeMenuToggle.contains(e.target)
+        ){
+
+            noticeSidebar.classList.remove("active");
+
+        }
+
+
+    });
+
+
+
+    // Close menu after clicking any link
+
+    const noticeLinks =
+    noticeSidebar.querySelectorAll("a");
+
+
+    noticeLinks.forEach(function(link){
+
+
+        link.addEventListener("click",function(){
+
+            noticeSidebar.classList.remove("active");
+
+        });
+
+
+    });
+
 
 }
 

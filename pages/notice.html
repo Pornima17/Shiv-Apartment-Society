@@ -10,9 +10,12 @@
     <title>Notice Board</title>
 
     <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/responsive.css">
+
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
@@ -29,44 +32,115 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 
 <div class="dashboard">
 
-    <!-- Sidebar -->
+<!-- Mobile Menu Toggle -->
 
-    <div class="sidebar">
+<button id="noticeMenuToggle" class="menu-toggle">
 
-        <h2>🏢 Shiv Apartment</h2>
+    <i class="fa-solid fa-bars"></i>
 
-        <ul>
+</button>
 
-            <li><a href="dashboard.html">Dashboard</a></li>
+<!-- Sidebar -->
 
-            <li><a href="residents.html">Residents</a></li>
+<div class="sidebar" id="noticeSidebar">
 
-            <li><a href="complaints.html">Complaints</a></li>
-
-            <li><a href="maintenance.html">Maintenance</a></li>
-
-            <li><a href="events.html">events</a></li>
+    <h2>
+        🏢 Shiv Apartment
+    </h2>
 
 
-            <li><a  class="active" href="notice.html">Notice</a></li>
-            
-            <li><a href="visitors.html">Visitors</a></li>
+    <ul>
 
-            <li><a href="../index.html">Logout</a></li>
+        <li>
+            <a href="dashboard.html">
+                <i class="fa-solid fa-gauge"></i>
+                Dashboard
+            </a>
+        </li>
 
-        </ul>
 
-    </div>
+        <li>
+            <a href="residents.html">
+                <i class="fa-solid fa-users"></i>
+                Residents
+            </a>
+        </li>
+
+
+        <li>
+            <a href="complaints.html">
+                <i class="fa-solid fa-message"></i>
+                Complaints
+            </a>
+        </li>
+
+
+        <li>
+            <a href="maintenance.html">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Maintenance
+            </a>
+        </li>
+
+
+        <li>
+            <a href="events.html">
+                <i class="fa-solid fa-calendar-days"></i>
+                Events
+            </a>
+        </li>
+
+
+        <li>
+            <a class="active" href="notice.html">
+                <i class="fa-solid fa-bullhorn"></i>
+                Notice
+            </a>
+        </li>
+
+
+        <li>
+            <a href="visitors.html">
+                <i class="fa-solid fa-person-walking"></i>
+                Visitors
+            </a>
+        </li>
+
+
+        <li>
+            <a href="../index.html">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+
+
+    </ul>
+
+</div>
+
 
     <!-- Main Content -->
 
-    <div class="main-content">
+<div class="main-content" id="noticeMainContent">
+<div class="page-header">
 
-<h1>Notice Board</h1>
+    <div>
+        <h1>
+            📢 Notice Board
+        </h1>
 
-<p>
-Manage all society notices and announcements here.
-</p>
+        <p>
+            Create, manage and share important society announcements.
+        </p>
+    </div>
+
+    <div class="header-date">
+        <i class="fa-solid fa-calendar"></i>
+        <span id="currentDate"></span>
+    </div>
+
+</div>
 
 <div class="notice-top">
 
@@ -89,9 +163,54 @@ Manage all society notices and announcements here.
 
 </div>
 
-<div class="notice-form">
+<div class="notice-summary">
 
-    <h2>📢 Add New Notice</h2>
+
+<div class="summary-card">
+
+<i class="fa-solid fa-bullhorn"></i>
+
+<div>
+<h3 id="totalNotice">0</h3>
+<p>Total Notices</p>
+</div>
+
+</div>
+
+
+<div class="summary-card">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+<div>
+<h3 id="todayNotice">0</h3>
+<p>Today's Notice</p>
+</div>
+
+</div>
+
+
+<div class="summary-card">
+
+<i class="fa-solid fa-clock"></i>
+
+<div>
+<h3 id="recentNotice">0</h3>
+<p>Recent Notices</p>
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="notice-form card">
+
+    <h2>
+        <i class="fa-solid fa-pen-to-square"></i>
+        Create New Notice
+    </h2>
 
     <div class="form-group">
 
@@ -139,13 +258,14 @@ Manage all society notices and announcements here.
 
         </button>
 
-        <button
-            type="reset"
-            class="cancel-btn">
+<button
+type="button"
+id="clearNotice"
+class="cancel-btn">
 
-            Clear
+Clear
 
-        </button>
+</button>
 
     </div>
 
