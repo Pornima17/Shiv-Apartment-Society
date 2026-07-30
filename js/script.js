@@ -1084,18 +1084,81 @@ function updateParkingSummary(){
 }
 
 // =========================
+// Filter By Date
+// =========================
+
+function filterByDate(data, fromDate, toDate){
+
+    if(!fromDate && !toDate){
+
+        return data;
+
+    }
+
+    return data.filter(function(item){
+
+        if(!item.date){
+
+            return true;
+
+        }
+
+        const recordDate =
+        new Date(item.date);
+
+        if(fromDate &&
+            recordDate < new Date(fromDate)){
+
+            return false;
+
+        }
+
+        if(toDate &&
+            recordDate > new Date(toDate)){
+
+            return false;
+
+        }
+
+        return true;
+
+    });
+
+}
+// =========================
 // Reports Module
 // =========================
 
 function updateReports() {
 
-    const reportResidents = document.getElementById("reportResidents");
-    const reportFlats = document.getElementById("reportFlats");
-    const reportParking = document.getElementById("reportParking");
-    const reportMaintenance = document.getElementById("reportMaintenance");
-    const reportTableBody = document.getElementById("reportTableBody");
+    // Summary Cards
+    const reportResidents =
+        document.getElementById("reportResidents");
 
-    // Reports page नसेल तर function बंद
+    const reportFlats =
+        document.getElementById("reportFlats");
+
+    const reportParking =
+        document.getElementById("reportParking");
+
+    const reportMaintenance =
+        document.getElementById("reportMaintenance");
+
+    // Table
+    const reportTableBody =
+        document.getElementById("reportTableBody");
+
+    // Filter
+const reportModule =
+    document.getElementById("reportModule");
+
+const fromDate =
+    document.getElementById("fromDate");
+
+const toDate =
+    document.getElementById("toDate");
+
+    // Reports page नसेल तर Stop
     if (
         !reportResidents ||
         !reportFlats ||
@@ -1103,10 +1166,15 @@ function updateReports() {
         !reportMaintenance ||
         !reportTableBody
     ) {
+
         return;
+
     }
 
-    // Local Storage मधून Data
+    // =========================
+    // Load Data
+    // =========================
+
     const residents =
         JSON.parse(localStorage.getItem("residents")) || [];
 
@@ -1119,32 +1187,196 @@ function updateReports() {
     const maintenance =
         JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
 
-    // Total Maintenance Collection
+    const complaints =
+        JSON.parse(localStorage.getItem("complaints")) || [];
+
+    const visitors =
+        JSON.parse(localStorage.getItem("visitors")) || [];
+
+    const events =
+        JSON.parse(localStorage.getItem("events")) || [];
+
+        const notices =
+    JSON.parse(localStorage.getItem("notices")) || [];
+
+const filteredMaintenance =
+filterByDate(
+    maintenance,
+    fromDate ? fromDate.value : "",
+    toDate ? toDate.value : ""
+);
+
+const filteredComplaints =
+filterByDate(
+    complaints,
+    fromDate ? fromDate.value : "",
+    toDate ? toDate.value : ""
+);
+
+const filteredVisitors =
+filterByDate(
+    visitors,
+    fromDate ? fromDate.value : "",
+    toDate ? toDate.value : ""
+);
+
+const filteredEvents =
+filterByDate(
+    events,
+    fromDate ? fromDate.value : "",
+    toDate ? toDate.value : ""
+);
+
+
+    // =========================
+    // Total Maintenance
+    // =========================
+
     let totalCollection = 0;
 
-    maintenance.forEach(function(record){
+filteredMaintenance.forEach(function(record){
 
-        totalCollection += Number(record.amount) || 0;
+        totalCollection +=
+        Number(record.amount) || 0;
 
     });
 
+    // =========================
     // Summary Cards
-    reportResidents.innerText = residents.length;
-    reportFlats.innerText = flats.length;
-    reportParking.innerText = parking.length;
-    reportMaintenance.innerText = "₹" + totalCollection;
+    // =========================
 
-    // Table
+    reportResidents.textContent =
+    residents.length;
+
+    reportFlats.textContent =
+    flats.length;
+
+    reportParking.textContent =
+    parking.length;
+
+    reportMaintenance.textContent =
+    "₹" + totalCollection;
+
+    // =========================
+    // Report Table
+    // =========================
+
     reportTableBody.innerHTML = "";
 
-    const reports = [
+    const selectedModule =
+    reportModule ?
+    reportModule.value :
+    "all";
 
-        ["Residents", residents.length],
-        ["Flats", flats.length],
-        ["Parking", parking.length],
-        ["Maintenance Records", maintenance.length]
+    const reports = [];
 
-    ];
+    if(selectedModule === "all" || selectedModule === "residents"){
+
+        reports.push({
+
+            icon:"fa-solid fa-users",
+
+            module:"Residents",
+
+            total:residents.length
+
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "flats"){
+
+        reports.push({
+
+            icon:"fa-solid fa-building",
+
+            module:"Flats",
+
+            total:flats.length
+
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "parking"){
+
+        reports.push({
+
+            icon:"fa-solid fa-square-parking",
+
+            module:"Parking",
+
+            total:parking.length
+
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "maintenance"){
+
+        reports.push({
+
+            icon:"fa-solid fa-wallet",
+
+            module:"Maintenance",
+
+total:filteredMaintenance.length
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "complaints"){
+
+        reports.push({
+
+            icon:"fa-solid fa-triangle-exclamation",
+
+            module:"Complaints",
+
+total:filteredComplaints.length
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "visitors"){
+
+        reports.push({
+
+            icon:"fa-solid fa-user-check",
+
+            module:"Visitors",
+
+total:filteredVisitors.length
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "events"){
+
+        reports.push({
+
+            icon:"fa-solid fa-calendar-days",
+
+            module:"Events",
+
+total:filteredEvents.length
+        });
+
+    }
+
+    if(selectedModule === "all" || selectedModule === "notice"){
+
+    reports.push({
+
+        icon:"fa-solid fa-bullhorn",
+
+        module:"Notice",
+
+        total:notices.length
+
+    });
+
+}
 
     reports.forEach(function(item){
 
@@ -1152,9 +1384,19 @@ function updateReports() {
 
         <tr>
 
-            <td>${item[0]}</td>
+            <td>
 
-            <td>${item[1]}</td>
+                <i class="${item.icon}"></i>
+
+                ${item.module}
+
+            </td>
+
+            <td>
+
+                ${item.total}
+
+            </td>
 
         </tr>
 
@@ -1164,7 +1406,28 @@ function updateReports() {
 
 }
 
-updateReports();
+// =========================
+// Generate Report
+// =========================
+
+const generateReport =
+document.getElementById("generateReport");
+
+if(generateReport){
+
+    generateReport.addEventListener(
+
+        "click",
+
+        function(){
+
+            updateReports();
+
+        }
+
+    );
+
+}
 
 // =========================
 // Print Report
@@ -1175,13 +1438,168 @@ document.getElementById("printReport");
 
 if(printReport){
 
-    printReport.addEventListener("click",function(){
+    printReport.addEventListener(
 
-        window.print();
+        "click",
+
+        function(){
+
+            window.print();
+
+        }
+
+    );
+
+}
+
+// =========================
+// Export Report (CSV)
+// =========================
+
+const exportExcel =
+document.getElementById("exportExcel");
+
+if(exportExcel){
+
+    exportExcel.addEventListener("click", exportReportCSV);
+
+}
+
+function exportReportCSV(){
+
+    const rows = document.querySelectorAll(".report-table tr");
+
+    let csv = [];
+
+    rows.forEach(function(row){
+
+        const cols = row.querySelectorAll("th, td");
+
+        const rowData = [];
+
+        cols.forEach(function(col){
+
+            rowData.push(
+                '"' + col.innerText.trim() + '"'
+            );
+
+        });
+
+        csv.push(rowData.join(","));
+
+    });
+
+    const csvFile =
+    new Blob([csv.join("\n")], {
+
+        type:"text/csv"
+
+    });
+
+    const downloadLink =
+    document.createElement("a");
+
+    downloadLink.download =
+    "Society_Report.csv";
+
+    downloadLink.href =
+    window.URL.createObjectURL(csvFile);
+
+    downloadLink.style.display =
+    "none";
+
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
+
+}
+
+// =========================
+// Export Report PDF
+// =========================
+
+const exportPdf =
+document.getElementById("exportPdf");
+
+if(exportPdf){
+
+    exportPdf.addEventListener("click",function(){
+
+        const element =
+        document.querySelector(".main-content");
+
+        const pdfHeader =
+        document.getElementById("pdfReportHeader");
+
+        if(pdfHeader){
+
+            pdfHeader.style.display = "flex";
+
+        }
+
+        html2pdf()
+
+        .set({
+
+            margin:0.5,
+
+            filename:"Society_Report.pdf",
+
+            image:{
+                type:"jpeg",
+                quality:1
+            },
+
+            html2canvas:{
+                scale:2
+            },
+
+            jsPDF:{
+                unit:"in",
+                format:"a4",
+                orientation:"portrait"
+            }
+
+        })
+
+        .from(element)
+
+        .save()
+
+        .then(function(){
+
+            if(pdfHeader){
+
+                pdfHeader.style.display = "none";
+
+            }
+
+        });
 
     });
 
 }
+// =========================
+// Report Generated Date
+// =========================
+
+const generatedDate =
+document.getElementById("generatedDate");
+
+if(generatedDate){
+
+    generatedDate.textContent =
+    new Date().toLocaleString();
+
+}
+
+// =========================
+// Default Load
+// =========================
+
+updateReports();
 
 // =========================
 // Load Flats
@@ -7885,6 +8303,64 @@ if(eventMenuToggle && eventSidebar){
         link.addEventListener("click", function(){
 
             eventSidebar.classList.remove("active");
+
+        });
+
+    });
+
+}
+
+// =========================
+// Reports Mobile Menu Toggle
+// =========================
+
+const reportsMenuToggle =
+document.getElementById("reportsMenuToggle");
+
+const reportsSidebar =
+document.getElementById("reportsSidebar");
+
+
+if(reportsMenuToggle && reportsSidebar){
+
+
+    // Open / Close Sidebar
+
+    reportsMenuToggle.addEventListener("click", function(e){
+
+        e.stopPropagation();
+
+        reportsSidebar.classList.toggle("active");
+
+    });
+
+
+    // Close Sidebar when clicking outside
+
+    document.addEventListener("click", function(e){
+
+        if(
+            !reportsSidebar.contains(e.target) &&
+            !reportsMenuToggle.contains(e.target)
+        ){
+
+            reportsSidebar.classList.remove("active");
+
+        }
+
+    });
+
+
+    // Close Sidebar after clicking menu link
+
+    const reportsLinks =
+    reportsSidebar.querySelectorAll("a");
+
+    reportsLinks.forEach(function(link){
+
+        link.addEventListener("click", function(){
+
+            reportsSidebar.classList.remove("active");
 
         });
 
